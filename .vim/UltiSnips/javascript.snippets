@@ -1,0 +1,25 @@
+snippet service "AngularJS Service" !b
+${1:mod}.factory('${2:ServiceName}', ['$resource',
+function($resource) {
+  return $resource('${3:location/}', {}, {
+    query: { method:'GET', params:{}, isArray:false }
+  });
+}]);
+endsnippet
+
+snippet cont "AngularJS Controller" !b
+${1:mod}.controller('${2:SomethingCtrl}', ['$scope',
+function($scope) {
+  ${3}
+}]);
+endsnippet
+
+snippet ngapp "AngularJS App Boilerplate" !b
+var app = angular.module('${1:appName}', []);
+
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.
+    when('${2:url/}', {templateUrl: '${3:partial.html}', controller: '${4:SomeCtrl}' }).
+    otherwise({redirectTo: '/'});
+}]);
+endsnippet
