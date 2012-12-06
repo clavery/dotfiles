@@ -1,0 +1,31 @@
+[push]
+	default = tracking
+[user]
+	name = Charles Lavery
+	email = charles.lavery@gmail.com
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[alias]
+  co = checkout
+  s = status
+  a = add
+[core]
+  excludesfile = ~/.gitignore
+	pager = less -FRSX
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = green
+  changed = yellow 
+  untracked = red
+
