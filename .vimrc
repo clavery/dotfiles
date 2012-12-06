@@ -382,6 +382,7 @@ set wildignore+=*.min.js
 au FileType javascript set keywordprg=:help
 au FileType javascript setlocal makeprg=jshint\ %\\\|sed\ '/^$/d'\\\|sed\ '/^[0-9]\ /d'
 au FileType javascript setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
+au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
 
 " vitality
 let g:vitality_fix_focus = 0
