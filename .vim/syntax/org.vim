@@ -43,4 +43,5 @@ hi def link noteState Constant
 hi def link importantStart Keyword
 hi def link project Constant
 hi def link listNote Identifier
+hi def link holdStates Label
 
