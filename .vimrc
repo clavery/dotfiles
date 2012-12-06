@@ -9,6 +9,7 @@ set t_Co=256
 let mapleader = ","
 
 " allow backspacing over everything in insert mode
+set autoread
 set lazyredraw
 set backspace=indent,eol,start
 set notimeout
@@ -159,10 +160,7 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
 
-  if has("gui_running")
-    " save all when losing focus
-    au FocusLost * nested :silent! wa
-  endif
+  au FocusLost * nested :silent! wa
 
   " Use green status line in insert mode
   au InsertEnter * hi StatusLine term=reverse ctermbg=0 ctermfg=DarkGreen guibg=#A8FF60 guifg=#202020
@@ -368,3 +366,6 @@ set wildignore+=*.min.js
 au FileType javascript set keywordprg=:help
 au FileType javascript setlocal makeprg=jshint\ %\\\|sed\ '/^$/d'\\\|sed\ '/^[0-9]\ /d'
 au FileType javascript setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
+
+" vitality
+let g:vitality_fix_focus = 0
