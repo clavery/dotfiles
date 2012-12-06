@@ -56,7 +56,7 @@ set nowritebackup
 set noswapfile
 set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:⌧,extends:…,precedes:…
 set nrformats=
-set noesckeys
+set esckeys
 set diffopt=filler,iwhite
 set foldlevelstart=99
 
