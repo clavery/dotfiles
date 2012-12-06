@@ -53,6 +53,7 @@ set nowritebackup
 set noswapfile
 set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:⌧,extends:…,precedes:…
 set nrformats=
+set noesckeys
 
 if version >= 703
   set cryptmethod=blowfish
@@ -176,9 +177,9 @@ augroup END
 
 " reload .vimrc
 if has("win32")
-  map <leader>r :source ~\_vimrc<cr>
+  map <leader>r :source ~/_vimrc<cr>
 else
-  map <leader>r :source ~\.vimrc<cr>
+  map <leader>r :source ~/.vimrc<cr>
 endif
 
 " toggle spell check

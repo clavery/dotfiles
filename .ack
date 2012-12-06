@@ -14,4 +14,3 @@ web=.html,.js,.scss,.css,.php
 --type-set
 docs=.markdown,.md,.mdown,.rst,.txt
 --ignore-dir=build/
---ignore=*.min.js
