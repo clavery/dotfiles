@@ -1,0 +1,4 @@
+"\C-b": beginning-of-line
+set convert-meta on
+set completion-ignore-case on
+set show-all-if-ambiguous on

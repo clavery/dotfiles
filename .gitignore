@@ -2,4 +2,8 @@
 *.pyc
 .svn
 _svn
+WEB-INF/*
+.ropeproject/
+nohup.out
+venv/
 .netrwhist
