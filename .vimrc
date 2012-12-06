@@ -9,9 +9,11 @@ set t_Co=256
 let mapleader = ","
 
 " allow backspacing over everything in insert mode
+set lazyredraw
 set backspace=indent,eol,start
-set nottimeout
 set notimeout
+set ttimeout
+set ttimeoutlen=10
 set nojoinspaces
 set backup
 set backupdir=~/.backup//
