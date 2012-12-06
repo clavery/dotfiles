@@ -24,7 +24,7 @@ set history=1000
 set ruler
 set showcmd
 set incsearch
-set scrolloff=3
+set scrolloff=4
 set hlsearch
 set tabstop=2
 set shiftwidth=2
@@ -57,6 +57,7 @@ set noswapfile
 set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:⌧,extends:…,precedes:…
 set nrformats=
 set noesckeys
+set diffopt=filler,iwhite
 
 if version >= 703
   set cryptmethod=blowfish
