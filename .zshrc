@@ -117,13 +117,6 @@ esac
 
 ######### Functions #########
 
-# git current branch name
-current_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo ${ref#refs/heads/}
-}
-
-
 # number of minutes since last commit
 minutes_since_last_commit() {
     now=`date +%s`

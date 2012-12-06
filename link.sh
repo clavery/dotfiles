@@ -3,7 +3,7 @@
 HOSTNAME=`hostname -s`
 HOST_OS=`uname|tr '[:upper:]' '[:lower:]'`
 
-find .* -maxdepth 0 -not \( -name '.' -or -name '..' \) -print -exec ln -fs $(pwd)/{} $HOME \;
+find .* -maxdepth 0 -not \( -name '.' -or -name '..' -or -name '.git' -or -name '.gitmodules' \) -print -exec ln -fs $(pwd)/{} $HOME \;
 
 case $HOST_OS in
   darwin)
