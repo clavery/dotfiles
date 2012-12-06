@@ -25,6 +25,7 @@ set ruler
 set showcmd
 set incsearch
 set scrolloff=4
+set synmaxcol=500
 set hlsearch
 set tabstop=2
 set shiftwidth=2
@@ -44,7 +45,6 @@ set linebreak " break on word
 set formatoptions+=c
 set formatoptions+=q
 set textwidth=100
-set cursorline
 set wildmenu
 set wildmode=list:longest
 set smartindent
@@ -58,6 +58,7 @@ set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:⌧,extends:…,precedes:…
 set nrformats=
 set noesckeys
 set diffopt=filler,iwhite
+set foldlevelstart=99
 
 if version >= 703
   set cryptmethod=blowfish
@@ -82,6 +83,19 @@ else
   set wildignore+=*/.sass-cache/*
   set wildignore+=*/lib/*
 endif
+
+" cursor line in normal mode only
+set cursorline
+augroup cline
+  au!
+  au WinLeave,InsertEnter * set nocursorline
+  au WinEnter,InsertLeave * set cursorline
+augroup END
+
+augroup quickfix
+  au!
+  au Filetype qf setlocal nolist nowrap
+augroup END
 
 " disable mouse
 if has('mouse')
@@ -176,6 +190,9 @@ augroup END
 
 """ Maps
 
+nnoremap  <F1> :set invfullscreen<CR>
+inoremap <F1> <ESC>:set invfullscreen<CR>a
+
 " reload .vimrc
 if has("win32")
   map <leader>r :source ~/_vimrc<cr>
@@ -185,8 +202,6 @@ endif
 
 " toggle spell check
 map <leader>s :setlocal spell!<cr>
-
-"nmap <silent> <C-E> :FufBuff<cr>
 
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
@@ -211,7 +226,7 @@ command! Q :q
 command! Wq :wq
 command! WQ :wq
 
-command! Sudo %!sudo tee > /dev/null %
+cnoremap w!! w !sudo tee % >/dev/null
 
 " Run makeprg and open quickfix
 nmap <F4> :w<cr>:make<cr><cr>:cw<cr>
@@ -219,6 +234,8 @@ nmap <F4> :w<cr>:make<cr><cr>:cw<cr>
 " Better up and down movement
 noremap j gj
 noremap k gk
+noremap gj j
+noremap gk k
 noremap <DOWN> gj
 noremap <UP> gk
 
@@ -250,16 +267,14 @@ endif
 
 hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
 hi StatusLineNC guifg=#606060
+hi Search ctermbg=55
 
 if has("gui")
   highlight SignColumn guibg=#232526 guifg=white
 endif
 
 " Highlight VCS markers
-highlight ErrorMsg guibg=#CD321D ctermbg=red ctermfg=white gui=NONE
-let m = matchadd("ErrorMsg", '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$', 100)
-
-hi MatchParen guibg=#1A4B5F gui=NONE guifg=yellow ctermfg=blue ctermbg=cyan
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 """ Status Line
 
@@ -370,3 +385,7 @@ au FileType javascript setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
 
 " vitality
 let g:vitality_fix_focus = 0
+
+"matchit
+runtime macros/matchit.vim
+map <tab> %
