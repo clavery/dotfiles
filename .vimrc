@@ -9,6 +9,8 @@ set t_Co=256
 let mapleader = ","
 
 " allow backspacing over everything in insert mode
+set encoding=utf-8
+set fileencodings=utf-8,latin1,default
 set autoread
 set lazyredraw
 set backspace=indent,eol,start
