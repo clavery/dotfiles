@@ -95,7 +95,7 @@ augroup END
 
 " disable mouse
 if has('mouse')
-  set mouse=n
+  set mouse=
 endif
 
 " Scroll in diffs
