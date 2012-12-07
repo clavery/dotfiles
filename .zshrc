@@ -323,10 +323,9 @@ case $HOSTNAME in
     export SSL_CERT_FILE=/usr/local/etc/openssl/cacert.pem
   ;;
   *)
-    export LEDGER_FILE=~/ledger/main.ledger
   ;;
 esac
-alias l="ledger -f $LEDGER_FILE"
+alias l="ledger"
 
 # check if ec2 instance is ready
 function ec2-check-ready() {
