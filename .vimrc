@@ -46,7 +46,7 @@ set gdefault " change behavior of /g option
 set linebreak " break on word
 set formatoptions+=c
 set formatoptions+=q
-set textwidth=100
+set textwidth=0
 set wildmenu
 set wildmode=list:longest
 set smartindent
@@ -87,12 +87,6 @@ else
 endif
 
 " cursor line in normal mode only
-set cursorline
-augroup cline
-  au!
-  au WinLeave,InsertEnter * set nocursorline
-  au WinEnter,InsertLeave * set cursorline
-augroup END
 
 augroup quickfix
   au!

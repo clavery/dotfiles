@@ -23,3 +23,15 @@ app.config(['$routeProvider', function($routeProvider) {
     otherwise({redirectTo: '/'});
 }]);
 endsnippet
+
+snippet ca "Callback Closure w/ Args" !w
+function(${1:args}) {
+  ${2}
+});
+${3}
+endsnippet
+snippet cl "Closure w/ Args" !w
+function(${1:args}) {
+  $2
+}${3}
+endsnippet
