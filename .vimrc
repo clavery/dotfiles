@@ -61,6 +61,7 @@ set nrformats=
 set esckeys
 set diffopt=filler,iwhite
 set foldlevelstart=99
+set completeopt=menuone,longest,preview
 
 if version >= 703
   set cryptmethod=blowfish
@@ -85,10 +86,11 @@ else
   set wildignore+=*/.sass-cache/*
   set wildignore+=*/lib/*
   set wildignore+=*/vendor/*
+  set wildignore+=*.min.js
+  set wildignore+=*.pyc
 endif
 
 " cursor line in normal mode only
-
 augroup quickfix
   au!
   au Filetype qf setlocal nolist nowrap
@@ -130,21 +132,9 @@ endif
 syntax on
 filetype plugin indent on
 
-let g:explHideFiles='^\.,.*\.pyc$'
-"let g:netrw_browsex_viewer=
-let g:netrw_liststyle=3
-let g:netrw_banner=0
-
-""" AutoCommands
-
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
   au!
-
-  autocmd FileType text setlocal textwidth=80
-  autocmd FileType text setlocal formatoptions=qa
-  autocmd FileType html setlocal textwidth=0
-  autocmd FileType cf setlocal textwidth=0
 
   " Don't use undofile or backup/swp for *.aes and *.secure
   au BufRead *.aes setlocal noundofile
@@ -154,19 +144,7 @@ augroup vimrcEx
   au BufRead *.secure setlocal nobackup
   au BufRead *.secure setlocal viminfo=
 
-  au BufWinLeave *.txt mkview
-  au BufWinEnter *.txt silent loadview
-
-  " Format text automagically
-  au BufRead *.txt setf text
-  au FileType text setlocal formatoptions=qtn
-  au FileType text set ai
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
+  " jump to last position
   autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
@@ -174,11 +152,8 @@ augroup vimrcEx
 
   au FocusLost * nested :silent! wa
 
-  " Use green status line in insert mode
   au InsertEnter * hi StatusLine term=reverse ctermbg=0 ctermfg=DarkGreen guibg=#A8FF60 guifg=#202020
-  au InsertLeave,BufLeave,BufEnter * hi StatusLine guifg=#CCCCCC     guibg=#404040     gui=NONE    ctermfg=white       ctermbg=8    cterm=NONE
-
-  " Red status bar when readonly buffer
+  au InsertLeave,BufLeave,BufEnter * hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
   au BufNew,BufAdd,BufWrite,BufNewFile,BufRead,BufEnter,FileChangedRO * :if &ro | hi StatusLine guibg=#CD321D ctermbg=red | endif
 
   " Resize splits on window resize
@@ -186,7 +161,6 @@ augroup vimrcEx
 augroup END
 
 """ Maps
-
 nnoremap  <F1> :set invfullscreen<CR>
 inoremap <F1> <ESC>:set invfullscreen<CR>a
 
@@ -289,8 +263,6 @@ set statusline+=)
 " Line and column position and counts.
 set statusline+=\ (%l\/%L,\ %03c,\ %03b)
 
-""" Plugins
-
 " Folding
 function! MyFoldText() " {{{
     let line = getline(v:foldstart)
@@ -324,19 +296,6 @@ let g:ctrlp_regexp = 1
 let g:ctrlp_switch_buffer = 0
 nnoremap <silent> <c-e> :CtrlPBuffer<cr>
 
-au FileType vim set keywordprg=:help
-
-" PHP
-au FileType php set keywordprg=:help
-let g:syntastic_phpcs_conf="-n --standard=Squiz"
-au FileType php set omnifunc=phpcomplete#CompletePHP
-
-" SQL
-let g:sql_type_default = 'mysql'
-
-"Ledger
-au BufRead *.ledger setlocal filetype=ledger
-
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 nnoremap <c-w><right> :vertical res -10<cr>
@@ -346,15 +305,6 @@ nnoremap <c-w><down> :res -5<cr>
 
 set fillchars=vert:\ 
 high VertSplit guibg=#555555
-
-" PYTHON
-set wildignore+=*.pyc
-set completeopt=menuone,longest,preview
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-let g:pydoc_open_cmd = 'vsplit'
-au FileType python setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4 autoindent
-let g:pymode_lint_write = 0
-let g:pymode_folding = 0
 
 " Supertab
 function! g:MyFunction()
@@ -370,13 +320,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" Javascript
-set wildignore+=*.min.js
-au FileType javascript set keywordprg=:help
-au FileType javascript setlocal makeprg=jshint\ %\\\|sed\ '/^$/d'\\\|sed\ '/^[0-9]\ /d'
-au FileType javascript setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
-au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-
 " vitality
 let g:vitality_fix_focus = 0
 
@@ -384,5 +327,17 @@ let g:vitality_fix_focus = 0
 runtime macros/matchit.vim
 map <tab> %
 
-"markdown
-au BufRead *.md set ft=markdown
+" netrw
+let g:explHideFiles='^\.,.*\.pyc$'
+"let g:netrw_browsex_viewer=
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+
+" File types
+augroup filetypes
+  au!
+
+  au BufRead *.md setlocal ft=markdown
+  au BufRead *.ledger setlocal filetype=ledger
+  au BufRead *.txt setf text
+augroup END
