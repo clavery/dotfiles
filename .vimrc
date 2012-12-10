@@ -84,6 +84,7 @@ else
   set wildignore+=*/.svn/*
   set wildignore+=*/.sass-cache/*
   set wildignore+=*/lib/*
+  set wildignore+=*/vendor/*
 endif
 
 " cursor line in normal mode only
@@ -190,11 +191,7 @@ nnoremap  <F1> :set invfullscreen<CR>
 inoremap <F1> <ESC>:set invfullscreen<CR>a
 
 " reload .vimrc
-if has("win32")
-  map <leader>r :source ~/_vimrc<cr>
-else
-  map <leader>r :source ~/.vimrc<cr>
-endif
+map <leader>r :source $MYVIMRC<cr>
 
 " toggle spell check
 map <leader>s :setlocal spell!<cr>
@@ -386,3 +383,6 @@ let g:vitality_fix_focus = 0
 "matchit
 runtime macros/matchit.vim
 map <tab> %
+
+"markdown
+au BufRead *.md set ft=markdown
