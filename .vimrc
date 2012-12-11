@@ -351,3 +351,6 @@ function! QuickfixFilenames()
   endfor
   return join(values(buffer_numbers))
 endfunction
+
+" Load local overrides
+silent! source ~/.vimrc-local
