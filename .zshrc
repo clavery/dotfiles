@@ -389,3 +389,8 @@ stty stop undef
 __git_files () { 
   _wanted files expl 'local files' _files     
 }
+
+# reset
+if [[ $TERM == 'rxvt-256color' ]]; then
+  export TERM=xterm-256color
+fi
