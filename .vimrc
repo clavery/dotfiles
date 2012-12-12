@@ -292,7 +292,7 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_height = 18
 let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_regexp = 1
+let g:ctrlp_regexp = 0
 let g:ctrlp_switch_buffer = 0
 nnoremap <silent> <c-e> :CtrlPBuffer<cr>
 
