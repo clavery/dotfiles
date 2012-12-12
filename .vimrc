@@ -185,7 +185,6 @@ set pastetoggle=<F2>
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
 noremap <silent> <leader>p :cp<cr>
-noremap <silent> <leader>o :bot cw<cr>
 
 " Capitals save/quit too
 command! W :w
@@ -350,6 +349,20 @@ function! QuickfixFilenames()
     let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
   endfor
   return join(values(buffer_numbers))
+endfunction
+
+nnoremap <leader>o :call QuickfixToggle()<cr>
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        bot cclose
+        let g:quickfix_is_open = 0
+    else
+        bot copen
+        let g:quickfix_is_open = 1
+    endif
 endfunction
 
 " Load local overrides
