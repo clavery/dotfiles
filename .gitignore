@@ -7,3 +7,5 @@ WEB-INF/*
 nohup.out
 venv/
 .netrwhist
+
+.vim/spell
