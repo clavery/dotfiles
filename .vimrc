@@ -88,6 +88,7 @@ else
   set wildignore+=*/vendor/*
   set wildignore+=*.min.js
   set wildignore+=*.pyc
+  set wildignore+=*/tmp/*
 endif
 
 " cursor line in normal mode only
