@@ -350,7 +350,7 @@ in_git
 
 export GPG_TTY=$(tty)
 
-if [[ $HOSTOS == 'linux' ]]; then
+if [[ $HOST_OS == 'linux' ]]; then
   if [ -f "${HOME}/.gpg-agent-info" ]; then
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
@@ -359,7 +359,7 @@ if [[ $HOSTOS == 'linux' ]]; then
 
   gpg-agent > /dev/null 2>&1
   if [[ $? != 0 ]]; then
-    gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
+    gpg-agent --daemon --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
