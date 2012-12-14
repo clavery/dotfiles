@@ -79,13 +79,9 @@ else
   set wildignore+=*/WEB-INF/*
   set wildignore+=*/venv/*
   set wildignore+=*/node_modules/*
-  set wildignore+=*/lib/*
-  set wildignore+=*/build/*
   set wildignore+=*/.git/*
   set wildignore+=*/.svn/*
   set wildignore+=*/.sass-cache/*
-  set wildignore+=*/lib/*
-  set wildignore+=*/vendor/*
   set wildignore+=*.min.js
   set wildignore+=*.pyc
   set wildignore+=*/tmp/*
@@ -295,6 +291,7 @@ let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_regexp = 0
 let g:ctrlp_switch_buffer = 0
 nnoremap <silent> <c-e> :CtrlPBuffer<cr>
+let g:ctrlp_custom_ignore = { 'dir': '\v[\/](lib|build|vendor)' }
 
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
@@ -358,10 +355,12 @@ let g:quickfix_is_open = 0
 
 function! QuickfixToggle()
     if g:quickfix_is_open
-        bot cclose
+        cclose
         let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
     else
-        bot copen
+        let g:quickfix_return_to_window = winnr()
+        copen
         let g:quickfix_is_open = 1
     endif
 endfunction
