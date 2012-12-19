@@ -291,7 +291,7 @@ let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_regexp = 0
 let g:ctrlp_switch_buffer = 0
 nnoremap <silent> <c-e> :CtrlPBuffer<cr>
-let g:ctrlp_custom_ignore = { 'dir': '\v[\/](lib|build|vendor)' }
+let g:ctrlp_custom_ignore = { 'dir': '\v[\/](build|vendor)' }
 
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
