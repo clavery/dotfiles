@@ -42,6 +42,6 @@ hi def link metaDataDue Comment
 hi def link noteState Constant
 hi def link importantStart Keyword
 hi def link project Constant
-hi def link listNote Identifier
-hi def link holdStates Label
+hi def link listNote Label
+hi def link holdStates Identifier
 
