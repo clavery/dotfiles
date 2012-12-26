@@ -1,13 +1,28 @@
+\encoding UTF8
+\echo Client encoding is :ENCODING
+
 \set ECHO none
-\pset null 'NULL'
 \set HISTFILE ~/.psql_history-:HOST-:DBNAME
 \set HISTCONTROL ignoredups
 
+-- display query time in ms
 \timing
 
 \set PROMPT1 '%[%033[31;1m%]%n%[%033[33;1m%]@%[%033[32;1m%m%[%033[0m%] %[%033[37;1m%]%/%[%033[0m%]%[%033[34;1m%]%x%[%033[0m%] %# '
 \set PROMPT2 '> '
 \set PROMPT3 '>> '
 
-\encoding unicode
+\pset null 'NULL'
+-- full border in output
+\pset border 2
+-- when in unaligned mode (\a) output CSV
+\pset fieldsep ','
+
+-- wrap fields so it fits nicely (default is aligned)
+\pset format wrapped
+
+
+-- pretty boxes
+\pset linestyle unicode
+
 \set ECHO all
