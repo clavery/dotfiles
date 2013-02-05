@@ -322,7 +322,7 @@ let g:vitality_fix_focus = 0
 
 "matchit
 runtime macros/matchit.vim
-map <tab> %
+"map <tab> %
 
 " netrw
 let g:explHideFiles='^\.,.*\.pyc$'
