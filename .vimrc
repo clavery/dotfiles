@@ -225,7 +225,7 @@ colorscheme molokai
 
 set guifont=Inconsolata-g:h14
 if has("win32")
-  set guifont=Consolas:h14:cANSI
+  set guifont=Consolas:h13:cANSI
 endif
 
 hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
