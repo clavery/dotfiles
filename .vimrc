@@ -236,7 +236,10 @@ if has("gui")
   highlight SignColumn guibg=#232526 guifg=white
 endif
 
-" Highlight VCS markers
+highlight PmenuSel ctermbg=16 ctermfg=13
+set pumheight=8
+
+" highlight VCS markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 """ Status Line
@@ -364,6 +367,12 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+
+" easy motion
+let g:EasyMotion_leader_key = '<Leader>'
+
+"ycm
+let g:ycm_min_num_of_chars_for_completion = 3
 
 " Load local overrides
 silent! source ~/.vimrc-local
