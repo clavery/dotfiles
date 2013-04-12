@@ -1,24 +1,25 @@
 [push]
-	default = tracking
+  default = tracking
 [user]
-	name = Charles Lavery
-	email = charles.lavery@gmail.com
+  name = Charles Lavery
+  email = charles.lavery@gmail.com
 [color]
-	branch = auto
-	diff = auto
-	interactive = auto
-	status = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
 [alias]
   co = checkout
   s = status --short
   a = add
+  l = log
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   graph = log --all --graph --decorate --oneline -n30
   lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan bold)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
 [core]
   excludesfile = ~/.gitignore
-	pager = less -FRSX
+  pager = less -FRSX
 [color "branch"]
   current = yellow reverse
   local = yellow
