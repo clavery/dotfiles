@@ -79,3 +79,6 @@
 [submodule ".vim/bundle/slime"]
 	path = .vim/bundle/slime
 	url = https://github.com/jpalardy/vim-slime.git
+[submodule ".vim/bundle/zencoding"]
+	path = .vim/bundle/zencoding
+	url = https://github.com/mattn/zencoding-vim.git
