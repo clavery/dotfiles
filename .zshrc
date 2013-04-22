@@ -359,7 +359,7 @@ if [[ $HOST_OS == 'linux' ]]; then
 
   gpg-agent > /dev/null 2>&1
   if [[ $? != 0 ]]; then
-    gpg-agent --daemon --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
+    gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
