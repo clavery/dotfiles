@@ -224,7 +224,7 @@ precmd() {
 
 PROMPT=''
 case $HOSTNAME in
-  sagan)
+  meeples)
     export PROMPT='%{$fg[red]%}${vcs_info_msg_0_} %{$fg[blue]%}%3c $%{%f%} '
   ;;
   *)
@@ -244,7 +244,7 @@ alias g=git
 alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
 alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
-alias tmux="TERM=xterm-256color tmux"
+#alias tmux="TERM=xterm-256color tmux"
 # use macvim if avaliable
 if [[ $HOST_OS == 'darwin' && -x `which mvim` ]] {
   alias vim="mvim -v"
@@ -359,7 +359,7 @@ if [[ $HOST_OS == 'linux' ]]; then
 
   gpg-agent > /dev/null 2>&1
   if [[ $? != 0 ]]; then
-    gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
+    gpg-agent -s --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
