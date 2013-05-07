@@ -242,6 +242,13 @@ set pumheight=8
 " highlight VCS markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
+" override diff highlighting
+hi link gitDiffRemoved Identifier
+hi link diffRemoved Identifier
+hi link diffChanged Special
+hi link diffAdded Exception
+
+
 """ Status Line
 
 set statusline=%f    " Path.
