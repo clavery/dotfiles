@@ -374,5 +374,36 @@ let g:EasyMotion_leader_key = '<Leader>'
 "ycm
 let g:ycm_min_num_of_chars_for_completion = 3
 
+"css
+au BufRead,BufNewFile *.scss set filetype=scss
+
+"tags
+nmap <F8> :TagbarToggle<CR> 
+nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
+let g:tagbar_autoclose = 1
+let g:tagbar_type_scss = {
+    \ 'ctagstype' : 'scss',
+    \ 'kinds'     : [
+        \ 'm:medias',
+        \ 'i:ids',
+        \ 'c:classes',
+        \ 't:tags'
+    \ ],
+    \ 'sro'        : '.'
+\ }
+
+let g:hardmode_on = 0
+function! HardmodeToggle()
+  if g:hardmode_on
+    let g:hardmode_on = 0
+  else
+    noremap <Up> <NOP>
+    noremap <Down> <NOP>
+    noremap <Left> <NOP>
+    noremap <Right> <NOP>
+    let g:hardmode_on = 1
+  endif
+endfunction
+
 " Load local overrides
 silent! source ~/.vimrc-local
