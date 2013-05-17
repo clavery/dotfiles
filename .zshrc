@@ -95,7 +95,7 @@ export CLICOLORS=1
 # bsd
 export LSCOLORS=exfxcxdxbxegedabagacad
 # gnu
-export LS_COLORS="di=34:ex=31:no=00:ow=90;43:"
+export LS_COLORS="di=1;96:ex=31:no=00:ow=90;43:"
 
 ########## PATHS ##########
 
@@ -224,7 +224,7 @@ precmd() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples)
+  meeples|beast)
     export PROMPT='%{$fg[red]%}${vcs_info_msg_0_} %{$fg[blue]%}%3c $%{%f%} '
   ;;
   *)
@@ -244,12 +244,18 @@ alias g=git
 alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
 alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
-#alias tmux="TERM=xterm-256color tmux"
+alias tmux="tmux -2 -u"
+alias attach="tmux -2 -u attach"
 # use macvim if avaliable
 if [[ $HOST_OS == 'darwin' && -x `which mvim` ]] {
   alias vim="mvim -v"
   alias vi="mvim -v"
 }
+
+if [[ $HOST_OS == 'linux' ]] {
+  alias vi=vim
+}
+
 # vim crontab fix
 alias crontab="VIM_CRONTAB=true crontab"
 alias sl=ls # often screw this up
@@ -359,7 +365,7 @@ if [[ $HOST_OS == 'linux' ]]; then
 
   gpg-agent > /dev/null 2>&1
   if [[ $? != 0 ]]; then
-    gpg-agent -s --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
+    gpg-agent --enable-ssh-support --daemon --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK

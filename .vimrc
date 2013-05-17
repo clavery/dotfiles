@@ -220,10 +220,10 @@ nnoremap vaT vatV
 
 """ Highlighting
 
-set background=dark
 colorscheme molokai
 
 set guifont=Inconsolata-g:h14
+set guifont=dejavu\ sans\ mono\ 12
 if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
