@@ -95,7 +95,7 @@ export CLICOLORS=1
 # bsd
 export LSCOLORS=exfxcxdxbxegedabagacad
 # gnu
-export LS_COLORS="di=1;96:ex=31:no=00:ow=90;43:"
+export LS_COLORS="di=1;96:ex=31:no=00:or=90;43:ln=target:ow=00;46"
 
 ########## PATHS ##########
 
