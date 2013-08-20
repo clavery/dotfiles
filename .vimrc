@@ -34,6 +34,9 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set number
+set relativenumber
+autocmd InsertEnter,WinLeave * :set number
+autocmd InsertLeave,WinEnter * :set relativenumber
 set numberwidth=3
 set hidden
 set showmatch
@@ -52,6 +55,7 @@ set wildmode=list:longest
 set smartindent
 set laststatus=2
 set foldlevelstart=0
+set splitbelow
 set splitright
 set nobackup
 set nowritebackup
@@ -177,6 +181,12 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+" Arrow keys for buffer switching
+nnoremap <left> :bprev<cr>
+nnoremap <right> :bnext<cr>
+nnoremap <down> :buffer #<cr>
+nnoremap <up> :buffers<cr>:buffer<space>
+
 set pastetoggle=<F2>
 
 " quickfix next previous shortcut
@@ -193,14 +203,6 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Run makeprg and open quickfix
 nmap <F4> :w<cr>:make<cr><cr>:cw<cr>
-
-" Better up and down movement
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
-noremap <DOWN> gj
-noremap <UP> gk
 
 " Folding
 nnoremap <Space> za
@@ -399,18 +401,6 @@ let g:tagbar_type_scss = {
     \ 'sro'        : '.'
 \ }
 
-let g:hardmode_on = 0
-function! HardmodeToggle()
-  if g:hardmode_on
-    let g:hardmode_on = 0
-  else
-    noremap <Up> <NOP>
-    noremap <Down> <NOP>
-    noremap <Left> <NOP>
-    noremap <Right> <NOP>
-    let g:hardmode_on = 1
-  endif
-endfunction
 
 " Load local overrides
 silent! source ~/.vimrc-local

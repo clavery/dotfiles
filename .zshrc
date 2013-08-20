@@ -473,7 +473,12 @@ fi
 ###-end-npm-completion-###
 
 # npm local install
+OLD_MANPATH=$(manpath 2> /dev/null)
 export NPM_PACKAGES="$HOME/.npm-packages"
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+export MANPATH="$NPM_PACKAGES/share/man:$OLD_MANPATH"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$NPM_PACKAGES/bin:$PATH"
+
+# deb development
+export DEBFULLNAME="Charles Lavery"
+export DEBEMAIL="charles.lavery@gmail.com"
