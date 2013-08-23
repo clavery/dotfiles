@@ -320,6 +320,8 @@ nnoremap <silent> <c-m> :<C-u>Unite -quick-match -winheight=20 menu<cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>y :Unite -no-start-insert history/yank<cr>
 
+"unite-session plugin
+let g:unite_source_session_enable_auto_save = 1
 
 " UNITE Menus {{{
 let g:unite_source_menu_menus = {}
