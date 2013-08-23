@@ -8,6 +8,8 @@ set t_Co=256
 
 let mapleader = ","
 
+" Vim Settings {{{
+
 " allow backspacing over everything in insert mode
 set encoding=utf-8
 set fileencodings=utf-8,latin1,default
@@ -35,8 +37,6 @@ set softtabstop=2
 set expandtab
 set number
 set relativenumber
-autocmd InsertEnter,WinLeave * :set number
-autocmd InsertLeave,WinEnter * :set relativenumber
 set numberwidth=3
 set hidden
 set showmatch
@@ -83,19 +83,12 @@ else
   set wildignore+=*/WEB-INF/*
   set wildignore+=*/venv/*
   set wildignore+=*/node_modules/*
-  set wildignore+=*/.git/*
   set wildignore+=*/.svn/*
   set wildignore+=*/.sass-cache/*
   set wildignore+=*.min.js
   set wildignore+=*.pyc
   set wildignore+=*/tmp/*
 endif
-
-" cursor line in normal mode only
-augroup quickfix
-  au!
-  au Filetype qf setlocal nolist nowrap
-augroup END
 
 " disable mouse
 if has('mouse')
@@ -133,37 +126,24 @@ endif
 syntax on
 filetype plugin indent on
 
-" Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
   au!
-
-  " Don't use undofile or backup/swp for *.aes and *.secure
-  au BufRead *.aes setlocal noundofile
-  au BufRead *.aes setlocal nobackup
-  au BufRead *.aes setlocal viminfo=
-  au BufRead *.secure setlocal noundofile
-  au BufRead *.secure setlocal nobackup
-  au BufRead *.secure setlocal viminfo=
-
   " jump to last position
   autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
 
+  " autosave
   au FocusLost * nested :silent! wa
-
-  au InsertEnter * hi StatusLine term=reverse ctermbg=0 ctermfg=DarkGreen guibg=#A8FF60 guifg=#202020
-  au InsertLeave,BufLeave,BufEnter * hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
-  au BufNew,BufAdd,BufWrite,BufNewFile,BufRead,BufEnter,FileChangedRO * :if &ro | hi StatusLine guibg=#CD321D ctermbg=red | endif
 
   " Resize splits on window resize
   au VimResized * exe "normal! \<c-w>="
 augroup END
 
-""" Maps
-nnoremap  <F1> :set invfullscreen<CR>
-inoremap <F1> <ESC>:set invfullscreen<CR>a
+" }}}
+
+" Mappings {{{
 
 " reload .vimrc
 map <leader>r :source $MYVIMRC<cr>
@@ -191,7 +171,7 @@ set pastetoggle=<F2>
 
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
-noremap <silent> <leader>p :cp<cr>
+noremap <silent> <leader>m :cp<cr>
 
 " Capitals save/quit too
 command! W :w
@@ -201,34 +181,37 @@ command! WQ :wq
 
 cnoremap w!! w !sudo tee % >/dev/null
 
-" Run makeprg and open quickfix
-nmap <F4> :w<cr>:make<cr><cr>:cw<cr>
-
-" Folding
-nnoremap <Space> za
-vnoremap <Space> za
-
 nnoremap <leader>/ :nohl<cr>
 nnoremap <leader>l :set list!<cr>
 nnoremap <leader>w :set wrap!<cr>
 
 nnoremap <leader>` "=strftime("%a %d %b %Y %X")<cr>P
 
-cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+nnoremap <c-w><right> :vertical res -10<cr>
+nnoremap <c-w><left> :vertical res +10<cr>
+nnoremap <c-w><up> :res +5<cr>
+nnoremap <c-w><down> :res -5<cr>
 
-" Make block level tags select nicer
-nnoremap viT vitVkoj
-nnoremap vaT vatV
+" }}}
 
-""" Highlighting
+" Highlighting {{{
 
 colorscheme molokai
+
+command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 set guifont=Inconsolata-g:h14
 set guifont=dejavu\ sans\ mono\ 12
 if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
+
+augroup statusLines
+  au!
+  au InsertEnter * hi StatusLine term=reverse ctermbg=0 ctermfg=DarkGreen guibg=#A8FF60 guifg=#202020
+  au InsertLeave,BufLeave,BufEnter * hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
+  au BufNew,BufAdd,BufWrite,BufNewFile,BufRead,BufEnter,FileChangedRO * :if &ro | hi StatusLine guibg=#CD321D ctermbg=red | endif
+augroup END
 
 hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
 hi StatusLineNC guifg=#606060
@@ -250,8 +233,12 @@ hi link diffRemoved Identifier
 hi link diffChanged Special
 hi link diffAdded Exception
 
+set fillchars=vert:\ 
+high VertSplit guibg=#555555
 
-""" Status Line
+" }}}
+
+" Status Line {{{
 
 set statusline=%f    " Path.
 set statusline+=%m   " Modified flag
@@ -271,8 +258,14 @@ set statusline+=)
 " Line and column position and counts.
 set statusline+=\ (%l\/%L,\ %03c,\ %03b)
 
-" Folding
-function! MyFoldText() " {{{
+" }}}
+
+" Folding {{{
+
+nnoremap <Space> za
+vnoremap <Space> za
+
+function! MyFoldText()
     let line = getline(v:foldstart)
 
     let nucolwidth = &fdc + &number * &numberwidth
@@ -286,83 +279,110 @@ function! MyFoldText() " {{{
     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
     return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-endfunction " }}}
+endfunction
 set foldtext=MyFoldText()
 
-" Gundo
+" }}}
+
+" Gundo {{{
+
 nmap <silent> <leader>u :GundoToggle<cr>
 
-" Ack
-map <leader>a :Ack 
+" }}}
 
-"CtrlP
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_max_height = 18
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_regexp = 0
-let g:ctrlp_switch_buffer = 0
-nnoremap <silent> <c-e> :CtrlPBuffer<cr>
-let g:ctrlp_custom_ignore = { 'dir': '\v[\/](build|vendor)' }
+" UNITE {{{
 
-command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
-nnoremap <c-w><right> :vertical res -10<cr>
-nnoremap <c-w><left> :vertical res +10<cr>
-nnoremap <c-w><up> :res +5<cr>
-nnoremap <c-w><down> :res -5<cr>
+let g:unite_enable_start_insert = 1
+let g:unite_winheight = 10
+let g:unite_split_rule = 'botright'
+let g:unite_enable_start_insert = 1
+let g:unite_prompt = '» '
 
-set fillchars=vert:\ 
-high VertSplit guibg=#555555
+au FileType unite call s:unite_my_settings()
 
-" Supertab
-function! g:MyFunction()
-  py km_from_string("")
-  call SuperTabChain(&completefunc, "<c-x><c-n>") |
-  call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+function! s:unite_my_settings()
+  nmap <buffer> <ESC>      <Plug>(unite_exit)
+  nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+  nnoremap <silent><buffer><expr> <C-k> unite#do_action('preview')
+
+  setlocal norelativenumber
+  setlocal nonumber
 endfunction
-let g:snipMateAllowMatchingDot = 0
-command! IPy call g:MyFunction()
 
-" Ultisnips
+" mappings
+nnoremap <silent> <c-e> :<C-u>Unite -start-insert -quick-match buffer<cr>
+nnoremap <silent> <c-p> :<C-u>Unite -start-insert file_rec/async:!<cr>
+nnoremap <silent> <c-g> :<C-u>Unite -no-start-insert -winheight=20 grep:.<cr>
+nnoremap <silent> <c-s> :<C-u>Unite session<cr>
+nnoremap <silent> <c-m> :<C-u>Unite -quick-match -winheight=20 menu<cr>
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :Unite -no-start-insert history/yank<cr>
+
+
+" UNITE Menus {{{
+let g:unite_source_menu_menus = {}
+
+" sessions menu {{{
+let g:unite_source_menu_menus.sessions = {
+\  'description' : 'Session Management'
+\}
+let g:unite_source_menu_menus.sessions.command_candidates = [
+    \['load session', 'Unite session'],
+    \['make session (default)', 'UniteSessionSave'],
+    \['make session (custom)', 'exe "UniteSessionSave " input("name: ")'],
+\]
+" }}}
+
+
+" }}}
+
+" }}}
+
+" Ultisnips {{{
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" }}}
 
-" vitality
+" vitality {{{
 let g:vitality_fix_focus = 0
+" }}}
 
-"matchit
+" matchit {{{
 runtime macros/matchit.vim
-"map <tab> %
+" }}}
 
-" netrw
+" netrw {{{
 let g:explHideFiles='^\.,.*\.pyc$'
 "let g:netrw_browsex_viewer=
 let g:netrw_liststyle=3
 let g:netrw_banner=0
+" }}}
 
-" File types
+" File types overrides {{{
 augroup filetypes
   au!
 
   au BufRead *.md setlocal ft=markdown
   au BufRead *.ledger setlocal filetype=ledger
   au BufRead *.txt setlocal filetype=text
+  au BufRead,BufNewFile *.scss set filetype=scss
+
+  au BufRead *.aes setlocal noundofile
+  au BufRead *.aes setlocal nobackup
+  au BufRead *.aes setlocal viminfo=
+  au BufRead *.secure setlocal noundofile
+  au BufRead *.secure setlocal nobackup
+  au BufRead *.secure setlocal viminfo=
+
+  au Filetype qf setlocal nolist nowrap
 augroup END
+" }}}
 
-command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
-function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(values(buffer_numbers))
-endfunction
-
+" Quickfix Window {{{
 nnoremap <leader>o :call QuickfixToggle()<cr>
-
 let g:quickfix_is_open = 0
 
 function! QuickfixToggle()
@@ -376,31 +396,12 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+" }}}
 
-" easy motion
-let g:EasyMotion_leader_key = '<Leader>'
-
-"ycm
-let g:ycm_min_num_of_chars_for_completion = 3
-
-"css
-au BufRead,BufNewFile *.scss set filetype=scss
-
-"tags
-nmap <F8> :TagbarToggle<CR> 
-nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
-let g:tagbar_autoclose = 1
-let g:tagbar_type_scss = {
-    \ 'ctagstype' : 'scss',
-    \ 'kinds'     : [
-        \ 'm:medias',
-        \ 'i:ids',
-        \ 'c:classes',
-        \ 't:tags'
-    \ ],
-    \ 'sro'        : '.'
-\ }
-
+" Filetypes {{{
+" }}}
 
 " Load local overrides
 silent! source ~/.vimrc-local
+
+" vim:foldmethod=marker foldlevel=0
