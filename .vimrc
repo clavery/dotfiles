@@ -200,8 +200,12 @@ colorscheme molokai
 
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
-set guifont=Inconsolata-g:h14
-set guifont=DejaVu\ Sans\ Mono\ 13
+if has("linux")
+  set guifont=DejaVu\ Sans\ Mono\ 13
+endif
+if has("mac")
+  set guifont=Inconsolata-g:h14
+endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
