@@ -179,6 +179,14 @@ command! Q :q
 command! Wq :wq
 command! WQ :wq
 
+" open external programs easier
+command! -nargs=1 Silent
+      \ | execute ':silent !'.<q-args>
+      \ | execute ':redraw!'
+
+" prevent enter from being taken
+nnoremap <CR> <C-n>
+
 cnoremap w!! w !sudo tee % >/dev/null
 
 nnoremap <leader>/ :nohl<cr>
