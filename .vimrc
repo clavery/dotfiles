@@ -145,6 +145,7 @@ augroup END
 
 " Mappings {{{
 
+nnoremap <enter> <C-n>
 " reload .vimrc
 map <leader>r :source $MYVIMRC<cr>
 
@@ -318,7 +319,7 @@ function! s:unite_my_settings()
   nmap <buffer> <ESC>      <Plug>(unite_exit)
   nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
   nnoremap <silent><buffer><expr> <C-k> unite#do_action('preview')
-
+  nmap <buffer> <C-r>      <Plug>(unite_redraw)
   setlocal norelativenumber
   setlocal nonumber
 endfunction
@@ -421,6 +422,15 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Filetypes {{{
+
+"Python
+au FileType python set ts=4 sw=4
+
+"HTML
+au FileType html set ts=4 sw=4
+
+"Jinja2
+au BufRead *.j2 set ft=jinja
 " }}}
 
 " Load local overrides
