@@ -482,3 +482,23 @@ export PATH="$NPM_PACKAGES/bin:$PATH"
 # deb development
 export DEBFULLNAME="Charles Lavery"
 export DEBEMAIL="charles.lavery@gmail.com"
+export NPM_PACKAGES="$HOME/.npm-packages"
+
+export PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# node / npm
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+
+#python
+export WORKON_HOME=$HOME/.venv
+if [ -f /usr/bin/virtualenvwrapper.sh ]
+then
+  . /usr/bin/virtualenvwrapper.sh
+fi
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]
+then
+  . /usr/local/bin/virtualenvwrapper.sh
+fi
+

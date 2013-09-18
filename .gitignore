@@ -9,3 +9,4 @@ venv/
 .netrwhist
 
 .vim/spell
+.idea/

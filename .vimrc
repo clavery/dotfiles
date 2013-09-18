@@ -145,6 +145,7 @@ augroup END
 
 " Mappings {{{
 
+nnoremap <enter> <C-n>
 " reload .vimrc
 map <leader>r :source $MYVIMRC<cr>
 
@@ -179,6 +180,14 @@ command! Q :q
 command! Wq :wq
 command! WQ :wq
 
+" open external programs easier
+command! -nargs=1 Silent
+      \ | execute ':silent !'.<q-args>
+      \ | execute ':redraw!'
+
+" prevent enter from being taken
+nnoremap <CR> <C-n>
+
 cnoremap w!! w !sudo tee % >/dev/null
 
 nnoremap <leader>/ :nohl<cr>
@@ -200,8 +209,12 @@ colorscheme molokai
 
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
-set guifont=Inconsolata-g:h14
-set guifont=dejavu\ sans\ mono\ 12
+if has("linux")
+  set guifont=DejaVu\ Sans\ Mono\ 13
+endif
+if has("mac")
+  set guifont=Inconsolata-g:h14
+endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
@@ -306,7 +319,7 @@ function! s:unite_my_settings()
   nmap <buffer> <ESC>      <Plug>(unite_exit)
   nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
   nnoremap <silent><buffer><expr> <C-k> unite#do_action('preview')
-
+  nmap <buffer> <C-r>      <Plug>(unite_redraw)
   setlocal norelativenumber
   setlocal nonumber
 endfunction
@@ -400,7 +413,24 @@ function! QuickfixToggle()
 endfunction
 " }}}
 
+" Omnicomplettion
+
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
 " Filetypes {{{
+
+"Python
+au FileType python set ts=4 sw=4
+
+"HTML
+au FileType html set ts=4 sw=4
+
+"Jinja2
+au BufRead *.j2 set ft=jinja
 " }}}
 
 " Load local overrides
