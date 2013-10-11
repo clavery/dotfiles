@@ -185,9 +185,6 @@ command! -nargs=1 Silent
       \ | execute ':silent !'.<q-args>
       \ | execute ':redraw!'
 
-" prevent enter from being taken
-nnoremap <CR> <C-n>
-
 cnoremap w!! w !sudo tee % >/dev/null
 
 nnoremap <leader>/ :nohl<cr>
@@ -329,7 +326,7 @@ nnoremap <silent> <c-e> :<C-u>Unite -start-insert -quick-match buffer<cr>
 nnoremap <silent> <c-p> :<C-u>Unite -start-insert file_rec/async:!<cr>
 nnoremap <silent> <c-g> :<C-u>Unite -no-start-insert -winheight=20 grep:.<cr>
 nnoremap <silent> <c-s> :<C-u>Unite session<cr>
-nnoremap <silent> <c-m> :<C-u>Unite -quick-match -winheight=20 menu<cr>
+nnoremap <silent> <c-u> :<C-u>Unite -quick-match -winheight=20 menu<cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>y :Unite -no-start-insert history/yank<cr>
 

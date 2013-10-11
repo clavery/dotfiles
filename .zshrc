@@ -81,7 +81,7 @@ export PAGER=less
 export MANPAGER=less
 
 # less options
-export LESS="--ignore-case"
+export LESS="--ignore-case -r"
 
 # less open scripts if avaliable
 [ -x ~/bin/lessopen.sh ] && export LESSOPEN="| ~/bin/lessopen.sh %s"
@@ -502,3 +502,11 @@ then
   . /usr/local/bin/virtualenvwrapper.sh
 fi
 
+
+function share() {
+  if [ -n "$2" ]; then
+    s3cmd put --acl-public $1 "s3://dumpstuffhere/${1:t}"
+  else
+    s3cmd put --acl-public $1 "s3://dumpstuffhere/$2/${1:t}"
+  fi
+}
