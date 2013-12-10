@@ -510,3 +510,8 @@ function share() {
     s3cmd put --acl-public $1 "s3://dumpstuffhere/$2/${1:t}"
   fi
 }
+
+if [ -d /Applications/Postgres.app/Contents/MacOS/bin ]
+then
+  export PATH=$PATH:/Applications/Postgres.app/Contents/MacOS/bin
+fi

@@ -210,7 +210,7 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Inconsolata-g:h14
+  set guifont=Monaco:h14
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
@@ -300,58 +300,6 @@ nmap <silent> <leader>u :GundoToggle<cr>
 
 " }}}
 
-" UNITE {{{
-
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-
-let g:unite_enable_start_insert = 1
-let g:unite_winheight = 10
-let g:unite_split_rule = 'botright'
-let g:unite_enable_start_insert = 1
-let g:unite_prompt = '» '
-
-au FileType unite call s:unite_my_settings()
-
-function! s:unite_my_settings()
-  nmap <buffer> <ESC>      <Plug>(unite_exit)
-  nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
-  nnoremap <silent><buffer><expr> <C-k> unite#do_action('preview')
-  nmap <buffer> <C-r>      <Plug>(unite_redraw)
-  setlocal norelativenumber
-  setlocal nonumber
-endfunction
-
-" mappings
-nnoremap <silent> <c-e> :<C-u>Unite -start-insert -quick-match buffer<cr>
-nnoremap <silent> <c-p> :<C-u>Unite -start-insert file_rec/async:!<cr>
-nnoremap <silent> <c-g> :<C-u>Unite -no-start-insert -winheight=20 grep:.<cr>
-nnoremap <silent> <c-s> :<C-u>Unite session<cr>
-nnoremap <silent> <c-u> :<C-u>Unite -quick-match -winheight=20 menu<cr>
-let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :Unite -no-start-insert history/yank<cr>
-
-"unite-session plugin
-let g:unite_source_session_enable_auto_save = 1
-
-" UNITE Menus {{{
-let g:unite_source_menu_menus = {}
-
-" sessions menu {{{
-let g:unite_source_menu_menus.sessions = {
-\  'description' : 'Session Management'
-\}
-let g:unite_source_menu_menus.sessions.command_candidates = [
-    \['load session', 'Unite session'],
-    \['make session (default)', 'UniteSessionSave'],
-    \['make session (custom)', 'exe "UniteSessionSave " input("name: ")'],
-\]
-" }}}
-
-
-" }}}
-
-" }}}
-
 " Ultisnips {{{
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -428,6 +376,13 @@ au FileType html set ts=4 sw=4
 
 "Jinja2
 au BufRead *.j2 set ft=jinja
+" }}}
+
+" CTRLP {{{
+
+let g:ctrlp_map = '<c-p>'
+nnoremap <C-e> :CtrlPBuffer<cr>
+
 " }}}
 
 " Load local overrides

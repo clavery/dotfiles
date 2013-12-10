@@ -10,3 +10,5 @@ venv/
 
 .vim/spell
 .idea/
+.#
+*.elc
