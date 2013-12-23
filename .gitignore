@@ -12,3 +12,6 @@ venv/
 .idea/
 .#
 *.elc
+.sass-cache/
+bower_components/
+node_modules/

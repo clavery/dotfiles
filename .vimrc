@@ -363,6 +363,7 @@ endfunction
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript set ts=2 sw=2
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
@@ -378,12 +379,19 @@ au FileType html set ts=4 sw=4
 au BufRead *.j2 set ft=jinja
 " }}}
 
+"Javascript
 " CTRLP {{{
 
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 
 " }}}
+
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-e>"
+
+let g:used_javascript_libs = 'underscore,angularjs'
 
 " Load local overrides
 silent! source ~/.vimrc-local
