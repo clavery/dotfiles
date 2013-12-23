@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/ag.vim"]
 	path = .vim/bundle/ag.vim
 	url = https://github.com/epmatsw/ag.vim.git
+[submodule ".vim/bundle/editor-config"]
+	path = .vim/bundle/editor-config
+	url = https://github.com/editorconfig/editorconfig-vim.git
