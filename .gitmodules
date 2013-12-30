@@ -67,3 +67,6 @@
 [submodule ".vim/bundle/editor-config"]
 	path = .vim/bundle/editor-config
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule ".vim/bundle/vim-gnupg"]
+	path = .vim/bundle/vim-gnupg
+	url = https://github.com/jamessan/vim-gnupg.git

@@ -396,4 +396,6 @@ let g:used_javascript_libs = 'underscore,angularjs'
 " Load local overrides
 silent! source ~/.vimrc-local
 
+let g:GPGDefaultRecipients = ['9B5B4181']
+
 " vim:foldmethod=marker foldlevel=0
