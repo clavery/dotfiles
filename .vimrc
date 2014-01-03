@@ -145,7 +145,6 @@ augroup END
 
 " Mappings {{{
 
-nnoremap <enter> <C-n>
 " reload .vimrc
 map <leader>r :source $MYVIMRC<cr>
 
@@ -169,6 +168,8 @@ nnoremap <down> :buffer #<cr>
 nnoremap <up> :buffers<cr>:buffer<space>
 
 set pastetoggle=<F2>
+
+nnoremap <F4> :silent make <cr>
 
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
@@ -363,27 +364,22 @@ endfunction
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript set ts=2 sw=2
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Filetypes {{{
 
-"Python
-au FileType python set ts=4 sw=4
-
-"HTML
-au FileType html set ts=4 sw=4
-
 "Jinja2
 au BufRead *.j2 set ft=jinja
+
 " }}}
 
-"Javascript
 " CTRLP {{{
 
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
+" just use CWD
+let g:ctrlp_working_path_mode = ''
 
 " }}}
 
@@ -391,11 +387,13 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-e>"
 
-let g:used_javascript_libs = 'underscore,angularjs'
+let g:GPGDefaultRecipients = ['9B5B4181']
+
+"emacs begin/end
+inoremap <c-a> <Home>
+inoremap <c-e> <End>
 
 " Load local overrides
 silent! source ~/.vimrc-local
-
-let g:GPGDefaultRecipients = ['9B5B4181']
 
 " vim:foldmethod=marker foldlevel=0
