@@ -254,6 +254,7 @@ alias attach="tmux -2 -u attach"
 if [[ $HOST_OS == 'darwin' && -x `which mvim` ]] {
   alias vim="mvim -v"
   alias vi="mvim -v"
+  export EDITOR="mvim -v"
 }
 
 if [[ $HOST_OS == 'linux' ]] {

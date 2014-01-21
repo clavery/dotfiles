@@ -83,6 +83,7 @@ else
   set wildignore+=*/WEB-INF/*
   set wildignore+=*/venv/*
   set wildignore+=*/node_modules/*
+  set wildignore+=*/bower_components/*
   set wildignore+=*/.svn/*
   set wildignore+=*/.sass-cache/*
   set wildignore+=*.min.js
@@ -385,7 +386,6 @@ let g:ctrlp_working_path_mode = ''
 
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-e>"
 
 let g:GPGDefaultRecipients = ['9B5B4181']
 
