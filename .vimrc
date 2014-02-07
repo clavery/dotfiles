@@ -106,6 +106,7 @@ if $VIM_CRONTAB == "true"
   set nobackup
   set nowritebackup
 endif
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
 if version >= 703
   set undodir=~/.undo
@@ -303,9 +304,9 @@ nmap <silent> <leader>u :GundoToggle<cr>
 " }}}
 
 " Ultisnips {{{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<c-j>"
 " }}}
 
 " vitality {{{
@@ -367,6 +368,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType rst setlocal suffixesadd=.rst
 
 " Filetypes {{{
 
@@ -384,10 +386,9 @@ let g:ctrlp_working_path_mode = ''
 
 " }}}
 
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsExpandTrigger="<c-j>"
-
 let g:GPGDefaultRecipients = ['9B5B4181']
+
+let g:riv_global_leader="<c-z>"
 
 "emacs begin/end
 inoremap <c-a> <Home>
