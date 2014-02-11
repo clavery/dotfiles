@@ -1,7 +1,13 @@
 " .vimrc
 " Charles Lavery
 
+filetype off
+
 call pathogen#infect()
+call pathogen#helptags()
+
+filetype plugin indent on
+syntax on
 
 set nocompatible
 set t_Co=256
@@ -65,7 +71,7 @@ set nrformats=
 set esckeys
 set diffopt=filler,iwhite
 set foldlevelstart=99
-set completeopt=menuone,longest,preview
+set completeopt=menuone,longest
 
 if version >= 703
   set cryptmethod=blowfish
@@ -125,9 +131,6 @@ if has("gui_running")
   set mouse+=a
 endif
 
-syntax on
-filetype plugin indent on
-
 augroup vimrcEx
   au!
   " jump to last position
@@ -162,12 +165,10 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
-
-" Arrow keys for buffer switching
-nnoremap <left> :bprev<cr>
-nnoremap <right> :bnext<cr>
-nnoremap <down> :buffer #<cr>
-nnoremap <up> :buffers<cr>:buffer<space>
+nnoremap <right> :silent vertical resize +5<cr>
+nnoremap <left> :silent vertical resize -5<cr>
+nnoremap <up> :silent resize +5<cr>
+nnoremap <down> :silent resize -5<cr>
 
 set pastetoggle=<F2>
 
