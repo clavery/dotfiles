@@ -232,7 +232,10 @@ hi StatusLineNC guifg=#606060
 hi Search ctermbg=55
 
 if has("gui")
-  highlight SignColumn guibg=#232526 guifg=white
+  highlight SignColumn guibg=#232526 guifg=#ffffff
+  highlight Normal guibg=#303030
+  hi LineNr guifg=#999999 guibg=#5555555
+  hi Visual guibg=#b3d4fc guifg=#000000
 endif
 
 highlight PmenuSel ctermbg=16 ctermfg=13
@@ -249,6 +252,7 @@ hi link diffAdded Exception
 
 set fillchars=vert:\ 
 high VertSplit guibg=#555555
+
 
 " }}}
 

@@ -516,9 +516,9 @@ function share() {
   fi
 }
 
-if [ -d /Applications/Postgres.app/Contents/MacOS/bin ]
+if [ -d /Applications/Postgres93.app/Contents/MacOS/bin ]
 then
-  export PATH=$PATH:/Applications/Postgres.app/Contents/MacOS/bin
+  export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
 fi
 
 _tmux_pane_words() {
