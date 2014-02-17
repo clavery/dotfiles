@@ -228,7 +228,7 @@ precmd() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples|beast)
+  meeples|beast|dasbook)
     export PROMPT='%{$fg[red]%}${vcs_info_msg_0_} %{$fg[blue]%}%3c $%{%f%} '
   ;;
   *)
@@ -501,10 +501,12 @@ export WORKON_HOME=$HOME/.venv
 if [ -f /usr/bin/virtualenvwrapper.sh ]
 then
   . /usr/bin/virtualenvwrapper.sh
+  workon default
 fi
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
   . /usr/local/bin/virtualenvwrapper.sh
+  workon default
 fi
 
 

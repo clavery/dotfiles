@@ -214,7 +214,7 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Monaco:h14
+  set guifont=Source\ Code\ Pro\ Medium:h15
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
@@ -374,6 +374,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType rst setlocal suffixesadd=.rst
+autocmd FileType org setlocal suffixesadd=.rst,.org
 
 " Filetypes {{{
 
