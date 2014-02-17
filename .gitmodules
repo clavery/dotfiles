@@ -73,3 +73,6 @@
 [submodule ".vim/bundle/riv"]
 	path = .vim/bundle/riv
 	url = https://github.com/Rykka/riv.vim.git
+[submodule ".vim/bundle/org"]
+	path = .vim/bundle/org
+	url = https://github.com/clavery/vim-org.git
