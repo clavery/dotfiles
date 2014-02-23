@@ -1,17 +1,17 @@
 
 setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4 autoindent
 
-"" Python
-let g:pydoc_open_cmd = 'vsplit'
-let g:pymode_warnings = 1
-let g:pymode_lint_write = 0
-let g:pymode_lint_on_write = 0
-let g:pymode_folding = 0
-let g:pymode_indent = 1
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_syntax_slow_sync = 0
-let g:pymode_rope_goto_definition_cmd = 'e'
-let g:pymode_rope_completion_bind = ''
+" Execute the tests
+nmap <silent><Leader>tf <Esc>:Pytest file<CR>
+nmap <silent><Leader>tc <Esc>:Pytest class<CR>
+nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+" cycle through test errors
+nmap <silent><Leader>tn <Esc>:Pytest next<CR>
+nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
+nmap <silent><Leader>te <Esc>:Pytest error<CR>
 
+nmap <silent><Leader>pl <Esc>:PymodeLint<CR>
+nmap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
 
+vnoremap <silent><Leader>px :call pymode#rope#extract_method()<cr>
+nnoremap <silent><Leader>pr :call pymode#rope#rename()<cr>
