@@ -36,7 +36,7 @@ set showcmd
 set incsearch
 set scrolloff=4
 set synmaxcol=500
-set hlsearch
+set nohlsearch
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -191,7 +191,7 @@ command! -nargs=1 Silent
 
 cnoremap w!! w !sudo tee % >/dev/null
 
-nnoremap <leader>/ :nohl<cr>
+nnoremap <leader>/ :set hlsearch!<cr>
 nnoremap <leader>l :set list!<cr>
 nnoremap <leader>w :set wrap!<cr>
 
@@ -236,6 +236,9 @@ if has("gui")
   highlight Normal guibg=#303030
   hi LineNr guifg=#999999 guibg=#5555555
   hi Visual guibg=#b3d4fc guifg=#000000
+  " hot pink
+  hi Search guibg=#fe57a1 guifg=#000000
+  hi IncSearch guifg=#fe57a1 guibg=#000000
 endif
 
 highlight PmenuSel ctermbg=16 ctermfg=13
@@ -399,6 +402,14 @@ let g:riv_global_leader="<c-z>"
 "emacs begin/end
 inoremap <c-a> <Home>
 inoremap <c-e> <End>
+
+" allows incsearch highlighting for range commands
+cnoremap $t <CR>:t''<CR>
+cnoremap <C-t> <CR>:t''<CR>
+cnoremap $m <CR>:m''<CR>
+cnoremap <C-j> <CR>:m''<CR>
+cnoremap $d <CR>:d<CR>``
+
 
 " Load local overrides
 silent! source ~/.vimrc-local

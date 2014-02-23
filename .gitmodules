@@ -76,3 +76,6 @@
 [submodule ".vim/bundle/org"]
 	path = .vim/bundle/org
 	url = https://github.com/clavery/vim-org.git
+[submodule ".vim/bundle/robot"]
+	path = .vim/bundle/robot
+	url = https://github.com/mfukar/robotframework-vim.git
