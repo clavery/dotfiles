@@ -234,8 +234,8 @@ hi Search ctermbg=55
 if has("gui")
   highlight SignColumn guibg=#232526 guifg=#ffffff
   highlight Normal guibg=#303030
-  hi LineNr guifg=#999999 guibg=#5555555
-  hi Visual guibg=#b3d4fc guifg=#000000
+  hi LineNr guifg=#999999 guibg=#555555
+  hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
   " hot pink
   hi Search guibg=#fe57a1 guifg=#000000
   hi IncSearch guifg=#fe57a1 guibg=#000000
