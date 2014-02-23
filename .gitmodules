@@ -79,3 +79,6 @@
 [submodule ".vim/bundle/robot"]
 	path = .vim/bundle/robot
 	url = https://github.com/mfukar/robotframework-vim.git
+[submodule ".vim/bundle/pytest"]
+	path = .vim/bundle/pytest
+	url = https://github.com/alfredodeza/pytest.vim.git
