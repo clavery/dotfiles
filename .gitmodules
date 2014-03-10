@@ -70,9 +70,6 @@
 [submodule ".vim/bundle/vim-gnupg"]
 	path = .vim/bundle/vim-gnupg
 	url = https://github.com/jamessan/vim-gnupg.git
-[submodule ".vim/bundle/riv"]
-	path = .vim/bundle/riv
-	url = https://github.com/Rykka/riv.vim.git
 [submodule ".vim/bundle/org"]
 	path = .vim/bundle/org
 	url = https://github.com/clavery/vim-org.git
