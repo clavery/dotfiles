@@ -33,3 +33,16 @@
   added = green
   changed = yellow 
   untracked = red
+[merge]
+	tool = fugitive
+[mergetool]
+	prompt = false
+  keepBackup = false
+[mergetool "gvimdiff"]
+  path = mvim
+[diff]
+  tool = gvimdiff
+[difftool "gvimdiff"]
+  cmd = mvim
+[mergetool "fugitive"]
+	cmd = mvim -f -g -d -c \"Gdiff\" \"$MERGED\"

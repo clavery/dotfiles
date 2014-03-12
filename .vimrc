@@ -102,11 +102,6 @@ if has('mouse')
   set mouse=
 endif
 
-" Scroll in diffs
-if &diff
-  set scrollbind
-endif
-
 " fix crontab -e
 if $VIM_CRONTAB == "true"
   set nobackup
@@ -139,12 +134,18 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
 
-  " autosave
-  au FocusLost * nested :silent! wa
-
   " Resize splits on window resize
   au VimResized * exe "normal! \<c-w>="
 augroup END
+if &diff
+else
+  augroup autosave
+    au!
+    " autosave
+    au FocusLost * nested :silent! wa
+  augroup END
+endif
+
 
 " }}}
 
@@ -247,14 +248,20 @@ set pumheight=8
 " highlight VCS markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" override diff highlighting
-hi link gitDiffRemoved Identifier
-hi link diffRemoved Identifier
-hi link diffChanged Special
-hi link diffAdded Exception
-
 set fillchars=vert:\ 
 high VertSplit guibg=#555555
+
+hi DiffAdd         guifg=#A6E22E guibg=NONE
+hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold
+hi DiffDelete      guifg=#465457 guibg=NONE
+hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold
+if &diff
+  set scrollbind
+
+  nmap dh :diffget //2<CR>
+  nmap dl :diffget //3<CR>
+  nmap du :diffup<CR>
+endif
 
 
 " }}}
