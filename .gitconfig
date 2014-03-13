@@ -10,9 +10,10 @@
   status = auto
 [alias]
   co = checkout
-  s = status --short
+  s = status --short -b
   a = add
   l = log
+  last = difftool HEAD^..HEAD --
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   graph = log --all --graph --decorate --oneline -n30
   lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan bold)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -40,9 +41,9 @@
   keepBackup = false
 [mergetool "gvimdiff"]
   path = mvim
-[diff]
-  tool = gvimdiff
-[difftool "gvimdiff"]
-  cmd = mvim
 [mergetool "fugitive"]
-	cmd = mvim -f -g -d -c \"Gdiff\" \"$MERGED\"
+  cmd = mvim -f -g -d -c \"Gdiff | wincmd J\" \"$MERGED\"
+[diff]
+  tool = vimdiff
+[difftool "vimdiff"]
+  cmd = mvim -f -v -d \"$LOCAL\" \"$REMOTE\"

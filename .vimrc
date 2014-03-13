@@ -251,16 +251,21 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 set fillchars=vert:\ 
 high VertSplit guibg=#555555
 
-hi DiffAdd         guifg=#A6E22E guibg=NONE
-hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold
-hi DiffDelete      guifg=#465457 guibg=NONE
-hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold
+hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
+hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold ctermbg=NONE ctermfg=4
+hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=1
+hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold cterm=bold ctermfg=5 ctermbg=NONE
 if &diff
   set scrollbind
 
   nmap dh :diffget //2<CR>
   nmap dl :diffget //3<CR>
   nmap du :diffup<CR>
+
+  set foldlevel=99
+  set norelativenumber
+  syntax off
+  hi Normal ctermfg=240 guibg=#888888
 endif
 
 
