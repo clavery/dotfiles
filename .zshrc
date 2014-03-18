@@ -107,7 +107,7 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 case $HOST_OS in
   darwin)
-    export PATH=/usr/local/share/npm/bin:$PATH
+    export PATH=/usr/local/share/npm/bin:/usr/local/opt/ruby/bin:$PATH
     export NODE_PATH=/usr/local/lib/node_modules
 
     export MANPATH=/usr/local/share/man:$MANPATH
@@ -518,6 +518,12 @@ function share() {
   fi
 }
 
+# ruby
+if [ -d /usr/local/opt/ruby/bin ]
+then
+  export PATH=$PATH:/usr/local/opt/ruby/bin
+fi
+
 if [ -d /Applications/Postgres93.app/Contents/MacOS/bin ]
 then
   export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
@@ -541,3 +547,5 @@ bindkey '^X^X' tmux-pane-words-anywhere
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' completer _tmux_pane_words
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
+
+alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
