@@ -10,6 +10,7 @@
   status = auto
 [alias]
   co = checkout
+  cm = commit
   s = status --short -b
   a = add
   l = log
