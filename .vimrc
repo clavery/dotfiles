@@ -468,6 +468,10 @@ let g:airline#extensions#default#section_truncate_width = {
     \ 'z': 45,
     \ }
 
+"expand region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
 " Load local overrides
 silent! source ~/.vimrc-local
 
