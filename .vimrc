@@ -404,6 +404,8 @@ let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 " just use CWD
 let g:ctrlp_working_path_mode = ''
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 
 " }}}
 
@@ -434,6 +436,9 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_syntax_slow_sync = 0
 let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
+
+" vim-signcolor
+nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
 
 " Load local overrides
 silent! source ~/.vimrc-local

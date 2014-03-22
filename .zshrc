@@ -6,6 +6,8 @@
 HOSTNAME=`hostname -s`
 HOST_OS=`uname|tr '[:upper:]' '[:lower:]'`
 
+stty stop undef
+
 export HISTSIZE=1000
 export EDITOR=vim
 
@@ -20,23 +22,25 @@ zmodload zsh/stat
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
-
 ######## Options #########
 unsetopt AUTO_CD
-setopt ALWAYSLASTPROMPT # try to return to the last prompt if given no numeric argument.
-setopt APPENDHISTORY    # zsh sessions will append their history  list  to the  history file, rather than overwrite it.
-setopt EQUALS                   # Perform = filename expansion.
-setopt EXTENDEDHISTORY  # Save  each  command's  beginning timestamp
-setopt FUNCTIONARGZERO  # When  executing  a  shell  function or sourcing a script, set $0 temporarily to the name of the function/script.
-setopt HISTIGNOREDUPS   # Do not enter command lines into the history  list  if  they  are duplicates of the previous event.
-setopt HISTIGNORESPACE  # Remove  command lines from the history list when the first character on the line is a  space.
-setopt LONGLISTJOBS     # List jobs in the long format by default.
-setopt MULTIOS                  # Perform implicit tees or cats  when  multiple  redirections  are attempted
-setopt PRINTEIGHTBIT    # Print eight bit characters literally in completion  lists
-setopt RMSTARSILENT     # Do not query the user before executing `rm *' or `rm path/*'.
-setopt SHORTLOOPS               # Allow the short forms of for,  select,  if,  and  function  constructs.
+setopt ALWAYSLASTPROMPT
+setopt APPENDHISTORY
+setopt EQUALS
+setopt EXTENDEDHISTORY
+setopt FUNCTIONARGZERO
+setopt HISTIGNOREDUPS
+setopt HISTIGNORESPACE
+setopt LONGLISTJOBS
+setopt MULTIOS
+setopt PRINTEIGHTBIT 
+setopt RMSTARSILENT 
+setopt SHORTLOOPS  
 setopt CLOBBER
 unsetopt CORRECT
+
+# enable prompt substitution
+setopt prompt_subst
 
 # directory stack
 unsetopt AUTO_NAME_DIRS
@@ -46,18 +50,6 @@ setopt PUSHD_IGNORE_DUPS
 # use bash style backward kill word
 autoload -U select-word-style
 select-word-style bash
-
-alias 1='cd -'
-alias 2='cd +2'
-alias 3='cd +3'
-alias 4='cd +4'
-alias 5='cd +5'
-alias 6='cd +6'
-alias 7='cd +7'
-alias 8='cd +8'
-alias 9='cd +9'
-
-######## Key bindings #######
 
 # emacs mode
 bindkey -e
@@ -69,8 +61,6 @@ bindkey "^B" beginning-of-line
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
-
-######## PAGER ###########
 
 # less colors
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -87,19 +77,13 @@ export MANPAGER=less
 # less options
 export LESS="--ignore-case -r"
 
-# less open scripts if avaliable
-[ -x ~/bin/lessopen.sh ] && export LESSOPEN="| ~/bin/lessopen.sh %s"
-
-######## ls colors ########
-
 # cross-platform color ls
 ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || alias ls='ls -G'
-
 export CLICOLORS=1
 # bsd
 export LSCOLORS=exfxcxdxbxegedabagacad
 # gnu
-export LS_COLORS="di=1;96:ex=31:no=00:or=90;43:ln=target:ow=00;46"
+export LS_COLORS="di=34:ex=31:no=00:or=90;43:ln=target:ow=00;46"
 
 ########## PATHS ##########
 
@@ -107,11 +91,7 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 case $HOST_OS in
   darwin)
-    export PATH=/usr/local/share/npm/bin:/usr/local/opt/ruby/bin:$PATH
-    export NODE_PATH=/usr/local/lib/node_modules
-
     export MANPATH=/usr/local/share/man:$MANPATH
-
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
   ;;
   linux)
@@ -121,108 +101,47 @@ esac
 
 ######### Functions #########
 
-# number of minutes since last commit
-minutes_since_last_commit() {
-    now=`date +%s`
-    last_commit=`git log --pretty=format:'%at' -1`
-    seconds_since_last_commit=$((now-last_commit))
-    minutes_since_last_commit=$((seconds_since_last_commit/60))
-    echo $minutes_since_last_commit
-}
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+zstyle ':vcs_info:*' actionformats '<%b%F{3}%c%u%F{1}> %a'
+zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r%f%F{1}'
 
 # are we in a git repo? helper function
 # git branch is fast
 in_git() {
   git branch > /dev/null 2>&1
   if [[ $? == 0 ]] {
-    IN_GIT_REPO=true
+    IN_GIT_REPO=1
   } else {
-    IN_GIT_REPO=false
+    IN_GIT_REPO=0
   }
 }
 
-# Find .env file in current dir or parent dirs and source it
-# run 'unmagic' function when leaving directory tree.
-_MAGIC_FILE=".env"
-_LAST_DIRECTORY=""
-check_magic() {
-  FOUND=""
-
-  # Ugly directory search. previous code "walked" up directories
-  # but was breaking directory stack in strange ways
-  p="."
-  path_exp=`echo $p(:A)`
-  while [[ ( "$path_exp" != "`echo ~(:A)`" ) && ( "$path_exp" != "/" ) ]];
-  do
-    # zsh path expansion
-    path_exp=`echo $p(:A)`
-    if [ -f "$path_exp/$_MAGIC_FILE" ]; then
-      FOUND="$path_exp"
-      break
-    fi
-    p=${p}/..
-  done
-
-  if [[ -z $FOUND ]]; then
-    if [[ ! -z $functions[unmagic] ]]; then
-      unmagic
-      unset -f unmagic
-    fi
-  else
-    if [[ "$FOUND" != "$PWD" ]]; then
-      builtin cd -q $FOUND
-      source "$_MAGIC_FILE"
-      builtin cd -q $OLDPWD
-    else
-      source "$_MAGIC_FILE"
-    fi
-  fi
-}
-
-########## Version Control Info Module ##########
-
-autoload -Uz vcs_info
-
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' get-revision true
-# string to print when something is in the index
-zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
-# string to print when changes but not in index
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
-zstyle ':vcs_info:*' actionformats '<%b%F{3}%c%u%F{1}> %a'
-zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
-# show branch name and revision in svn
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r%f%F{1}'
-
-######## PROMPT #########
-
-# enable prompt substitution
-setopt prompt_subst
+# Call in_git at shell start
+in_git
 
 # Run everytime the working dir changes
 chpwd() {
   in_git
-  check_magic
 }
-
 
 # run before every shell line
 precmd() {
-  if [[ $IN_GIT_REPO == "true" ]] {
+  if [[ $IN_GIT_REPO == 1 ]] {
     if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
       zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
     } else {
       # add circle for untracked files
       zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{red}●%F{1}>'
     }
-
-    export RPROMPT='%F{red}$(minutes_since_last_commit)m%f'
-  } else {
-    export RPROMPT=''
   }
 
-  # this should be quick if not in a repo
   vcs_info
 }
 
@@ -242,16 +161,21 @@ export PS2="%_ > "
 
 ######### Aliases #########
 
-alias gpush="git add . && git commit -a -m 'quick commit' && git push"
 alias g=git
-# serves directory on localhost:8000
-alias shs="python -m SimpleHTTPServer"
-# simple smtp server on port 1025, outputs to stdout
-alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
+alias gpush="git add . && git commit -a -m 'quick commit' && git push"
+alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
+
 alias tmux="tmux -2 -u"
 alias attach="tmux -2 -u attach"
+
+# vim crontab fix
+alias crontab="VIM_CRONTAB=true crontab"
+
+alias history='fc -l 1'
+alias dirs='dirs -vp'
+
 # use macvim if avaliable
-if [[ $HOST_OS == 'darwin' && -x `which mvim` ]] {
+if [[ -x `which mvim` ]] {
   alias vim="mvim -v"
   alias vi="mvim -v"
   export EDITOR="mvim -v"
@@ -261,24 +185,13 @@ if [[ $HOST_OS == 'linux' ]] {
   alias vi=vim
 }
 
-# vim crontab fix
-alias crontab="VIM_CRONTAB=true crontab"
-alias sl=ls # often screw this up
-alias history='fc -l 1'
-alias lsless='CLICOLOR_FORCE=true ls -al | less -r'
-
-# Amazon AMI tools, etc
-if [[ $HOSTNAME == 'sagan' ]] {
-  export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.3-45758/jars"
-  export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.5.2.5/jars"
-}
-
 ######### Completion #########
 unsetopt flowcontrol
-setopt auto_menu         # show completion menu on succesive tab press
+# show completion menu on succesive tab press
+setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
-#
+
 autoload -U compinit
 compinit -i
 autoload -U bashcompinit
@@ -324,31 +237,8 @@ zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):director
 # grep
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
-export ACK_COLOR_MATCH='green'
-export ACK_PAGER='less -r'
 
-#ledger
-case $HOSTNAME in
-  beaker)
-    export LEDGER_FILE=~/Documents/ledger/main.ledger
-    export SSL_CERT_FILE=/usr/local/etc/openssl/cacert.pem
-  ;;
-  *)
-  ;;
-esac
-alias l="ledger"
-
-# check if ec2 instance is ready
-function ec2-check-ready() {
-  test=1
-  while [[ $test -gt 0 ]] ; do
-    sleep 20
-    ec2-get-console-output $1 | grep Meta &> /dev/null
-    test=$?
-  done
-  growlnotify -m "console output ready $1" -s EC2
-}
-
+# Quick password generation functions
 function genpass() {
   LC_ALL=C tr -dc 'A-Za-z0-9_?$%\\%!#+=-' < /dev/urandom | head -c $1; echo
 }
@@ -356,9 +246,7 @@ function genpass2() {
   LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1; echo
 }
 
-# Call in_git at shell start
-in_git
-
+# GPG-agent for linux only (use MacGPG on OSX)
 export GPG_TTY=$(tty)
 
 if [[ $HOST_OS == 'linux' ]]; then
@@ -377,175 +265,61 @@ if [[ $HOST_OS == 'linux' ]]; then
   fi
 fi
 
-# Google Calendar/Contacts stuff
-function contacts
-{
-  google contacts list $1 --fields name,phone,email
-}
-
-function today
-{
-  google calendar list --date 'today' --fields when,title --delimiter '   '
-}
-
-function week
-{
-  today=$(date '+%a')
-  case $today in
-    Mon|Sun|Sat)
-      first=$(date --date 'Monday' '+%Y-%m-%d')
-      ;;
-    *)
-      first=$(date --date 'last Monday' '+%Y-%m-%d')
-      ;;
-  esac
-  last=$(date --date 'friday' '+%Y-%m-%d')
-
-  google calendar list --date "$first,$last" --fields when,title --delimiter '   '
-}
-
-## rbenv
-if [[ -d "$HOME/.rbenv" ]]; then
-  export PATH=$HOME/.rbenv/bin:$PATH
-  eval "$($HOME/.rbenv/bin/rbenv init -)"
-fi
-
-stty stop undef
-
 # git completion fixes
 __git_files () { 
   _wanted files expl 'local files' _files     
 }
 
-# reset
-if [[ $TERM == 'rxvt-256color' ]]; then
-  export TERM=xterm-256color
-fi
-
-
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
-
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
-
-if type complete &>/dev/null; then
-  _npm_completion () {
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           npm completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  complete -F _npm_completion npm
-elif type compdef &>/dev/null; then
-  _npm_completion() {
-    si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 npm completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _npm_completion npm
-elif type compctl &>/dev/null; then
-  _npm_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _npm_completion npm
-fi
-###-end-npm-completion-###
-
-# npm local install
-OLD_MANPATH=$(manpath 2> /dev/null)
-export NPM_PACKAGES="$HOME/.npm-packages"
-export MANPATH="$NPM_PACKAGES/share/man:$OLD_MANPATH"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-export PATH="$NPM_PACKAGES/bin:$PATH"
-
-# deb development
+# debian development
 export DEBFULLNAME="Charles Lavery"
 export DEBEMAIL="charles.lavery@gmail.com"
-export NPM_PACKAGES="$HOME/.npm-packages"
 
-export PATH="$NPM_PACKAGES/bin:$PATH"
-unset MANPATH
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-# node / npm
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-
-#python
+#### Python ####
 export WORKON_HOME=$HOME/.venv
 if [ -f /usr/bin/virtualenvwrapper.sh ]
 then
   . /usr/bin/virtualenvwrapper.sh
-  workon default
+
+  if [ -d /Users/chuck/.venv/default ]
+  then
+    workon default
+  fi
 fi
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
   . /usr/local/bin/virtualenvwrapper.sh
-  workon default
-fi
 
-
-function share() {
-  if [ -n "$2" ]; then
-    s3cmd put --acl-public $1 "s3://dumpstuffhere/${1:t}"
-  else
-    s3cmd put --acl-public $1 "s3://dumpstuffhere/$2/${1:t}"
+  if [ -d /Users/chuck/.venv/default ]
+  then
+    workon default
   fi
-}
+fi
+# serves directory on localhost:8000
+alias shs="python -m SimpleHTTPServer"
+# simple smtp server on port 1025, outputs to stdout
+alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
 
-# ruby
+#### ruby ####
 if [ -d /usr/local/opt/ruby/bin ]
 then
   export PATH=$PATH:/usr/local/opt/ruby/bin
 fi
 
+#### postgres ####
 if [ -d /Applications/Postgres93.app/Contents/MacOS/bin ]
 then
   export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
 fi
 
-_tmux_pane_words() {
-  local expl
-  local -a w
-  if [[ -z "$TMUX_PANE" ]]; then
-    _message "not running inside tmux!"
-    return 1
-  fi
-  w=( ${(u)=$(tmux capture-pane \; show-buffer \; delete-buffer)} )
-  _wanted values expl 'words from current tmux pane' compadd -a w
-}
+#### ledger ####
+case $HOSTNAME in
+  dasbook)
+    export LEDGER_FILE=~/Documents/ledger/main.ledger
+    export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
+    export LEDGER_PRICE_DB=~/Documents/ledger/prices.db
+  ;;
+  *)
+  ;;
+esac
+alias l="ledger"
 
-zle -C tmux-pane-words-prefix   complete-word _generic
-zle -C tmux-pane-words-anywhere complete-word _generic
-bindkey '^Xt' tmux-pane-words-prefix
-bindkey '^X^X' tmux-pane-words-anywhere
-zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' completer _tmux_pane_words
-zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
-zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
-
-alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
