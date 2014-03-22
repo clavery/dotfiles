@@ -12,7 +12,7 @@ syntax on
 set nocompatible
 set t_Co=256
 
-let mapleader = ","
+let mapleader = "\<Space>"
 
 " Vim Settings {{{
 
@@ -66,7 +66,7 @@ set splitright
 set nobackup
 set nowritebackup
 set noswapfile
-set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:⌧,extends:…,precedes:…
+set listchars=tab:▸\ ,trail:•,nbsp:␣,extends:…,precedes:…
 set nrformats=
 set esckeys
 set diffopt=filler,iwhite
@@ -234,7 +234,9 @@ hi Search ctermbg=55
 
 if has("gui")
   highlight SignColumn guibg=#232526 guifg=#ffffff
-  highlight Normal guibg=#303030
+  highlight SpecialKey guifg=red
+  highlight Normal guibg=#303030 
+
   hi LineNr guifg=#999999 guibg=#555555
   hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
   " hot pink
@@ -409,7 +411,15 @@ let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 
 " }}}
 
-let g:GPGDefaultRecipients = ['9B5B4181']
+" You Complete Me {{{
+
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_filepath_completion_use_working_dir = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+
+" }}} "
 
 let g:riv_global_leader="<c-z>"
 
