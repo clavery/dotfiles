@@ -167,6 +167,7 @@ alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
 
 alias tmux="tmux -2 -u"
 alias attach="tmux -2 -u attach"
+alias ag="ag --pager less"
 
 # vim crontab fix
 alias crontab="VIM_CRONTAB=true crontab"
