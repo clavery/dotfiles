@@ -17,6 +17,7 @@ let mapleader = "\<Space>"
 " Vim Settings {{{
 
 " allow backspacing over everything in insert mode
+set noshowmode
 set encoding=utf-8
 set fileencodings=utf-8,latin1,default
 set autoread
@@ -235,7 +236,7 @@ hi Search ctermbg=55
 if has("gui")
   highlight SignColumn guibg=#232526 guifg=#ffffff
   highlight SpecialKey guifg=red
-  highlight Normal guibg=#303030 
+  highlight Normal guibg=#303030
 
   hi LineNr guifg=#999999 guibg=#555555
   hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
@@ -250,7 +251,7 @@ set pumheight=8
 " highlight VCS markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-set fillchars=vert:\ 
+set fillchars=vert:\ ,diff:-
 high VertSplit guibg=#555555
 
 hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
@@ -417,9 +418,13 @@ let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 
 " }}} "
+
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 let g:riv_global_leader="<c-z>"
 
@@ -449,6 +454,19 @@ let g:pymode_rope_completion_bind = ''
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
+
+" airline
+let g:airline#extensions#tabline#show_tab_type = 0
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = ''
+let g:airline#extensions#default#section_truncate_width = {
+    \ 'b': 88,
+    \ 'x': 60,
+    \ 'y': 88,
+    \ 'z': 45,
+    \ }
 
 " Load local overrides
 silent! source ~/.vimrc-local

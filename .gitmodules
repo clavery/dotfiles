@@ -82,3 +82,12 @@
 [submodule ".vim/bundle/snippets"]
 	path = .vim/bundle/snippets
 	url = https://github.com/honza/vim-snippets.git
+[submodule ".vim/bundle/airline"]
+	path = .vim/bundle/airline
+	url = https://github.com/bling/vim-airline.git
+[submodule ".vim/bundle/psql"]
+	path = .vim/bundle/psql
+	url = https://github.com/vim-scripts/psql.vim.git
+[submodule ".vim/bundle/expand-region"]
+	path = .vim/bundle/expand-region
+	url = https://github.com/terryma/vim-expand-region.git
