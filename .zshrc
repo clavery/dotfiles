@@ -11,16 +11,14 @@ stty stop undef
 export HISTSIZE=1000
 export EDITOR=vim
 
+export PROMPT_EOL_MARK=''
+
 ######## Load Modules ########
 
 autoload colors; colors;
-# zsh move
-autoload -U zmv
-autoload -U zcalc
-zmodload zsh/stat
-## smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
+autoload -U add-zsh-hook
 
 ######## Options #########
 unsetopt AUTO_CD
@@ -112,6 +110,13 @@ zstyle ':vcs_info:*' actionformats '<%b%F{3}%c%u%F{1}> %a'
 zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r%f%F{1}'
 
+cmd_exec_time() {
+    local stop=$(date +%s)
+    local start=${cmd_timestamp:-$stop}
+    integer elapsed=$stop-$start
+    (($elapsed > 5)) && print -P '%F{yellow}${elapsed}s%f'
+}
+
 # are we in a git repo? helper function
 # git branch is fast
 in_git() {
@@ -123,6 +128,10 @@ in_git() {
   }
 }
 
+preexec() {
+  cmd_timestamp=$(date +%s)
+}
+
 # Call in_git at shell start
 in_git
 
@@ -131,7 +140,6 @@ chpwd() {
   in_git
 }
 
-# run before every shell line
 precmd() {
   if [[ $IN_GIT_REPO == 1 ]] {
     if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
@@ -141,14 +149,15 @@ precmd() {
       zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{red}●%F{1}>'
     }
   }
-
   vcs_info
+  cmd_exec_time
+  unset cmd_timestamp
 }
 
 PROMPT=''
 case $HOSTNAME in
   meeples|beast|dasbook)
-    export PROMPT='%{$fg[red]%}${vcs_info_msg_0_} %{$fg[blue]%}%3c $%{%f%} '
+    export PROMPT='%F{red}${vcs_info_msg_0_} %F{blue}%3c %(?.%F{blue}.%F{red})$%f '
   ;;
   *)
     # show username/hostname for all other hosts
@@ -299,6 +308,9 @@ fi
 alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
 alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
+export PYTHONDONTWRITEBYTECODE=1
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
 
 #### ruby ####
 if [ -d /usr/local/opt/ruby/bin ]

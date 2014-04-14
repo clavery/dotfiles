@@ -216,7 +216,8 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Source\ Code\ Pro\ Medium:h15
+  set guifont=Source\ Code\ Pro:h14
+  set guifont=Sauce\ Code\ Powerline:h14
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
@@ -456,7 +457,6 @@ let g:pymode_rope_completion_bind = ''
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
 
 " airline
-let g:airline#extensions#tabline#show_tab_type = 0
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -467,6 +467,7 @@ let g:airline#extensions#default#section_truncate_width = {
     \ 'y': 88,
     \ 'z': 45,
     \ }
+let g:airline#extensions#tabline#show_tab_type = 0
 
 "expand region
 vmap v <Plug>(expand_region_expand)
