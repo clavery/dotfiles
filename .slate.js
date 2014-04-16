@@ -20,3 +20,10 @@ slate.bind("right:e,cmd", function(win) {
 slate.bind("f:e,cmd", function(win) {
   win.doOperation(fullscreen);
 });
+
+S.bnda({
+  "d:e,cmd" : S.op("push", { "direction" : "right", "style" : "bar-resize:screenSizeX/2" }),
+  "a:e,cmd" : S.op("push", { "direction" : "left", "style" : "bar-resize:screenSizeX/2" }),
+  "w:e,cmd" : S.op("push", { "direction" : "up", "style" : "bar-resize:screenSizeY/2" }),
+  "s:e,cmd" : S.op("push", { "direction" : "down", "style" : "bar-resize:screenSizeY/2" })
+});
