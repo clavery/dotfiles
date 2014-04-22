@@ -155,9 +155,6 @@ endif
 " reload .vimrc
 map <leader>r :source $MYVIMRC<cr>
 
-" toggle spell check
-map <leader>s :setlocal spell!<cr>
-
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
 nmap <silent> <C-Down> :wincmd j<cr>
@@ -482,6 +479,13 @@ endfunction
 
 let g:shell_filetype = "text"
 vnoremap <leader>s :<c-u>call SplitShellCmd()<cr>
+nnoremap <leader>s :<c-u>call SplitShellCmdP()<cr>
+function! SplitShellCmdP()
+  normal! mx
+  normal! vap
+  call SplitShellCmd()
+  normal! `x
+endfunction
 function! SplitShellCmd()
     let cmd = s:get_visual_selection()
     let result = system(cmd)
@@ -497,6 +501,7 @@ function! SplitShellCmd()
 
     normal! ggdG
     call append(line('$'), split(result, '\v\n'))
+    exe "wincmd w"
 endfunction
 
 " Load local overrides
