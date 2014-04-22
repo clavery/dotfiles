@@ -473,6 +473,32 @@ let g:airline#extensions#tabline#show_tab_type = 0
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
+function! s:get_visual_selection()
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  return join(lines, " ")
+endfunction
+
+let g:shell_filetype = "text"
+vnoremap <leader>s :<c-u>call SplitShellCmd()<cr>
+function! SplitShellCmd()
+    let cmd = s:get_visual_selection()
+    let result = system(cmd)
+
+    if bufwinnr(bufnr("__CMD_SCRATCH__")) == -1
+      " Open a new split and set it up.
+      top split __CMD_SCRATCH__
+      execute "setlocal filetype=".g:shell_filetype
+      setlocal buftype=nofile
+    else
+      exe bufwinnr(bufnr("__CMD_SCRATCH__")) . "wincmd w"
+    endif
+
+    normal! ggdG
+    call append(line('$'), split(result, '\v\n'))
+endfunction
+
 " Load local overrides
 silent! source ~/.vimrc-local
 

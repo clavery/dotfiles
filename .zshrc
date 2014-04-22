@@ -106,8 +106,8 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' get-revision true
 zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
-zstyle ':vcs_info:*' actionformats '<%b%F{3}%c%u%F{1}> %a'
-zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
+zstyle ':vcs_info:*' actionformats '<%b%F{3}%c%u%F{1}> %F{003}%a '
+zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}> '
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r%f%F{1}'
 
 cmd_exec_time() {
@@ -143,21 +143,34 @@ chpwd() {
 precmd() {
   if [[ $IN_GIT_REPO == 1 ]] {
     if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
-      zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}>'
+      zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{1}> '
     } else {
       # add circle for untracked files
-      zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{red}●%F{1}>'
+      zstyle ':vcs_info:*' formats '<%b%F{3}%c%u%F{red}●%F{1}> '
     }
+  }
+  if [[ $VIRTUAL_ENV:t == "default" ]] {
+    _VENV="⭑ "
+  } elif [[ -n "$VIRTUAL_ENV" ]] {
+    _VENV="${VIRTUAL_ENV:t} "
+  } else {
+    _VENV=""
   }
   vcs_info
   cmd_exec_time
   unset cmd_timestamp
 }
 
+list_colors() {
+  for code in {000..255}; do
+    print -P -- "$code: %F{$code}test%f"
+  done
+}
+
 PROMPT=''
 case $HOSTNAME in
   meeples|beast|dasbook)
-    export PROMPT='%F{red}${vcs_info_msg_0_} %F{blue}%3c %(?.%F{blue}.%F{red})$%f '
+    export PROMPT='%F{005}${_VENV}%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
   ;;
   *)
     # show username/hostname for all other hosts
@@ -285,6 +298,7 @@ export DEBFULLNAME="Charles Lavery"
 export DEBEMAIL="charles.lavery@gmail.com"
 
 #### Python ####
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WORKON_HOME=$HOME/.venv
 if [ -f /usr/bin/virtualenvwrapper.sh ]
 then
@@ -346,7 +360,7 @@ function mark {
     mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
 function unmark { 
-    rm -i "$MARKPATH/$1"
+    rm "$MARKPATH/$1"
 }
 function marks {
     \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
