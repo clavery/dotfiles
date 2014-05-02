@@ -17,6 +17,8 @@ let mapleader = "\<Space>"
 " Vim Settings {{{
 
 " allow backspacing over everything in insert mode
+set exrc
+set secure
 set noshowmode
 set encoding=utf-8
 set fileencodings=utf-8,latin1,default
@@ -487,21 +489,45 @@ function! SplitShellCmdP()
   normal! `x
 endfunction
 function! SplitShellCmd()
-    let cmd = s:get_visual_selection()
-    let result = system(cmd)
+  let cmd = s:get_visual_selection()
+  let result = system(cmd)
 
-    if bufwinnr(bufnr("__CMD_SCRATCH__")) == -1
-      " Open a new split and set it up.
-      top split __CMD_SCRATCH__
-      execute "setlocal filetype=".g:shell_filetype
-      setlocal buftype=nofile
-    else
-      exe bufwinnr(bufnr("__CMD_SCRATCH__")) . "wincmd w"
-    endif
+  if bufwinnr(bufnr("__CMD_SCRATCH__")) == -1
+    " Open a new split and set it up.
+    top split __CMD_SCRATCH__
+    execute "setlocal filetype=".g:shell_filetype
+    setlocal buftype=nofile
+  else
+    exe bufwinnr(bufnr("__CMD_SCRATCH__")) . "wincmd w"
+  endif
 
-    normal! ggdG
-    call append(line('$'), split(result, '\v\n'))
-    exe "wincmd w"
+  normal! ggdG
+  call append(line('$'), split(result, '\v\n'))
+  exe "wincmd w"
+endfunction
+
+nnoremap <leader>t :call SplitShellPytest()<cr>
+function! SplitShellPytest()
+  write
+  let cmd = "py.test --tb=short -v " . expand("%")
+  let result = system(cmd)
+
+  if bufwinnr(bufnr("__PYTEST__")) == -1
+    " Open a new split and set it up.
+    botright 14split __PYTEST__
+    execute "setlocal filetype=pytest"
+    execute "setlocal nonumber"
+    execute "setlocal norelativenumber"
+    setlocal buftype=nofile
+  else
+    exe bufwinnr(bufnr("__PYTEST__")) . "wincmd w"
+  endif
+
+  execute "setlocal noreadonly"
+  normal! ggdG
+  call append(line('$'), split(result, '\v\n'))
+  execute "setlocal readonly"
+  exe "wincmd w"
 endfunction
 
 " Load local overrides

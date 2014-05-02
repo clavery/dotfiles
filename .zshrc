@@ -89,7 +89,7 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 case $HOST_OS in
   darwin)
-    export MANPATH=/usr/local/share/man:$MANPATH
+    export MANPATH=/usr/local/share/man:/Applications/Xcode.app/Contents/Developer/usr/share/man:$MANPATH
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
   ;;
   linux)
