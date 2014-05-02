@@ -4,7 +4,6 @@
 filetype off
 
 call pathogen#infect()
-call pathogen#helptags()
 
 filetype plugin indent on
 syntax on
@@ -14,9 +13,6 @@ set t_Co=256
 
 let mapleader = "\<Space>"
 
-" Vim Settings {{{
-
-" allow backspacing over everything in insert mode
 set exrc
 set secure
 set noshowmode
@@ -26,7 +22,7 @@ set autoread
 set lazyredraw
 set backspace=indent,eol,start
 set notimeout
-set ttimeout
+set nottimeout
 set ttimeoutlen=10
 set nojoinspaces
 set backup
@@ -48,7 +44,7 @@ set number
 set relativenumber
 set numberwidth=3
 set hidden
-set showmatch
+set noshowmatch
 set matchtime=2 " show paren matches quickly
 set shortmess=lmnrxoOItTA
 set ignorecase
@@ -150,12 +146,7 @@ else
 endif
 
 
-" }}}
-
-" Mappings {{{
-
-" reload .vimrc
-map <leader>r :source $MYVIMRC<cr>
+" MAPPINGS
 
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
@@ -185,16 +176,11 @@ command! Q :q
 command! Wq :wq
 command! WQ :wq
 
-" open external programs easier
-command! -nargs=1 Silent
-      \ | execute ':silent !'.<q-args>
-      \ | execute ':redraw!'
-
 cnoremap w!! w !sudo tee % >/dev/null
 
-nnoremap <leader>/ :set hlsearch!<cr>
-nnoremap <leader>l :set list!<cr>
-nnoremap <leader>w :set wrap!<cr>
+nnoremap <silent> <leader>/ :set hlsearch!<cr>
+nnoremap <silent> <leader>l :set list!<cr>
+nnoremap <silent> <leader>w :set wrap!<cr>
 
 nnoremap <leader>` "=strftime("%a %d %b %Y %X")<cr>P
 
@@ -203,12 +189,23 @@ nnoremap <c-w><left> :vertical res +10<cr>
 nnoremap <c-w><up> :res +5<cr>
 nnoremap <c-w><down> :res -5<cr>
 
-" }}}
+"emacs begin/end
+inoremap <c-a> <Home>
+inoremap <c-e> <End>
 
-" Highlighting {{{
+" allows incsearch highlighting for range commands
+cnoremap $t <CR>:t''<CR>
+cnoremap <C-t> <CR>:t''<CR>
+cnoremap $m <CR>:m''<CR>
+cnoremap <C-j> <CR>:m''<CR>
+cnoremap $d <CR>:d<CR>``
+
+
+" HIGHLIGHTING
 
 colorscheme molokai
 
+" show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 if has("linux")
@@ -222,15 +219,6 @@ if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
 
-augroup statusLines
-  au!
-  au InsertEnter * hi StatusLine term=reverse ctermbg=0 ctermfg=DarkGreen guibg=#A8FF60 guifg=#202020
-  au InsertLeave,BufLeave,BufEnter * hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
-  au BufNew,BufAdd,BufWrite,BufNewFile,BufRead,BufEnter,FileChangedRO * :if &ro | hi StatusLine guibg=#CD321D ctermbg=red | endif
-augroup END
-
-hi StatusLine guifg=#CCCCCC guibg=#404040 gui=NONE ctermfg=white ctermbg=8 cterm=NONE
-hi StatusLineNC guifg=#606060
 hi Search ctermbg=55
 
 if has("gui")
@@ -254,6 +242,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 set fillchars=vert:\ ,diff:-
 high VertSplit guibg=#555555
 
+" Override diff colors
 hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
 hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold ctermbg=NONE ctermfg=4
 hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=1
@@ -272,82 +261,9 @@ if &diff
 endif
 
 
-" }}}
+" FILETYPES
 
-" Status Line {{{
-
-set statusline=%f    " Path.
-set statusline+=%m   " Modified flag
-set statusline+=%r   " Readonly flag.
-set statusline+=%w   " Preview window flag.
-set statusline+=%h   " Preview window flag.
-set statusline+=\    " Space.
-set statusline+=%=   " Right align.
-" File format, encoding and type.  Ex: "(unix/utf-8/python)"
-set statusline+=(
-set statusline+=%{&ff}                        " Format (unix/DOS).
-set statusline+=/
-set statusline+=%{strlen(&fenc)?&fenc:&enc}   " Encoding (utf-8).
-set statusline+=/
-set statusline+=%{&ft}                        " Type (python).
-set statusline+=)
-" Line and column position and counts.
-set statusline+=\ (%l\/%L,\ %03c,\ %03b)
-
-" }}}
-
-" Folding {{{
-
-nnoremap <Space> za
-vnoremap <Space> za
-
-function! MyFoldText()
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-endfunction
-set foldtext=MyFoldText()
-
-" }}}
-
-" Gundo {{{
-
-nmap <silent> <leader>u :GundoToggle<cr>
-
-" }}}
-
-" Ultisnips {{{
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsExpandTrigger="<c-j>"
-" }}}
-
-" vitality {{{
-let g:vitality_fix_focus = 0
-" }}}
-
-" matchit {{{
-runtime macros/matchit.vim
-" }}}
-
-" netrw {{{
-let g:explHideFiles='^\.,.*\.pyc$'
-"let g:netrw_browsex_viewer=
-let g:netrw_liststyle=3
-let g:netrw_banner=0
-" }}}
-
-" File types overrides {{{
+" File types overrides
 augroup filetypes
   au!
 
@@ -365,44 +281,34 @@ augroup filetypes
 
   au Filetype qf setlocal nolist nowrap
 augroup END
-" }}}
 
-" Quickfix Window {{{
-nnoremap <leader>o :call QuickfixToggle()<cr>
-let g:quickfix_is_open = 0
-
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
-" }}}
-
-" Omnicomplettion
-
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" File jump suffixes
 autocmd FileType rst setlocal suffixesadd=.rst
 autocmd FileType org setlocal suffixesadd=.rst,.org
 
-" Filetypes {{{
-
-"Jinja2
+" Jinja2
 au BufRead *.j2 set ft=jinja
 
-" }}}
 
-" CTRLP {{{
+" PLUGINS
 
+" Gundo
+nmap <silent> <leader>u :GundoToggle<cr>
+
+" Ultisnips
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+
+" matchit
+runtime macros/matchit.vim
+
+" netrw
+let g:explHideFiles='^\.,.*\.pyc$'
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+
+" CTRLP 
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 " just use CWD
@@ -410,17 +316,12 @@ let g:ctrlp_working_path_mode = ''
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 
-" }}}
-
-" You Complete Me {{{
-
+" You Complete Me
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-
-" }}} "
 
 " Gitgutter
 let g:gitgutter_map_keys = 0
@@ -436,18 +337,7 @@ let g:airline_powerline_fonts = 1
 
 let g:riv_global_leader="<c-z>"
 
-"emacs begin/end
-inoremap <c-a> <Home>
-inoremap <c-e> <End>
-
-" allows incsearch highlighting for range commands
-cnoremap $t <CR>:t''<CR>
-cnoremap <C-t> <CR>:t''<CR>
-cnoremap $m <CR>:m''<CR>
-cnoremap <C-j> <CR>:m''<CR>
-cnoremap $d <CR>:d<CR>``
-
-"" Python
+" Pymode
 let g:pydoc_open_cmd = 'vsplit'
 let g:pymode_warnings = 1
 let g:pymode_lint_write = 0
@@ -459,9 +349,16 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_syntax_slow_sync = 0
 let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
+nnoremap <silent><Leader>pl <Esc>:PymodeLint<CR>
+nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
+vnoremap <silent><Leader>px :call pymode#rope#extract_method()<cr>
+nnoremap <silent><Leader>pr :call pymode#rope#rename()<cr>
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
+
+" syntastic
+nnoremap <silent> <leader>e :Errors<cr>
 
 " airline
 if !exists('g:airline_symbols')
@@ -476,10 +373,25 @@ let g:airline#extensions#default#section_truncate_width = {
     \ }
 let g:airline#extensions#tabline#show_tab_type = 0
 
-"expand region
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
 
+" FUNCTIONS
+
+" Quickfix Window Toggle
+nnoremap <leader>o :call QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+" Shell execution
 function! s:get_visual_selection()
   let [lnum1, col1] = getpos("'<")[1:2]
   let [lnum2, col2] = getpos("'>")[1:2]
@@ -514,6 +426,8 @@ function! SplitShellCmd()
   exe "wincmd w"
 endfunction
 
+" Pytest in a split
+" TODO generalize by filetype
 nnoremap <leader>t :call SplitShellPytest()<cr>
 function! SplitShellPytest()
   write
@@ -537,6 +451,17 @@ function! SplitShellPytest()
   execute "setlocal readonly"
   exe "wincmd w"
 endfunction
+
+" Show git log in balloon
+function! GitLogBalloonExpr()
+  let fname = bufname(v:beval_bufnr)
+  let result = system("git log --format='%h <%an @ %aD> %s' -L " . v:beval_lnum . "," . v:beval_lnum . ":" . fname . " | head -n 1")
+  if v:shell_error == 0
+    return result
+  endif
+endfunction
+set bexpr=GitLogBalloonExpr()
+set ballooneval
 
 " Load local overrides
 silent! source ~/.vimrc-local
