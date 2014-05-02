@@ -1,4 +1,5 @@
-"\C-b": beginning-of-line
+"\C-b": backward-word
+"\C-f": forward-word
 set convert-meta on
 set completion-ignore-case on
 set show-all-if-ambiguous on

@@ -422,6 +422,14 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 
 " }}} "
 
+" Gitgutter
+let g:gitgutter_map_keys = 0
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+let g:gitgutter_enabled = 0
+let g:gitgutter_highlight_lines = 1
+nnoremap <leader>g :GitGutterToggle<cr>
+
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
