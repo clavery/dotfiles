@@ -22,7 +22,7 @@ set autoread
 set lazyredraw
 set backspace=indent,eol,start
 set notimeout
-set nottimeout
+set ttimeout
 set ttimeoutlen=10
 set nojoinspaces
 set backup
@@ -169,6 +169,8 @@ nnoremap <F4> :silent make <cr>
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
 noremap <silent> <leader>m :cp<cr>
+noremap <silent> <leader>j :lnext<cr>
+noremap <silent> <leader>k :lprev<cr>
 
 " Capitals save/quit too
 command! W :w
@@ -214,6 +216,7 @@ endif
 if has("mac")
   set guifont=Source\ Code\ Pro:h14
   set guifont=Sauce\ Code\ Powerline:h14
+  set guifontwide=DejaVu\ Sans\ Mono:h14
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
@@ -292,6 +295,12 @@ au BufRead *.j2 set ft=jinja
 
 " PLUGINS
 
+" syntastic
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '~'
+let g:syntastic_style_error_symbol = 'x'
+let g:syntastic_style_warning_symbol = '➧'
+
 " Gundo
 nmap <silent> <leader>u :GundoToggle<cr>
 
@@ -349,10 +358,7 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_syntax_slow_sync = 0
 let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
-nnoremap <silent><Leader>pl <Esc>:PymodeLint<CR>
 nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
-vnoremap <silent><Leader>px :call pymode#rope#extract_method()<cr>
-nnoremap <silent><Leader>pr :call pymode#rope#rename()<cr>
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>

@@ -1,6 +1,6 @@
 
 " simple auto braces
-inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
+"inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
 
 " Function text object (does not wor correctly  in visual mode)
 onoremap if :<c-u>execute "normal! $?function\r:nohl\rf{v%"<cr>

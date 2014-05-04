@@ -97,3 +97,6 @@
 [submodule ".vim/bundle/vim-signcolor"]
 	path = .vim/bundle/vim-signcolor
 	url = git@github.com:clavery/vim-signcolor.git
+[submodule ".vim/bundle/delimitmate"]
+	path = .vim/bundle/delimitmate
+	url = https://github.com/Raimondi/delimitMate.git
