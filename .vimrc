@@ -320,12 +320,20 @@ autocmd FileType org setlocal suffixesadd=.rst,.org
 " Jinja2
 au BufRead *.j2 set ft=jinja
 
+" html
+let g:html_exclude_tags = ['html']
+
+
 augroup ft_quickfix
     au!
     au Filetype qf setlocal norelativenumber colorcolumn=0 nolist nocursorline nowrap tw=0
 augroup END
 
 " PLUGINS
+
+" emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,jinja,css,scss EmmetInstall
 
 " gpg
 let g:GPGPreferArmor = 1
