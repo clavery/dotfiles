@@ -201,7 +201,7 @@ alias dirs='dirs -vp'
 if [[ -x `which mvim` ]] {
   alias vim="mvim -v"
   alias vi="mvim -v"
-  export EDITOR="mvim -v"
+  export EDITOR=vim
 }
 
 if [[ $HOST_OS == 'linux' ]] {

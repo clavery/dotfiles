@@ -12,6 +12,7 @@ set nocompatible
 set t_Co=256
 
 let mapleader = "\<Space>"
+nnoremap <space> <nop>
 
 set exrc
 set secure
@@ -52,9 +53,9 @@ set smartcase
 set ttyfast
 set gdefault " change behavior of /g option
 set linebreak " break on word
-set formatoptions+=c
-set formatoptions+=q
-set textwidth=0
+set formatoptions=c,r,q,l
+set textwidth=100
+set showbreak=↪
 set wildmenu
 set wildmode=list:longest
 set smartindent
@@ -65,7 +66,13 @@ set splitright
 set nobackup
 set nowritebackup
 set noswapfile
+set list
 set listchars=tab:▸\ ,trail:•,nbsp:␣,extends:…,precedes:…
+augroup trailing
+    au!
+    au InsertEnter * :set listchars-=trail:•
+    au InsertLeave * :set listchars+=trail:•
+augroup END
 set nrformats=
 set esckeys
 set diffopt=filler,iwhite
@@ -85,15 +92,17 @@ set t_vb=
 if has("Win32")
   set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*\\_svn\\*,*\\build\\*,*\\lib\\*
 else
+  set wildignore+=.hg,.git,.svn
   set wildignore+=*/WEB-INF/*
-  set wildignore+=*/venv/*
   set wildignore+=*/node_modules/*
   set wildignore+=*/bower_components/*
-  set wildignore+=*/.svn/*
-  set wildignore+=*/.sass-cache/*
+  set wildignore+=.sass-cache
   set wildignore+=*.min.js
   set wildignore+=*.pyc
   set wildignore+=*/tmp/*
+  set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+  set wildignore+=*.DS_Store
+  set wildignore+=lib
 endif
 
 " disable mouse
@@ -148,6 +157,19 @@ endif
 
 " MAPPINGS
 
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+nnoremap <c-o> <c-o>zz
+noremap  <F1> :checktime<cr>
+inoremap <F1> <esc>:checktime<cr>
+
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
 nmap <silent> <C-Down> :wincmd j<cr>
@@ -165,6 +187,10 @@ nnoremap <down> :silent resize -5<cr>
 set pastetoggle=<F2>
 
 nnoremap <F4> :silent make <cr>
+
+" Source
+vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
@@ -216,7 +242,7 @@ endif
 if has("mac")
   set guifont=Source\ Code\ Pro:h14
   set guifont=Sauce\ Code\ Powerline:h14
-  set guifontwide=DejaVu\ Sans\ Mono:h14
+  set guifontwide=DejaVu\ Sans\ Mono
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
@@ -237,6 +263,8 @@ if has("gui")
 endif
 
 highlight PmenuSel ctermbg=16 ctermfg=13
+
+hi ColorColumn ctermbg=lightgrey guibg=#343434
 set pumheight=8
 
 " highlight VCS markers
@@ -292,8 +320,15 @@ autocmd FileType org setlocal suffixesadd=.rst,.org
 " Jinja2
 au BufRead *.j2 set ft=jinja
 
+augroup ft_quickfix
+    au!
+    au Filetype qf setlocal norelativenumber colorcolumn=0 nolist nocursorline nowrap tw=0
+augroup END
 
 " PLUGINS
+
+" gpg
+let g:GPGPreferArmor = 1
 
 " syntastic
 let g:syntastic_error_symbol = '✗'
@@ -317,7 +352,7 @@ let g:explHideFiles='^\.,.*\.pyc$'
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 
-" CTRLP 
+" CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 " just use CWD
@@ -466,8 +501,46 @@ function! GitLogBalloonExpr()
     return result
   endif
 endfunction
-set bexpr=GitLogBalloonExpr()
-set ballooneval
+if has("balloon_eval")
+  set bexpr=GitLogBalloonExpr()
+  set ballooneval
+endif
+
+function! HiInterestingWord(n)
+    " Save our location.
+    normal! mz
+
+    " Yank the current word into the z register.
+    normal! "zyiw
+
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+
+    " Move back to our original location.
+    normal! `z
+endfunction
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+
 
 " Load local overrides
 silent! source ~/.vimrc-local
