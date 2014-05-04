@@ -100,3 +100,6 @@
 [submodule ".vim/bundle/delimitmate"]
 	path = .vim/bundle/delimitmate
 	url = https://github.com/Raimondi/delimitMate.git
+[submodule ".vim/bundle/emmet"]
+	path = .vim/bundle/emmet
+	url = https://github.com/mattn/emmet-vim.git
