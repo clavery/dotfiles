@@ -103,3 +103,6 @@
 [submodule ".vim/bundle/emmet"]
 	path = .vim/bundle/emmet
 	url = https://github.com/mattn/emmet-vim.git
+[submodule ".vim/bundle/cmdpalette"]
+	path = .vim/bundle/cmdpalette
+	url = https://github.com/fisadev/vim-ctrlp-cmdpalette.git
