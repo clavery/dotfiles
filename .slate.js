@@ -21,6 +21,28 @@ slate.bind("f:e,cmd", function(win) {
   win.doOperation(fullscreen);
 });
 
+var showTerminal = slate.operation("focus", {
+  'app': 'Terminal'
+});
+slate.bind("c:e,cmd", function(win) {
+  win.doOperation(showTerminal);
+});
+
+var showVim = slate.operation("focus", {
+  'app': 'MacVim'
+});
+slate.bind("m:e,cmd", function(win) {
+  win.doOperation(showVim);
+});
+
+var grid = slate.operation("grid", {
+  "grids" : { }
+});
+slate.bind("g:e,cmd", function(win) {
+  win.doOperation(grid);
+});
+
+// quake keys
 S.bnda({
   "d:e,cmd" : S.op("push", { "direction" : "right", "style" : "bar-resize:screenSizeX/2" }),
   "a:e,cmd" : S.op("push", { "direction" : "left", "style" : "bar-resize:screenSizeX/2" }),
