@@ -134,6 +134,10 @@ if has("gui_running")
   set mouse+=a
 endif
 
+if !has("gui_running")
+  let g:loaded_airline = 1
+endif
+
 augroup vimrcEx
   au!
   " jump to last position
@@ -242,7 +246,6 @@ endif
 if has("mac")
   set guifont=Source\ Code\ Pro:h14
   set guifont=Sauce\ Code\ Powerline:h14
-  set guifontwide=DejaVu\ Sans\ Mono
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
