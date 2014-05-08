@@ -169,7 +169,7 @@ list_colors() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples|beast|dasbook)
+  meeples|beast|dasbook|gamma)
     export PROMPT='%F{005}${_VENV}%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
   ;;
   *)
@@ -308,12 +308,20 @@ then
   then
     workon default
   fi
+  if [ -d /Users/clavery/.venv/default ]
+  then
+    workon default
+  fi
 fi
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
   . /usr/local/bin/virtualenvwrapper.sh
 
   if [ -d /Users/chuck/.venv/default ]
+  then
+    workon default
+  fi
+  if [ -d /Users/clavery/.venv/default ]
   then
     workon default
   fi
