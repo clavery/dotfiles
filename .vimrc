@@ -14,6 +14,10 @@ set t_Co=256
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
 
+if has('mac')
+  set macmeta
+endif
+
 set exrc
 set secure
 set noshowmode
