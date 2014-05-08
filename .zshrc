@@ -53,7 +53,8 @@ select-word-style bash
 bindkey -e
 
 # better for gnu screen
-bindkey "^B" beginning-of-line
+bindkey "^B" backward-word
+bindkey "^F" forward-word
 
 # edit command line in vi with Ctrl-x Ctrl-e
 autoload -U edit-command-line

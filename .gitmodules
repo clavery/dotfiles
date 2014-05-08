@@ -106,3 +106,6 @@
 [submodule ".vim/bundle/cmdpalette"]
 	path = .vim/bundle/cmdpalette
 	url = https://github.com/fisadev/vim-ctrlp-cmdpalette.git
+[submodule ".vim/bundle/yankstack"]
+	path = .vim/bundle/yankstack
+	url = https://github.com/maxbrunsfeld/vim-yankstack.git
