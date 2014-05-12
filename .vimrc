@@ -59,6 +59,7 @@ set gdefault " change behavior of /g option
 set linebreak " break on word
 set formatoptions=c,r,q,l
 set textwidth=100
+set colorcolumn=+1
 set showbreak=↪
 set wildmenu
 set wildmode=list:longest
