@@ -557,6 +557,8 @@ hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
 hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
 hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
+nnoremap <leader>\ :MultipleCursorsFind <c-r>/<cr>
+
 " Load local overrides
 silent! source ~/.vimrc-local
 
