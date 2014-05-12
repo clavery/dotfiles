@@ -202,7 +202,7 @@ alias dirs='dirs -vp'
 if [[ -x `which mvim` ]] {
   alias vim="mvim -v"
   alias vi="mvim -v"
-  export EDITOR=vim
+  export EDITOR="mvim -v"
 }
 
 if [[ $HOST_OS == 'linux' ]] {
@@ -346,6 +346,12 @@ if [ -d /Applications/Postgres93.app/Contents/MacOS/bin ]
 then
   export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
 fi
+
+
+#### golang ####
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export GOPATH=${HOME}/code/go
+source /usr/local/share/zsh/site-functions/go
 
 #### ledger ####
 case $HOSTNAME in

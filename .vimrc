@@ -344,6 +344,7 @@ autocmd FileType html,jinja,css,scss EmmetInstall
 
 " gpg
 let g:GPGPreferArmor = 1
+let g:GPGDefaultRecipients = ['9B5B4181']
 
 " syntastic
 let g:syntastic_error_symbol = '✗'
