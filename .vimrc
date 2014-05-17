@@ -328,6 +328,9 @@ autocmd FileType org setlocal suffixesadd=.rst,.org
 " Jinja2
 au BufRead *.j2 set ft=jinja
 
+" Org
+au BufRead *.org set ft=org
+
 " html
 let g:html_exclude_tags = ['html']
 
