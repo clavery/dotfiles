@@ -118,3 +118,6 @@
 [submodule ".vim/bundle/ps"]
 	path = .vim/bundle/ps
 	url = https://github.com/PProvost/vim-ps1.git
+[submodule ".vim/bundle/nrrwrgn"]
+	path = .vim/bundle/nrrwrgn
+	url = https://github.com/chrisbra/NrrwRgn.git
