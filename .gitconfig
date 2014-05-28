@@ -24,7 +24,7 @@
   excludesfile = ~/.gitignore
   pager = less -FRSX
 [color "branch"]
-  current = yellow reverse
+  current = magenta
   local = yellow
   remote = green
 [color "diff"]
@@ -49,3 +49,12 @@
   tool = vimdiff
 [difftool "vimdiff"]
   cmd = mvim -f -v -d \"$LOCAL\" \"$REMOTE\"
+
+[tig]
+  line-graphics = utf-8
+  focus-child = false
+  main-view = date:relative author:full id:yes commit-title:graph=yes,refs=yes
+[tig "color"]
+  cursor = yellow black bold
+  title-focus = yellow black
+  title-blur = cyan black
