@@ -270,7 +270,7 @@ if has("gui")
 
   hi LineNr guifg=#999999 guibg=#555555
   hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
-  hi CursorLine guibg=#b3d4fc guifg=#000000 ctermbg=240
+  hi CursorLine guibg=#E6FFFF guifg=#000000 ctermbg=240
   " hot pink
   hi Search guibg=#fe57a1 guifg=#000000
   hi IncSearch guifg=#fe57a1 guibg=#000000
@@ -383,7 +383,7 @@ let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 " just use CWD
 let g:ctrlp_working_path_mode = ''
-let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -v -f $_D/.custignore || grep .)']
+let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']
 let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 
 " You Complete Me
