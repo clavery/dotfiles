@@ -34,8 +34,8 @@
   new = green bold
 [color "status"]
   added = green
-  changed = yellow 
-  untracked = red
+  changed = yellow
+  untracked = cyan
 [merge]
 	tool = fugitive
 [mergetool]

@@ -13,3 +13,5 @@ venv/
 .#
 *.elc
 .sass-cache/
+.agignore
+.custignore
