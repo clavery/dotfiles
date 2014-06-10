@@ -348,6 +348,9 @@ augroup END
 
 " PLUGINS
 
+" ag
+nnoremap <leader>a :<C-U>Ag 
+
 " emmet
 let g:user_emmet_install_global = 0
 autocmd FileType html,jinja,css,scss EmmetInstall
