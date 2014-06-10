@@ -13,9 +13,6 @@
 [submodule ".vim/bundle/nginx"]
 	path = .vim/bundle/nginx
 	url = https://github.com/evanmiller/nginx-vim-syntax
-[submodule ".vim/bundle/jinja"]
-	path = .vim/bundle/jinja
-	url = https://github.com/Glench/Vim-Jinja2-Syntax.git
 [submodule ".vim/bundle/scss"]
 	path = .vim/bundle/scss
 	url = https://github.com/cakebaker/scss-syntax.vim.git
@@ -121,3 +118,6 @@
 [submodule ".vim/bundle/nrrwrgn"]
 	path = .vim/bundle/nrrwrgn
 	url = https://github.com/chrisbra/NrrwRgn.git
+[submodule ".vim/bundle/vim-jinja"]
+	path = .vim/bundle/vim-jinja
+	url = https://github.com/clavery/vim-jinja.git
