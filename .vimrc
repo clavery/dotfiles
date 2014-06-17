@@ -424,6 +424,9 @@ let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
 nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
 
+" vim-go
+let g:go_disable_autoinstall = 1
+
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
 

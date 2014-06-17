@@ -355,7 +355,10 @@ fi
 #### golang ####
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOPATH=${HOME}/code/go
-source /usr/local/share/zsh/site-functions/go
+if [ -f /usr/local/share/zsh/site-functions/go ]
+then
+  source /usr/local/share/zsh/site-functions/go
+fi
 
 #### ledger ####
 case $HOSTNAME in
