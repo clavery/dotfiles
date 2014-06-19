@@ -324,6 +324,8 @@ augroup filetypes
   au BufRead *.secure setlocal nobackup
   au BufRead *.secure setlocal viminfo=
 
+  au BufRead *.tsv setlocal ft=tsv noexpandtab ts=4
+
   au Filetype qf setlocal nolist nowrap
 augroup END
 

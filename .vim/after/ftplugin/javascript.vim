@@ -20,7 +20,7 @@ function! SendToNode() range
   if bufwinnr(bufnr("__JSOUT__")) == -1
     " Open a new split and set it up.
     botright 14split __JSOUT__
-    execute "setlocal filetype=pytest"
+    execute "setlocal filetype=text"
     execute "setlocal nonumber"
     execute "setlocal norelativenumber"
     setlocal buftype=nofile
