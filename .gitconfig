@@ -37,7 +37,8 @@
   changed = yellow
   untracked = cyan
 [merge]
-	tool = fugitive
+  tool = fugitive
+  conflictstyle = diff3
 [mergetool]
 	prompt = false
   keepBackup = false

@@ -85,7 +85,6 @@ augroup END
 "augroup END
 set nrformats=
 set esckeys
-set diffopt=filler,iwhite
 set foldlevelstart=99
 set completeopt=menuone,longest
 
@@ -282,7 +281,7 @@ hi ColorColumn ctermbg=lightgrey guibg=#343434
 set pumheight=8
 
 " highlight VCS markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 
 set fillchars=vert:\ ,diff:-
 high VertSplit guibg=#555555
@@ -301,8 +300,8 @@ if &diff
 
   set foldlevel=99
   set norelativenumber
-  syntax off
-  hi Normal ctermfg=240 guibg=#888888
+"  syntax off
+"  hi Normal ctermfg=240 guibg=#888888
 endif
 
 
