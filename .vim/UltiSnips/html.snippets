@@ -1,92 +1,165 @@
 snippet jquery "Jquery" b
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 endsnippet
 
 snippet bootstrap "Bootstrap" b
-<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/amelia/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cerulean/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cyborg/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/darkly/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/journal/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/lumen/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/slate/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/spacelab/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/superhero/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/united/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/yeti/bootstrap.min.css" rel="stylesheet">
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 endsnippet
 
 snippet angular "AngularJS" b
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
 
 endsnippet
 
-snippet resource "AngularJS resource" b
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+snippet angular-mockme "mockme" b
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script src="https://raw.githubusercontent.com/clavery/mockme/master/mockme.js"></script>
 
 endsnippet
 
-snippet mocks "AngularJS mocks" b
-<script src="http://code.angularjs.org/1.0.2/angular-mocks.js"></script>
+snippet angular-mocks "AngularJS mocks" b
+<script src="//code.angularjs.org/1.2.18/angular-mocks.js"></script>
 
 endsnippet
 
-snippet table "XHTML <table>" !b
-<table class="${1:table}">
+snippet bootstrap-table "Bootstrap Table" !b
+<table class="table ${1:table-striped table-bordered table-condensed}">
   <thead>
-    <tr><th>${2:Header}</th></tr>
+    <tr>
+      <th>${2:Header}</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><td>${0:Data}</td></tr>
+    <tr>
+      <td>${0:Data}</td>
+    </tr>
   </tbody>
 </table>
 endsnippet
 
-
-snippet skel "Bootstrap HTML Skel" !b
-<div class="container-fluid">
-  <div class="navbar navbar-inverse">
-    <div class="navbar-inner">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-
-      <a class="brand" href="#">${1:ProjectName}</a>
-
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li class="active"><a href="#">${2:Link}</a></li>
-          <!-- <li class="divider-vertical"></li> -->
-        </ul>
+snippet bootstrap-skeleton "Bootstrap HTML Skel" !b
+    <div class="navbar ${1:navbar-inverse navbar-default} navbar-fixed-top" role="navigation">
+      <div class="${2:container container-fluid}">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">${3:Logo}</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </div>
+
+    <div class="container theme-showcase" role="main">
+
+      <div class="page-header">
+        <h1>${4:Title}</h1>
+      </div>
+
+      ${0}
+    </div>
+endsnippet
+
+snippet bootstrap-panel "Bootstrap Panel" !b
+<div class="panel ${1:panel-default panel-primary panel-success panel-info panel-warning panel-danger}">
+  <div class="panel-heading">
+    <h3 class="panel-title">${2:title}</h3>
   </div>
-  <div class="row-fluid">
-    <div class="${3:span12}">
-      $0
+  <div class="panel-body">
+    ${3:${VISUAL:content}}
+  </div>
+</div>
+
+endsnippet
+
+snippet bootstrap-row "Boostrap Row" !b
+<div class="row-fluid">
+	${1:${VISUAL}}
+</div>
+
+endsnippet
+
+snippet bootstrap-col "Boostrap Row" !b
+<div class="${1:col-xs-${2:12}} ${3:col-sm-${4:12}} ${5:col-md-${6:12}} ${7:col-md-${8:12}}">
+	${2:${VISUAL}}
+</div>
+
+endsnippet
+
+snippet bootstrap-alert "Bootstrap Alert" !b
+<div class="alert ${1:alert-danger alert-success alert-info alert-warning}" role="alert">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>${2:Warning}</strong> ${3:Content...}
+</div>
+
+endsnippet
+
+snippet bootstrap-form-horizontal "Bootstrap form horizontal" !b
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="`!p snip.rv = t[1].lower().replace(' ', '-')`" class="col-sm-2 control-label">${1:label}</label>
+    <div class="col-sm-10">
+      <input type="${2:text email password}" class="form-control" id="`!p snip.rv = t[1].lower().replace(' ', '-')`" placeholder="$1">
     </div>
   </div>
-</div>
-endsnippet
-
-snippet breadcrumb "Bootstrap Breadcrumbs" !b
-<ul class="breadcrumb">
-  <li><a href="/">${1:Home}</a> <span class="divider">/</span></li>
-  <li><a href="${2:/next}">${3:Next}</a> <span class="divider">/</span></li>
-  <li class="active">${4:Page}</li>
-</ul>
-endsnippet
-
-snippet alert "Bootstrap Alert" !b
-<div class="alert ${1:alert-error alert-success alert-info}">
-  <button type="button" class="close" data-dismiss="alert">×</button>
-  <strong>${1:Warning}</strong> ${2:Content...}
-</div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn ${3:btn-default btn-primary}">${4:Submit}</button>
+    </div>
+  </div>
+</form>
 
 endsnippet
 
-snippet label "Boostrap Label" !b
-<span class="label ${1:label-success label-warning label-important label-info label-inverse}">${2:content}</span>
-
-endsnippet
-
-snippet badge "Boostrap Badge" !b
-<span class="badge ${1:badge-success badge-warning badge-important badge-info badge-inverse}">${2:10}</span>
+snippet bootstrap-form-field "Bootstrap Horizontal Form Field" !b
+  <div class="form-group">
+    <label for="`!p snip.rv = t[1].lower().replace(' ', '-')`" class="col-sm-2 control-label">${1:label}</label>
+    <div class="col-sm-10">
+      <input type="${2:text email password}" class="form-control" id="`!p snip.rv = t[1].lower().replace(' ', '-')`" placeholder="$1">
+    </div>
+  </div>
 
 endsnippet
 
@@ -104,18 +177,18 @@ snippet boilerplate "HTML5 Boilerplate" !b
   <meta name="viewport" content="width=device-width">
 
   <link href="${2:/css/screen.css}" media="screen, projection" rel="stylesheet" type="text/css" />
-  <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-  <body>
-    ${3}
-  </body>
+<body>
+  ${3}
+</body>
 </html>
 endsnippet
 
 snippet lorem "Lipsum Text" !b
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur faucibus faucibus sem id ullamcorper. Donec eu nibh orci, quis rutrum nulla. Cras orci purus, lobortis in fringilla et, eleifend et velit. Mauris in sodales mi. Donec egestas enim nec mauris aliquam rutrum. Morbi vehicula cursus turpis quis interdum. Vestibulum dapibus enim sed elit rutrum venenatis. Pellentesque molestie blandit erat quis placerat.
 Suspendisse et lacinia lorem. Praesent scelerisque est eget libero feugiat eu fermentum lorem tincidunt. Mauris faucibus, nunc eu porttitor posuere, ipsum nibh feugiat odio, et interdum dolor sem at justo. Integer hendrerit laoreet semper. Nam fermentum sagittis ipsum. Suspendisse quam elit, consectetur sit amet hendrerit quis, mollis ac dui. Vestibulum metus nisl, tincidunt non venenatis ac, facilisis nec tortor. Duis in lectus in augue laoreet eleifend. Maecenas orci turpis, cursus eget porttitor ultrices, faucibus sit amet nunc. Nulla placerat elementum ante, ac blandit felis feugiat sed.
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Vestibulum mollis faucibus cursus. Morbi sed elit pretium nunc lacinia ultricies. In hendrerit metus massa. Maecenas in risus nunc, ut porttitor ante. Nulla non orci vitae massa rhoncus rutrum. Suspendisse a ante purus. Mauris augue massa, accumsan dignissim posuere ut, consequat quis lectus. Pellentesque cursus augue ac dui volutpat id mollis ante sodales. Suspendisse tincidunt faucibus condimentum. Aliquam non enim in leo aliquam pretium. Nunc mi elit, interdum id vehicula non, sagittis at justo. Sed justo odio, tristique vel fringilla sed, malesuada quis velit.
-Ut sodales tellus nec augue tincidunt venenatis iaculis ligula laoreet. Suspendisse rutrum consequat mi ac lobortis. In hac habitasse platea dictumst. Phasellus risus elit, molestie ac venenatis sit amet, scelerisque non augue. Pellentesque convallis elit vitae sem pharetra sed sagittis ligula pulvinar. Maecenas egestas hendrerit tempor. Mauris sed adipiscing massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis viverra feugiat lectus sit amet venenatis. Aenean elementum, sem sit amet volutpat varius, mauris nibh accumsan mauris, sit amet venenatis sem mauris non diam. Morbi volutpat orci a mi bibendum porttitor. Donec in dolor ligula.
 Nulla nec mi odio, eget iaculis sapien. Nulla facilisi. Vestibulum in volutpat lorem. Praesent ac tellus sodales arcu elementum suscipit a eu ligula. Nullam tempor, nibh eu bibendum sodales, justo erat eleifend elit, sed cursus magna velit nec urna. Cras at nisl vel lacus mollis rhoncus non eget purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean porta convallis purus ac molestie.
+
 endsnippet
+
+
