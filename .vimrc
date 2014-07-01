@@ -46,7 +46,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set number
-set relativenumber
+set norelativenumber " on is slow
 set numberwidth=3
 set hidden
 set noshowmatch
