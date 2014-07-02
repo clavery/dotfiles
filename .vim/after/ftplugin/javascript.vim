@@ -12,10 +12,11 @@ let g:used_javascript_libs = 'underscore,angularjs,jquery'
 function! SendToNode() range
   let tonode = join(getline(a:firstline, a:lastline), "\n")
   python import vim, subprocess
-  python p=subprocess.Popen(["node"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+  python p=subprocess.Popen(["node"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   python p.stdin.write(vim.eval('tonode'))
   python p.stdin.close()
-  let result = pyeval('p.stdout.read()')
+  python serr = p.stderr.read()
+  let result = pyeval('serr if serr else p.stdout.read()')
 
   if bufwinnr(bufnr("__JSOUT__")) == -1
     " Open a new split and set it up.
@@ -34,4 +35,10 @@ function! SendToNode() range
   execute "setlocal readonly"
   exe "wincmd w"
 endfunction
-vnoremap <silent> <leader>s :call SendToNode()<cr>
+command -range=% SendToNode  <line1>,<line2>call SendToNode()
+
+vnoremap <silent> <leader>s :SendToNode<cr>
+nnoremap <silent> <leader>s :SendToNode<cr>
+
+vnoremap <silent> <leader>r :SendToChrome<cr>
+nnoremap <silent> <leader>r :SendToChrome<cr>
