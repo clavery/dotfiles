@@ -369,6 +369,7 @@ let g:syntastic_style_warning_symbol = '➧'
 
 " Gundo
 nmap <silent> <leader>u :GundoToggle<cr>
+let g:gundo_help = 0
 
 " Ultisnips
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
