@@ -124,3 +124,6 @@
 [submodule ".vim/bundle/commentary"]
 	path = .vim/bundle/commentary
 	url = git://github.com/tpope/vim-commentary.git
+[submodule ".vim/bundle/enhanced-js"]
+	path = .vim/bundle/enhanced-js
+	url = https://github.com/jelera/vim-javascript-syntax.git
