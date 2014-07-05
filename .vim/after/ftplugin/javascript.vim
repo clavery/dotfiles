@@ -35,7 +35,7 @@ function! SendToNode() range
   execute "setlocal readonly"
   exe "wincmd w"
 endfunction
-command -range=% SendToNode  <line1>,<line2>call SendToNode()
+command! -range=% SendToNode  <line1>,<line2>call SendToNode()
 
 vnoremap <silent> <leader>s :SendToNode<cr>
 nnoremap <silent> <leader>s :SendToNode<cr>

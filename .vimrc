@@ -366,6 +366,11 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '~'
 let g:syntastic_style_error_symbol = 'x'
 let g:syntastic_style_warning_symbol = '➧'
+let g:syntastic_mode_map = { 'mode': 'active' }
+nnoremap <silent> <leader>c :SyntasticCheck<cr>
+nnoremap <silent> <leader>e :Errors<cr>
+let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
+
 
 " Gundo
 nmap <silent> <leader>u :GundoToggle<cr>
@@ -398,6 +403,8 @@ let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+
+let g:ycm_filetype_specific_completion_to_disable = { 'javascript' : 1 }
 
 " Gitgutter
 let g:gitgutter_map_keys = 0
@@ -432,9 +439,6 @@ let g:go_disable_autoinstall = 1
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
-
-" syntastic
-nnoremap <silent> <leader>e :Errors<cr>
 
 " airline
 if !exists('g:airline_symbols')
@@ -577,6 +581,8 @@ hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
 hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
 nnoremap <leader>\ :MultipleCursorsFind <c-r>/<cr>
+
+nnoremap <leader><leader> <c-^>
 
 " Load local overrides
 silent! source ~/.vimrc-local
