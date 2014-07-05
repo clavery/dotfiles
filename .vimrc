@@ -243,7 +243,6 @@ cnoremap $d <CR>:d<CR>``
 
 
 " HIGHLIGHTING
-
 colorscheme molokai
 
 " show syntax group under cursor
