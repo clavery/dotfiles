@@ -269,7 +269,9 @@ if has("gui")
 
   hi LineNr guifg=#999999 guibg=#555555
   hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
-  hi CursorLine guibg=#E6FFFF guifg=#000000 ctermbg=240
+  hi CursorLine guibg=#303030 guifg=NONE ctermbg=240
+  set cursorcolumn
+  hi CursorLineNr guibg=#555555 guifg=yellow ctermbg=240
   " hot pink
   hi Search guibg=#fe57a1 guifg=#000000
   hi IncSearch guifg=#fe57a1 guibg=#000000

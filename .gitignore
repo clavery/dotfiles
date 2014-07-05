@@ -16,3 +16,4 @@ venv/
 .agignore
 .custignore
 *.egg-info/
+.ipynb_checkpoints
