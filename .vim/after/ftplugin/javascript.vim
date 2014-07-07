@@ -37,8 +37,8 @@ function! SendToNode() range
 endfunction
 command! -range=% SendToNode  <line1>,<line2>call SendToNode()
 
-vnoremap <silent> <leader>s :SendToNode<cr>
-nnoremap <silent> <leader>s :SendToNode<cr>
+vnoremap <buffer> <silent> <leader>s :SendToNode<cr>
+nnoremap <buffer> <silent> <leader>s :SendToNode<cr>
 
-vnoremap <silent> <leader>r :SendToChrome<cr>
-nnoremap <silent> <leader>r :SendToChrome<cr>
+vnoremap <buffer> <silent> <leader>r :SendToChrome<cr>
+nnoremap <buffer> <silent> <leader>r :SendToChrome<cr>
