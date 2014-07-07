@@ -370,6 +370,7 @@ let g:syntastic_mode_map = { 'mode': 'active' }
 nnoremap <silent> <leader>c :SyntasticCheck<cr>
 nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
+let g:syntastic_json_checkers=['jsonlint']
 
 
 " Gundo
