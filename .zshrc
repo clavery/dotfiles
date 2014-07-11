@@ -393,3 +393,13 @@ function _completemarks {
 
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
+
+# ec2
+function ec2_waitforinstance() {
+ aws ec2 get-console-output --instance-id $1 --output text | grep -i ready
+ while [ $? != "0" ]; do
+   sleep 10
+   aws ec2 get-console-output --instance-id $1 --output text | grep -i ready
+ done 
+ terminal-notifier -message "$1 is ready" -activate com.apple.Terminal
+}
