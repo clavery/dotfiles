@@ -24,7 +24,8 @@ function! ctrlp#session#init()
   let type = 'cmd'
   let sessions = glob("~/.vim/sessions/*.vim", 0, 1)
   let cleaned = map(sessions, 'substitute(v:val,  "\.\\{-\\}\\([0-9A-Za-z_-]\\+\\)\.vim$", "\\1", "")')
-  let list = filter(cleaned, '!empty(v:val)')
+  let current = substitute(v:this_session,  "\.\\{-\\}\\([0-9A-Za-z_-]\\+\\)\.vim$", "\\1", "")
+  let list = filter(cleaned, '!empty(v:val) && v:val != "' . current . '"')
   return list
 endfunction
 
