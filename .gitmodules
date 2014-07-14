@@ -130,3 +130,6 @@
 [submodule ".vim/bundle/json"]
 	path = .vim/bundle/json
 	url = https://github.com/elzr/vim-json.git
+[submodule ".vim/bundle/handlebars"]
+	path = .vim/bundle/handlebars
+	url = https://github.com/mustache/vim-mustache-handlebars.git

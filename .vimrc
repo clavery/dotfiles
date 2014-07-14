@@ -18,6 +18,7 @@ if has('mac')
   set macmeta
 endif
 
+set sessionoptions=blank,buffers,curdir,help,winsize
 set exrc
 set secure
 set noshowmode
@@ -261,7 +262,7 @@ endif
 
 hi Search ctermbg=55
 
-if has("gui")
+func! ColorOverrides()
   highlight SignColumn guibg=#232526 guifg=#ffffff
   highlight SpecialKey guifg=red
   highlight Normal guibg=#303030
@@ -274,11 +275,17 @@ if has("gui")
   " hot pink
   hi Search guibg=#fe57a1 guifg=#000000
   hi IncSearch guifg=#fe57a1 guibg=#000000
-endif
 
-highlight PmenuSel ctermbg=16 ctermfg=13
+  highlight PmenuSel ctermbg=16 ctermfg=13
 
-hi ColorColumn ctermbg=lightgrey guibg=#343434
+  hi ColorColumn ctermbg=lightgrey guibg=#343434
+endfunc
+augroup coloroverrides
+  au!
+  au SessionLoadPost * call ColorOverrides()
+  au VimEnter * call ColorOverrides()
+augroup END
+
 set pumheight=8
 
 " highlight VCS markers
@@ -393,10 +400,12 @@ let g:netrw_banner=0
 " CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
+nnoremap <C-s> :CtrlPSession<cr>
 " just use CWD
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']
 let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
+
 
 " You Complete Me
 let g:ycm_min_num_identifier_candidate_chars = 3
@@ -587,5 +596,6 @@ nnoremap <leader><leader> <c-^>
 
 " Load local overrides
 silent! source ~/.vimrc-local
+
 
 " vim:foldmethod=marker foldlevel=0
