@@ -4,7 +4,7 @@ endif
 let g:loaded_session_autosave = 1
 
 function! s:persist()
-  if exists('v:this_session') && !empty(v:this_session)
+  if exists('v:this_session') && !empty(v:this_session) && !g:sourcing_session
     try
       execute 'mksession! '.fnameescape(v:this_session)
     catch

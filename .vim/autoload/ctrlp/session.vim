@@ -28,10 +28,20 @@ function! ctrlp#session#init()
   return list
 endfunction
 
+let g:sourcing_session = 0
 func! ctrlp#session#accept(mode, str)
   call ctrlp#exit()
+  let g:sourcing_session = 1
   wall
+
+  for buffer_num in range(1, bufnr('$'))
+    if buflisted(buffer_num)
+      execute 'bdelete! ' . buffer_num
+    endif
+  endfor
+
   execute "source " . expand('~/.vim/sessions/' . a:str . '.vim')
+  let g:sourcing_session = 0
 endfunc
 
 
