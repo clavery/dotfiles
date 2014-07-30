@@ -1,0 +1,3 @@
+profile_default/security/notebook_secret
+profile_default/db/*
+profile_default/history.sqlite
