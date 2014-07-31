@@ -6,4 +6,4 @@ mainly to be overridden in profile/static/custom/custom.css
 This will always be an empty file in IPython
 */
 
-@import "/static/custom/jquery.handsontable.full.css"'
+@import "/static/custom/jquery.handsontable.full.css";

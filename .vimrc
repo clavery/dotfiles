@@ -381,10 +381,15 @@ let g:syntastic_warning_symbol = '~'
 let g:syntastic_style_error_symbol = 'x'
 let g:syntastic_style_warning_symbol = '➧'
 let g:syntastic_mode_map = { 'mode': 'active' }
-nnoremap <silent> <leader>c :SyntasticCheck<cr>
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_balloons = 0
+nnoremap <leader>c :SyntasticCheck<cr>
 nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
 let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_scss_checkers=['scss_lint']
 
 
 " Gundo
