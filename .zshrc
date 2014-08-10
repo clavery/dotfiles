@@ -405,3 +405,7 @@ function ec2_waitforinstance() {
  done 
  terminal-notifier -message "$1 is ready" -activate com.apple.Terminal
 }
+
+# fzf
+export FZF_DEFAULT_COMMAND="ag -l --hidden -g '' --ignore .git"
+source ~/.fzf.zsh

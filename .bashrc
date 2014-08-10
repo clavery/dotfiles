@@ -32,3 +32,4 @@ fi
 export EDITOR='/usr/local/bin/subl -w'
 export EDITOR='/usr/local/bin/subl -w'
 export EDITOR='/usr/local/bin/subl -w'
+source ~/.fzf.bash
