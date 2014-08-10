@@ -20,6 +20,8 @@
   forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
   l = "!. ~/.githelpers && pretty_git_log"
   hp = "!. ~/.githelpers && show_git_head"
+  # interactive add with fzf (not the same as patch add)
+  ia = !git ls-files -m | fzf -m | xargs git add
 [core]
 	excludesfile = /Users/clavery/.gitignore
   pager = less -FRSX
