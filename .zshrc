@@ -409,3 +409,7 @@ function ec2_waitforinstance() {
 # fzf
 export FZF_DEFAULT_COMMAND="ag -l --hidden -g '' --ignore .git"
 source ~/.fzf.zsh
+
+function fkill {
+  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
+}
