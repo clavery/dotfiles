@@ -133,3 +133,6 @@
 [submodule ".vim/bundle/handlebars"]
 	path = .vim/bundle/handlebars
 	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule ".vim/bundle/scriptease"]
+	path = .vim/bundle/scriptease
+	url = https://github.com/tpope/vim-scriptease.git
