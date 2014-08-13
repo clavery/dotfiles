@@ -23,7 +23,7 @@
   # interactive add with fzf (not the same as patch add)
   ia = !git ls-files -m | fzf -m | xargs git add
 [core]
-	excludesfile = /Users/clavery/.gitignore
+  excludesfile = ~/.gitignore
   pager = less -FRSX
 [color "branch"]
   current = magenta
