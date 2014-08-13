@@ -42,7 +42,7 @@
   tool = fugitive
   conflictstyle = diff3
 [mergetool]
-	prompt = false
+  prompt = false
   keepBackup = false
 [mergetool "gvimdiff"]
   path = mvim
@@ -61,9 +61,6 @@
   cursor = yellow black bold
   title-focus = yellow black
   title-blur = cyan black
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+
+[diff "gpg"]
+  textconv = gpg --decrypt
