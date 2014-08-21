@@ -1,0 +1,22 @@
+
+Autocomplete
+-----------
+
+imap
+
+<c-i> - identifier
+<c-o> - omni
+
+Commenting
+----------
+
+gcc comment/uncomment (commentary)
+
+Emmet
+------
+
+<C-Y>, - expand
+<C-Y>i - img size expand
+
+
+

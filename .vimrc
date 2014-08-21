@@ -144,10 +144,23 @@ if has("gui_running")
   set mouse+=a
 endif
 
-if !has("gui_running")
-  let g:loaded_airline = 1
-endif
+set statusline=
+set statusline +=%(%1*[%{fugitive#head()}]%*\ %)%*
+set statusline +=%<%f            " path
+set statusline +=%(\ [%M%R%W]%)                "modified flag
+" Right
+set statusline +=%=%{&ff}/%{&fenc}            "file format
+set statusline +=%2*%y%*                "file type
+set statusline +=%=%5l             "current line
+set statusline +=/%L               "total lines
+set statusline +=%4v\              "virtual column number
+set statusline +=0x%04B\           "character under cursor
 
+augroup insertModeEx
+  au!
+  au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
+  au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
+augroup END
 augroup vimrcEx
   au!
   " jump to last position
@@ -168,9 +181,7 @@ else
   augroup END
 endif
 
-
 " MAPPINGS
-
 
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
@@ -181,8 +192,10 @@ nnoremap g; g;zz
 nnoremap g, g,zz
 
 nnoremap <c-o> <c-o>zz
-noremap  <F1> :checktime<cr>
-inoremap <F1> <esc>:checktime<cr>
+
+" autocomplete
+"inoremap <c-i> <c-x><c-i>
+inoremap <c-o> <c-x><c-o>
 
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
@@ -200,12 +213,6 @@ nnoremap <down> :silent resize -5<cr>
 
 set pastetoggle=<F2>
 
-nnoremap <F4> :silent make <cr>
-
-" Source
-vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
-
 " quickfix next previous shortcut
 noremap <silent> <leader>n :cn<cr>
 noremap <silent> <leader>m :cp<cr>
@@ -217,6 +224,7 @@ command! W :w
 command! Q :q
 command! Wq :wq
 command! WQ :wq
+command! Wqa :wqa
 
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -244,12 +252,12 @@ cnoremap $d <CR>:d<CR>``
 
 
 " HIGHLIGHTING
-if has("gui_running")
-  colorscheme molokai
-else
-  colorscheme molokai_console
-endif
-
+colorscheme molokai
+hi User1 ctermbg=239 ctermfg=6 guibg=#555555 guifg=#AE81FF
+hi User2 ctermbg=239 ctermfg=3 guibg=#555555 guifg=#66D9EF
+hi User3 ctermbg=239 ctermfg=118
+hi User4 ctermbg=239 ctermfg=118
+hi User5 ctermbg=239 ctermfg=118
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
@@ -299,7 +307,7 @@ set pumheight=8
 match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 
 set fillchars=vert:\ ,diff:-
-high VertSplit guibg=#555555
+high VertSplit guibg=#555555 ctermbg=239
 
 " Override diff colors
 hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
@@ -355,7 +363,6 @@ au BufRead *.org set ft=org
 
 " html
 let g:html_exclude_tags = ['html']
-
 
 augroup ft_quickfix
     au!
@@ -435,6 +442,7 @@ let g:gitgutter_eager = 0
 let g:gitgutter_enabled = 0
 let g:gitgutter_highlight_lines = 1
 nnoremap <leader>g :GitGutterToggle<cr>
+
 
 " Airline
 let g:airline#extensions#tabline#enabled = 0
