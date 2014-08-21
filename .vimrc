@@ -145,8 +145,8 @@ if has("gui_running")
 endif
 
 set statusline=
-set statusline +=%(%1*[%{fugitive#head()}]%*\ %)%*
-set statusline +=%<%f            " path
+set statusline +=%(%1*[%{fugitive#head()}]%*%)
+set statusline +=\ %<%f            " path
 set statusline +=%(\ [%M%R%W]%)                "modified flag
 " Right
 set statusline +=%=%{&ff}/%{&fenc}            "file format
@@ -195,14 +195,7 @@ nnoremap <c-o> <c-o>zz
 
 " autocomplete
 "inoremap <c-i> <c-x><c-i>
-inoremap <c-o> <c-x><c-o>
-
-" default null completion function
-func! Completion_Func(findstart, base)
-  return -3
-endfunc
-set completefunc=Completion_Func
-set omnifunc=Completion_Func
+"inoremap <c-o> <c-x><c-o>
 
 
 " Ctrl-move for Window Movement

@@ -136,3 +136,6 @@
 [submodule ".vim/bundle/scriptease"]
 	path = .vim/bundle/scriptease
 	url = https://github.com/tpope/vim-scriptease.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
