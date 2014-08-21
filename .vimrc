@@ -409,6 +409,9 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsExpandTrigger="<c-j>"
 
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+
 " matchit
 runtime macros/matchit.vim
 
