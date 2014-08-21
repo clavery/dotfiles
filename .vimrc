@@ -197,6 +197,14 @@ nnoremap <c-o> <c-o>zz
 "inoremap <c-i> <c-x><c-i>
 inoremap <c-o> <c-x><c-o>
 
+" default null completion function
+func! Completion_Func(findstart, base)
+  return -3
+endfunc
+set completefunc=Completion_Func
+set omnifunc=Completion_Func
+
+
 " Ctrl-move for Window Movement
 nmap <silent> <C-Up> :wincmd k<cr>
 nmap <silent> <C-Down> :wincmd j<cr>
