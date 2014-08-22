@@ -87,6 +87,8 @@ export LS_COLORS="di=34:ex=31:no=00:or=90;43:ln=target:ow=00;46"
 
 ########## PATHS ##########
 
+fpath=($HOME/dotfiles/.completions/src/ $fpath)
+
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 case $HOST_OS in
@@ -227,7 +229,7 @@ zmodload -i zsh/complist
 zstyle ':completion:*:*:*:*:*' menu select
 
 #grouping
-zstyle ':completion:*:descriptions' format 'Completing %d'
+zstyle ':completion:*:descriptions' format ''
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:-command-' group-order commands aliases builtins functions suffix-aliases reserved-words jobs parameters
 

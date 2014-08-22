@@ -139,3 +139,6 @@
 [submodule ".vim/bundle/supertab"]
 	path = .vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+[submodule ".completions"]
+	path = .completions
+	url = https://github.com/zsh-users/zsh-completions.git
