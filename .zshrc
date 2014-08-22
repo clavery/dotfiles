@@ -253,6 +253,8 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
+zstyle ':completion:*' verbose yes
+
 # completion file-patterns
 zstyle ':completion:*:*:perl:*' file-patterns '*.pl:globbed-files *(-/):directories' '*:all-files'
 zstyle ':completion:*:*:python:*' file-patterns '*.py:globbed-files *(-/):directories' '*:all-files'
@@ -368,6 +370,11 @@ case $HOSTNAME in
     export LEDGER_FILE=~/Documents/ledger/main.ledger
     export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
     export LEDGER_PRICE_DB=~/Documents/ledger/prices.db
+  ;;
+  gamma)
+    export LEDGER_FILE=/Volumes/Private/ledger/main.ledger
+    export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
+    export LEDGER_PRICE_DB=/Volumes/Private/ledger/prices.db
   ;;
   *)
   ;;
