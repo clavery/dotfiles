@@ -264,6 +264,9 @@ zstyle ':completion:*:*:coffee:*' file-patterns '*.coffee:globbed-files *(-/):di
 zstyle ':completion:*:*:node:*' file-patterns '*.js:globbed-files *(-/):directories' '*:all-files'
 zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):directories' '*:all-files'
 
+# npm completion
+. <(npm completion)
+
 # grep
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'

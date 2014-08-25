@@ -235,22 +235,9 @@ nnoremap <silent> <leader>w :set wrap!<cr>
 
 nnoremap <leader>` "=strftime("%a %d %b %Y %X")<cr>P
 
-nnoremap <c-w><right> :vertical res -10<cr>
-nnoremap <c-w><left> :vertical res +10<cr>
-nnoremap <c-w><up> :res +5<cr>
-nnoremap <c-w><down> :res -5<cr>
-
 "emacs begin/end
 inoremap <c-a> <Home>
 inoremap <c-e> <End>
-
-" allows incsearch highlighting for range commands
-cnoremap $t <CR>:t''<CR>
-cnoremap <C-t> <CR>:t''<CR>
-cnoremap $m <CR>:m''<CR>
-cnoremap <C-j> <CR>:m''<CR>
-cnoremap $d <CR>:d<CR>``
-
 
 " HIGHLIGHTING
 colorscheme molokai
@@ -373,11 +360,11 @@ augroup END
 " PLUGINS
 
 " ag
-nnoremap <leader>a :<C-U>Ag 
+nnoremap <leader>a :<C-U>Ag
 
 " emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,jinja,css,scss EmmetInstall
+autocmd FileType html,jinja,handlebars,css,scss EmmetInstall
 
 " gpg
 let g:GPGPreferArmor = 1
