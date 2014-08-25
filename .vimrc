@@ -144,12 +144,13 @@ if has("gui_running")
   set mouse+=a
 endif
 
-set statusline=
-set statusline +=%(%1*[%{fugitive#head()}]%*%)
-set statusline +=\ %<%f            " path
-set statusline +=%(\ [%M%R%W]%)                "modified flag
+set statusline =
+set statusline +=\ %(%1*%{strlen(fugitive#head())?'['.fugitive#head().']':''}%0*%)
+set statusline +=\ %f            " path
+set statusline +=%(\ [%n%M%R%W]%)                "modified flag
+
 " Right
-set statusline +=%=%{&ff}/%{&fenc}            "file format
+set statusline +=%=%{&ff}/%{strlen(&fenc)?&fenc:'none'}            "file format
 set statusline +=%2*%y%*                "file type
 set statusline +=%=%5l             "current line
 set statusline +=/%L               "total lines
@@ -379,6 +380,7 @@ let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_balloons = 0
+let g:syntastic_stl_format = '%E{[%e:%F]}'
 nnoremap <leader>c :SyntasticCheck<cr>
 nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
@@ -460,20 +462,6 @@ let g:go_disable_autoinstall = 1
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
-
-" airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.linenr = ''
-let g:airline#extensions#default#section_truncate_width = {
-    \ 'b': 88,
-    \ 'x': 60,
-    \ 'y': 88,
-    \ 'z': 45,
-    \ }
-let g:airline#extensions#tabline#show_tab_type = 0
-
 
 " FUNCTIONS
 
