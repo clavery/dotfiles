@@ -147,14 +147,14 @@ endif
 set statusline =
 set statusline +=\ %(%1*%{strlen(fugitive#head())?'['.fugitive#head().']':''}%0*%)
 set statusline +=\ %f            " path
-set statusline +=%(\ [%n%M%R%W]%)                "modified flag
+set statusline +=%(\ [%{v:register},%n%M%R%W]%)                "modified flag
 
 " Right
 set statusline +=%=%{&ff}/%{strlen(&fenc)?&fenc:'none'}            "file format
 set statusline +=%2*%y%*                "file type
-set statusline +=%=%5l             "current line
+set statusline +=\ %3l             "current line
 set statusline +=/%L               "total lines
-set statusline +=%4v\              "virtual column number
+set statusline +=%3v\              "virtual column number
 set statusline +=0x%04B\           "character under cursor
 
 augroup insertModeEx
