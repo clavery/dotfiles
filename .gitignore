@@ -18,3 +18,4 @@ venv/
 *.egg-info/
 .ipynb_checkpoints
 .vim/sessions
+.ipython/profile_default/security/
