@@ -142,3 +142,9 @@
 [submodule ".completions"]
 	path = .completions
 	url = https://github.com/zsh-users/zsh-completions.git
+[submodule ".vim/bundle/ipython"]
+	path = .vim/bundle/ipython
+	url = https://github.com/ivanov/vim-ipython.git
+[submodule ".vim/bundle/virtualenv"]
+	path = .vim/bundle/virtualenv
+	url = https://github.com/jmcantrell/vim-virtualenv.git

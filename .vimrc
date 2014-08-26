@@ -145,6 +145,7 @@ if has("gui_running")
 endif
 
 set statusline =
+set statusline +=\ %(%1*%{strlen(virtualenv#statusline())?'[venv:'.virtualenv#statusline().']':''}%0*%)
 set statusline +=\ %(%1*%{strlen(fugitive#head())?'['.fugitive#head().']':''}%0*%)
 set statusline +=\ %f            " path
 set statusline +=%(\ [%{v:register},%n%M%R%W]%)                "modified flag
