@@ -53,3 +53,20 @@ require(['/static/custom/jquery.handsontable.full.js']);
 CodeMirror.keyMap.default['Ctrl-W'] = 'delWordBefore';
 CodeMirror.keyMap.default['Ctrl-U'] = "delLineLeft";
 
+$([IPython.events]).on("app_initialized.NotebookApp", function () {
+    $('div#header').hide();
+    $('div#maintoolbar').hide();
+});
+
+$([IPython.events]).on("selected_cell_type_changed.Notebook", function () {
+    var cells = IPython.notebook.get_cells();
+    cells.forEach(function(cell) {
+      if (cell.code_mirror && cell.code_mirror.options.mode === 'magic_javascript') {
+        cell.code_mirror.setOption('theme', 'monokai');
+      } else {
+        // reset
+        cell.code_mirror.setOption('theme', 'ipython')
+      }
+    });
+});
+
