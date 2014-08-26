@@ -49,3 +49,7 @@
  */
 
 require(['/static/custom/jquery.handsontable.full.js']);
+
+CodeMirror.keyMap.default['Ctrl-W'] = 'delWordBefore';
+CodeMirror.keyMap.default['Ctrl-U'] = "delLineLeft";
+
