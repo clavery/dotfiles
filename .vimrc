@@ -414,6 +414,7 @@ let g:netrw_banner=0
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 nnoremap <C-s> :CtrlPSession<cr>
+nnoremap <C-q> :CtrlPCmdPalette<cr>
 " just use CWD
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']

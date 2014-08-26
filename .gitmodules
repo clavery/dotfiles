@@ -151,3 +151,6 @@
 [submodule ".vim/bundle/ctrl-p"]
 	path = .vim/bundle/ctrl-p
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule ".vim/bundle/ctrlp-cmdpalette"]
+	path = .vim/bundle/ctrlp-cmdpalette
+	url = https://github.com/fisadev/vim-ctrlp-cmdpalette.git
