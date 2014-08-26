@@ -42,3 +42,5 @@ nnoremap <buffer> <silent> <leader>s :SendToNode<cr>
 
 vnoremap <buffer> <silent> <leader>r :SendToChrome<cr>
 nnoremap <buffer> <silent> <leader>r :SendToChrome<cr>
+
+nno <buffer> <silent> K :exe 'silent !open dash://js:'.expand("<cword>")<cr>

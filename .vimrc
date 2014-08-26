@@ -436,11 +436,6 @@ let g:gitgutter_enabled = 0
 let g:gitgutter_highlight_lines = 1
 nnoremap <leader>g :GitGutterToggle<cr>
 
-
-" Airline
-let g:airline#extensions#tabline#enabled = 0
-let g:airline_powerline_fonts = 1
-
 let g:riv_global_leader="<c-z>"
 
 " Pymode

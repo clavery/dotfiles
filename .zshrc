@@ -341,6 +341,7 @@ alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
 alias sss="python -m smtpd -n -c DebuggingServer localhost:1025"
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHONIOENCODING='utf8:ignore'
 case $HOST_OS in
   darwin)
     export CFLAGS=-Qunused-arguments
