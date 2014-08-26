@@ -145,7 +145,7 @@ if has("gui_running")
 endif
 
 set statusline =
-set statusline +=\ %(%1*%{strlen(virtualenv#statusline())?'[venv:'.virtualenv#statusline().']':''}%0*%)
+set statusline +=\ %(%3*%{strlen(virtualenv#statusline())?'[venv:'.virtualenv#statusline().']':''}%0*%)
 set statusline +=\ %(%1*%{strlen(fugitive#head())?'['.fugitive#head().']':''}%0*%)
 set statusline +=\ %f            " path
 set statusline +=%(\ [%{v:register},%n%M%R%W]%)                "modified flag
@@ -245,7 +245,7 @@ inoremap <c-e> <End>
 colorscheme molokai
 hi User1 ctermbg=239 ctermfg=6 guibg=#555555 guifg=#AE81FF
 hi User2 ctermbg=239 ctermfg=3 guibg=#555555 guifg=#66D9EF
-hi User3 ctermbg=239 ctermfg=118
+hi User3 ctermbg=239 ctermfg=7 guibg=#555555 guifg=#E6DB74
 hi User4 ctermbg=239 ctermfg=118
 hi User5 ctermbg=239 ctermfg=118
 
