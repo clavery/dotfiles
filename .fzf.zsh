@@ -55,6 +55,15 @@ fzf-cd-widget() {
 zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
 
+# Ctrl-P - cd into the selected directory
+fzf-dirs-widget() {
+  cd $(eval echo ${$(\dirs -p | fzf):-.})
+  zle reset-prompt
+}
+zle     -N    fzf-dirs-widget
+bindkey '^P' fzf-dirs-widget
+
+
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
   LBUFFER=$(fc -l 1 | fzf +s +m -n..,1,2.. | sed "s/ *[0-9*]* *//")

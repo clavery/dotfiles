@@ -174,8 +174,8 @@ list_colors() {
 PROMPT=''
 case $HOSTNAME in
   meeples|beast|dasbook|gamma)
-    #export PROMPT='%F{005}${_VENV}%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
-    export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
+    export PROMPT='%F{5}${_VENV}%f%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
+    #export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
   ;;
   *)
     # show username/hostname for all other hosts
