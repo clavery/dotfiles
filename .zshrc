@@ -231,6 +231,7 @@ compinit -i
 autoload -U bashcompinit
 bashcompinit -i
 zmodload -i zsh/complist
+autoload -U zmv
 
 zstyle ':completion:*:*:*:*:*' menu select
 
