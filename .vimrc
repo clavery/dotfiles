@@ -362,7 +362,7 @@ augroup END
 " PLUGINS
 
 " ag
-nnoremap <leader>a :<C-U>Ag
+nnoremap <leader>a :<C-U>Ag 
 
 " emmet
 let g:user_emmet_install_global = 0
