@@ -202,6 +202,9 @@ alias crontab="VIM_CRONTAB=true crontab"
 alias history='fc -l 1'
 alias dirs='dirs -vp'
 
+# don't send screen...
+alias ssh='TERM=xterm-256color ssh'
+
 # use macvim if avaliable
 if [[ -x `which mvim` ]] {
   alias vim="mvim -v"
