@@ -299,11 +299,6 @@ match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 set fillchars=vert:\ ,diff:-
 high VertSplit guibg=#555555 ctermbg=239
 
-" Override diff colors
-hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
-hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold ctermbg=NONE ctermfg=4
-hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=1
-hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold cterm=bold ctermfg=5 ctermbg=NONE
 if &diff
   set scrollbind
 
@@ -313,7 +308,7 @@ if &diff
 
   set foldlevel=99
   set norelativenumber
-"  syntax off
+  syntax off
 "  hi Normal ctermfg=240 guibg=#888888
 endif
 
