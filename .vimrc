@@ -306,6 +306,8 @@ if &diff
   nmap dl :diffget //3<CR>
   nmap du :diffup<CR>
 
+  set diffopt+=vertical
+
   set foldlevel=99
   set norelativenumber
   syntax off

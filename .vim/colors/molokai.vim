@@ -274,7 +274,7 @@ end
 " default diff is distracting
 hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
 hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold ctermbg=NONE ctermfg=4
-hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=1
+hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=8
 hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold cterm=bold ctermfg=5 ctermbg=NONE
 " Must be at the end, because of ctermbg=234 bug.
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ

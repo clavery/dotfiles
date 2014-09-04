@@ -49,7 +49,7 @@
 [mergetool "gvimdiff"]
   path = mvim
 [mergetool "fugitive"]
-  cmd = mvim -f -g -d -c \"Gdiff | wincmd J\" \"$MERGED\"
+  cmd = mvim -f -v -d -c \"Gdiff | wincmd J\" \"$MERGED\"
 [diff]
   tool = vimdiff
 [difftool "vimdiff"]
