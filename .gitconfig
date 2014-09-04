@@ -22,6 +22,8 @@
   hp = "!. ~/.githelpers && show_git_head"
   # interactive add with fzf (not the same as patch add)
   ia = !git ls-files -m | fzf -m | xargs git add
+  # interactive select diff targets then difftool them
+  d = !git ls-files -m | fzf -m | xargs -o git difftool
 [core]
   excludesfile = ~/.gitignore
   pager = less -FRSX
