@@ -145,15 +145,15 @@ if has("gui_running")
 endif
 
 set statusline =
-set statusline +=\ %(%3*%{strlen(virtualenv#statusline())?'[venv:'.virtualenv#statusline().']':''}%0*%)
+set statusline +=\ %(%3*%{strlen(virtualenv#statusline())?'['.virtualenv#statusline().']':''}%0*%)
 set statusline +=\ %(%1*%{strlen(fugitive#head())?'['.fugitive#head().']':''}%0*%)
 set statusline +=\ %f            " path
-set statusline +=%(\ [%{v:register},%n%M%R%W]%)                "modified flag
+set statusline +=%(\ [%n%M%R%W]%)                "modified flag
 
 " Right
 set statusline +=%=%{&ff}/%{strlen(&fenc)?&fenc:'none'}            "file format
 set statusline +=%2*%y%*                "file type
-set statusline +=\ %3l             "current line
+set statusline +=\ %l             "current line
 set statusline +=/%L               "total lines
 set statusline +=%3v\              "virtual column number
 set statusline +=0x%04B\           "character under cursor
@@ -256,8 +256,9 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Source\ Code\ Pro:h14
-  set guifont=Sauce\ Code\ Powerline:h14
+  "set guifont=Source\ Code\ Pro:h14
+  set guifont=Source Code Pro Light:h14
+  "set guifont=Sauce\ Code\ Powerline:h14
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
