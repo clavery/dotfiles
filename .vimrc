@@ -256,8 +256,8 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  "set guifont=Source\ Code\ Pro:h14
-  set guifont=Source Code Pro Light:h14
+  set guifont=Source\ Code\ Pro:h14
+  "set guifont=Source\ Code\ Pro\ Light:h14
   "set guifont=Sauce\ Code\ Powerline:h14
 endif
 if has("win32")
@@ -445,6 +445,7 @@ let g:pymode_lint_write = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_folding = 0
 let g:pymode_indent = 1
+let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_syntax_slow_sync = 0
