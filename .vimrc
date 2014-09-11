@@ -420,8 +420,9 @@ let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 
 
 " You Complete Me
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_auto_trigger = 0
+let g:ycm_min_num_identifier_candidate_chars = 1
+let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
