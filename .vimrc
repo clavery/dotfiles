@@ -249,10 +249,8 @@ hi User3 ctermbg=239 ctermfg=7 guibg=#555555 guifg=#E6DB74
 hi User4 ctermbg=239 ctermfg=118
 hi User5 ctermbg=239 ctermfg=118
 
+" jinja nice highlights
 hi jinjaSpecial guibg=#555555
-
-
-
 hi jinjaSpecial term=bold ctermfg=81 gui=italic guifg=#66D9EF guibg=#3e3e3e
 hi jinjaTagBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
 hi jinjaVarBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
@@ -279,33 +277,6 @@ if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
 
-hi Search ctermbg=55
-
-func! ColorOverrides()
-  if has("gui_running")
-    highlight SpecialKey guifg=red
-    highlight Normal guibg=#303030
-
-    hi CursorLine guibg=#303030 guifg=NONE ctermbg=240
-    set cursorline
-    hi CursorLineNr guibg=#555555 guifg=yellow ctermbg=240
-
-    highlight PmenuSel ctermbg=16 ctermfg=13
-
-    hi ColorColumn ctermbg=lightgrey guibg=#343434
-  endif
-  " hot pink
-  hi Search guibg=#fe57a1 guifg=#000000
-  hi IncSearch guifg=#fe57a1 guibg=#000000
-  hi LineNr guifg=#999999 guibg=#555555 ctermbg=239
-  hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
-  highlight SignColumn guibg=#232526 guifg=#ffffff
-endfunc
-augroup coloroverrides
-  au!
-  au SessionLoadPost * call ColorOverrides()
-  au VimEnter * call ColorOverrides()
-augroup END
 
 set pumheight=8
 

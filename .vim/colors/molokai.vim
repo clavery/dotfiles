@@ -110,20 +110,20 @@ hi TabLineFill     guifg=#1B1D1E guibg=#1B1D1E
 hi TabLine         guibg=#1B1D1E guifg=#808080 gui=none
 
 if s:molokai_original == 1
-   hi Normal          guifg=#F8F8F2 guibg=#272822
+   hi Normal          guifg=#F8F8F2 guibg=#303030
    hi Comment         guifg=#75715E
-   hi CursorLine                    guibg=#3E3D32
-   hi CursorLineNr    guifg=#FD971F               gui=none
+   hi CursorLine                    guibg=#303030
+   hi CursorLineNr    guifg=none               gui=none
    hi CursorColumn                  guibg=#3E3D32
    hi ColorColumn                   guibg=#3B3A32
    hi LineNr          guifg=#BCBCBC guibg=#3B3A32
    hi NonText         guifg=#75715E
    hi SpecialKey      guifg=#75715E
 else
-   hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
+   hi Normal          guifg=#F8F8F2 guibg=#303030
    hi Comment         guifg=#7E8E91
-   hi CursorLine                    guibg=#293739
-   hi CursorLineNr    guifg=#FD971F               gui=none
+   hi CursorLine      guifg=NONE ctermbg=240              guibg=#303030
+   hi CursorLineNr    guifg=yellow  ctermbg=240 guibg=#555555  gui=none
    hi CursorColumn                  guibg=#293739
    hi ColorColumn                   guibg=#232526
    hi LineNr          guifg=#465457 guibg=#232526
@@ -276,6 +276,23 @@ hi DiffAdd         guifg=#A6E22E guibg=NONE ctermbg=NONE ctermfg=2
 hi DiffChange      guifg=#89807D guibg=NONE gui=italic,bold ctermbg=NONE ctermfg=4
 hi DiffDelete      guifg=#465457 guibg=NONE ctermbg=NONE ctermfg=8
 hi DiffText        guifg=#66D9EF guibg=NONE gui=italic,bold cterm=bold ctermfg=5 ctermbg=NONE
+
+hi Search ctermbg=55
+
+if has("gui_running")
+  highlight SpecialKey guifg=red
+
+  set cursorline
+
+  highlight PmenuSel ctermbg=16 ctermfg=13
+
+  hi ColorColumn ctermbg=lightgrey guibg=#343434
+endif
+hi Search guibg=#fe57a1 guifg=#000000
+hi IncSearch guifg=#fe57a1 guibg=#000000
+hi LineNr guifg=#999999 guibg=#555555 ctermbg=239
+hi Visual guibg=#b3d4fc guifg=#000000 ctermbg=240
+highlight SignColumn guibg=#232526 guifg=#ffffff
 " Must be at the end, because of ctermbg=234 bug.
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
 set background=dark
