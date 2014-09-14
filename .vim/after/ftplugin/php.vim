@@ -1,2 +1,1 @@
-setlocal keywordprg=:help
-setlocal omnifunc=phpcomplete#CompletePHP
+nno <buffer> <silent> K :exe 'silent !open dash://php:'.expand("<cword>")<cr>

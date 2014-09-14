@@ -160,3 +160,6 @@
 [submodule ".vim/bundle/python"]
 	path = .vim/bundle/python
 	url = https://github.com/klen/python-mode.git
+[submodule ".vim/bundle/postgresql"]
+	path = .vim/bundle/postgresql
+	url = https://github.com/krisajenkins/vim-postgresql-syntax.git
