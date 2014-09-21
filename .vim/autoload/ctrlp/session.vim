@@ -20,6 +20,10 @@ else
   let g:ctrlp_ext_vars = [s:session_var]
 endif
 
+function! ctrlp#session#name_from_file(filename)
+  return substitute(a:filename,  "\.\\{-\\}\\([0-9A-Za-z_-]\\+\\)\.vim$", "\\1", "")
+endfunction
+
 function! ctrlp#session#init()
   let type = 'cmd'
   let sessions = glob("~/.vim/sessions/*.vim", 0, 1)
