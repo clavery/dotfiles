@@ -440,6 +440,9 @@ let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
 nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
 
+" vim-markdown
+let g:vim_markdown_initial_foldlevel=2
+
 " vim-go
 let g:go_disable_autoinstall = 1
 
