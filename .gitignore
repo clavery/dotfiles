@@ -19,3 +19,6 @@ venv/
 .ipynb_checkpoints
 .vim/sessions
 .ipython/profile_default/security/
+
+# vim tags
+doc/tags
