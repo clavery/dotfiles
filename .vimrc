@@ -308,7 +308,7 @@ endif
 augroup filetypes
   au!
 
-  au BufRead *.md setlocal ft=mkd
+  au BufRead *.md setlocal ft=markdown
   au BufRead *.ledger setlocal filetype=ledger
   au BufRead *.txt setlocal filetype=text
   au BufRead,BufNewFile *.scss set filetype=scss

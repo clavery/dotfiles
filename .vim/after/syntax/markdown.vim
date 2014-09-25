@@ -75,3 +75,13 @@ hi def link holdStates Identifier
 hi def link logStates Comment
 
 hi Folded term=None ctermbg=None ctermfg=8 guibg=NONE
+
+" Automatically insert bullets
+setlocal formatoptions+=r
+" Do not automatically insert bullets when auto-wrapping with text-width
+setlocal formatoptions-=c
+" Accept various markers as bullets
+setlocal comments=b:*,b:+,b:-
+
+" Automatically continue blockquote on line break
+setlocal comments+=b:>
