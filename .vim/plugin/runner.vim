@@ -42,4 +42,31 @@ function! runner#run() range
   exe "wincmd w"
 endfunction
 
+function! runner#RunShellCommand(cmdline)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+     if part[0] =~ '\v[%#<]'
+        let expanded_part = fnameescape(expand(part))
+        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+     endif
+  endfor
+  if bufwinnr(bufnr("__OUT__")) == -1
+    " Open a new split and set it up.
+    botright 14split __OUT__
+    execute "setlocal nonumber"
+    execute "setlocal norelativenumber"
+    setlocal buftype=nofile
+  else
+    exe bufwinnr(bufnr("__OUT__")) . "wincmd w"
+  endif
+
+  execute "setlocal noreadonly"
+  normal! ggdG
+  execute 'silent $read !'. expanded_cmdline
+  execute "setlocal readonly"
+  exe "wincmd w"
+endfunction
+
+command! -complete=shellcmd -nargs=+ Shell call runner#RunShellCommand(<q-args>)
 command! -range=% Runner  <line1>,<line2>call runner#run()
