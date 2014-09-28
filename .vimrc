@@ -447,6 +447,11 @@ let g:vim_markdown_initial_foldlevel=2
 " vim-go
 let g:go_disable_autoinstall = 1
 
+" tagbar
+let g:tagbar_zoomwidth = 0
+let g:tagbar_sort = 0
+nnoremap <silent> <F8> :TagbarToggle<cr>
+
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
 
