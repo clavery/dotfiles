@@ -398,7 +398,7 @@ let g:netrw_banner=0
 " CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
-nnoremap <C-s> :CtrlPSession<cr>
+noremap <C-s> :CtrlPSession<cr>
 nnoremap <C-q> :CtrlPCmdPalette<cr>
 " just use CWD
 let g:ctrlp_working_path_mode = ''
