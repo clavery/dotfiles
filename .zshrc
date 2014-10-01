@@ -286,7 +286,13 @@ zstyle ':completion:*:*:node:*' file-patterns '*.js:globbed-files *(-/):director
 zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):directories' '*:all-files'
 
 # npm completion
-. <(npm completion)
+case $HOSTNAME in
+  dasbook|gamma)
+    . <(npm completion)
+    ;;
+  *)
+    ;;
+esac
 
 # grep
 export GREP_OPTIONS='--color=auto'
@@ -442,7 +448,9 @@ function ec2_waitforinstance() {
 
 # fzf
 export FZF_DEFAULT_COMMAND="ag -l --hidden -g '' --ignore .git"
-source ~/.fzf.zsh
+if [ -x /usr/local/Cellar/fzf/0.8.6/bin/fzf ]; then
+  source ~/.fzf.zsh
+fi
 
 function fkill {
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
