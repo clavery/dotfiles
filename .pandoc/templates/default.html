@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-sm-12">
+        $for(include-before)$
+        $include-before$
+        $endfor$
+      </div>
+    </div>
+
+    $if(toc)$
+    <div class="row" style="margin-top:40px;">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Table of Contents</div>
+          <div class="panel-body">
+            $toc$
+          </div>
+        </div>
+      </div>
+    </div>
+    $endif$
+
+    <div class="row">
+      <div class="col-sm-12">
+        $header-includes$
+
+        $body$
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        $for(include-after)$
+        $include-after$
+        $endfor$
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var tables = document.getElementsByTagName("table");
+    for(var i = 0; i < tables.length; ++i){
+    tables[i].setAttribute("class", "table table-striped");
+    }
+  </script>
+</body>
+</html>
