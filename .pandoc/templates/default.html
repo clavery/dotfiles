@@ -11,7 +11,32 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
 
+  $for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+  $endfor$
+  $if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+  $endif$
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  $if(quotes)$
+  <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+  $endif$
+  $if(highlighting-css)$
+  <style type="text/css">
+    $highlighting-css$
+  </style>
+  $endif$
   <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" rel="stylesheet">
+  $for(css)$
+  <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+  $endfor$
+  $if(math)$
+  $math$
+  $endif$
+  $for(header-includes)$
+  $header-includes$
+  $endfor$
 </head>
 <body>
   <div class="container" role="main">
@@ -38,9 +63,9 @@
 
     <div class="row">
       <div class="col-sm-12">
-        $header-includes$
+$header-includes$
 
-        $body$
+$body$
       </div>
     </div>
 
