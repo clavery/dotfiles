@@ -461,7 +461,7 @@ nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<
 let g:pandoc#after#modules#enabled = ["ultisnips"]
 "let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#syntax#conceal#blacklist = ['titleblock', 'list', 'atx']
-let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", "cs"]
+let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", "cs", "html", "sh", "vim"]
 let g:pandoc#folding#fdc = 0
 let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
 
