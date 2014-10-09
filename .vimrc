@@ -461,6 +461,7 @@ let g:pandoc#after#modules#enabled = ["ultisnips"]
 let g:pandoc#syntax#conceal#blacklist = ['titleblock', 'list', 'atx']
 let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", "cs"]
 let g:pandoc#folding#fdc = 0
+let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
 
 " FUNCTIONS
 
