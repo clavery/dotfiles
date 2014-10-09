@@ -14,6 +14,8 @@ set t_Co=256
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
 
+nnoremap Q <nop>
+
 if has('mac')
   set macmeta
 endif
