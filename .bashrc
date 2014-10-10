@@ -29,7 +29,3 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
   . /usr/local/bin/virtualenvwrapper.sh
 fi
-export EDITOR='/usr/local/bin/subl -w'
-export EDITOR='/usr/local/bin/subl -w'
-export EDITOR='/usr/local/bin/subl -w'
-source ~/.fzf.bash
