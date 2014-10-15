@@ -66,3 +66,6 @@
 
 [diff "gpg"]
   textconv = gpg --decrypt
+
+[mergetool "nbmerge"]
+  cmd = nbmerge $LOCAL $BASE $REMOTE $MERGED
