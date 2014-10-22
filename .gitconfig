@@ -66,6 +66,11 @@
 
 [diff "gpg"]
   textconv = gpg --decrypt
-
 [mergetool "nbmerge"]
   cmd = nbmerge $LOCAL $BASE $REMOTE $MERGED
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

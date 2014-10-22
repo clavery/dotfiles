@@ -432,9 +432,17 @@ function marks {
 function _completemarks {
   reply=($(ls $MARKPATH))
 }
-
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
+
+
+#templates
+export _TEMPLATE_PATH=$HOME/code/templates
+alias template="${_TEMPLATE_PATH}/template"
+function _completetemplate {
+  reply=($(find $_TEMPLATE_PATH -type d -depth 1 -exec basename {} \;))
+}
+compctl -K _completetemplate template
 
 # ec2
 function ec2_waitforinstance() {
