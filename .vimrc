@@ -107,7 +107,6 @@ else
   set wildignore+=.hg,.git,.svn
   set wildignore+=*/WEB-INF/*
   set wildignore+=*/node_modules/*
-  set wildignore+=*/bower_components/*
   set wildignore+=.sass-cache
   set wildignore+=*.min.js
   set wildignore+=*.pyc
