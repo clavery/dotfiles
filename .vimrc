@@ -2,7 +2,7 @@
 " Charles Lavery
 
 filetype off
-
+"let g:pathogen_disabled = [ 'ag.vim', 'commentary', 'ctrl-p', 'ctrlp-cmdpalette', 'editor-config', 'emmet', 'enhanced-js', 'fugitive', 'gundo', 'handlebars', 'html5', 'javascript-libraries-syntax', 'json', 'multiple-cursors', 'nginx', 'postgresql', 'ps', 'psql', 'python', 'robot', 'scss', 'snippets', 'surround', 'syntastic', 'tagbar', 'ultisnips', 'vim-chrome-repl', 'vim-gnupg', 'vim-jinja', 'vim-pandoc', 'vim-pandoc-after', 'vim-pandoc-syntax', 'vim-repeat', 'vim-signcolor', 'virtualenv', 'ycm' ]
 call pathogen#infect()
 
 filetype plugin indent on
