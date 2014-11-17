@@ -178,3 +178,6 @@
 [submodule ".vim/bundle/vim-pandoc-after"]
 	path = .vim/bundle/vim-pandoc-after
 	url = https://github.com/vim-pandoc/vim-pandoc-after.git
+[submodule ".vim/bundle/jsx"]
+	path = .vim/bundle/jsx
+	url = https://github.com/mxw/vim-jsx.git
