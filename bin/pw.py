@@ -19,9 +19,13 @@ def print_accounts():
 def print_account_info(account_name):
     f = ''.join(fileinput.input())
     groups = [ACCT_RE.search(g) for g in GROUPS_RE.split(f) if ACCT_RE.search(g)]
-    passwords = [m.group('password') for m in groups if account_name in m.group('account_name')]
-    if passwords:
-        sys.stdout.write( passwords[0].rstrip())
+    matches = [m for m in groups if account_name in m.group('account_name')]
+    if matches:
+        password = matches[0].group('password')
+        username = matches[0].group('username')
+        if username:
+            sys.stderr.write("%s\n" % username)
+        sys.stdout.write( password.rstrip())
     else:
         sys.stderr.write( "%s Not Found" % account_name)
 
