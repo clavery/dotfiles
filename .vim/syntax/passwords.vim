@@ -1,7 +1,7 @@
 """ password lists
 
 function! passwords#FoldText()
-  return '→ ' . getline(v:foldstart) . ' ⤸'
+  return '→ ' . substitute(getline(v:foldstart), 'A:\s*', '', "") . ' ⤸'
 endfunction
 setlocal foldtext=passwords#FoldText()
 setlocal foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
