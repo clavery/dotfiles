@@ -6,6 +6,10 @@
 HOSTNAME=`hostname -s`
 HOST_OS=`uname|tr '[:upper:]' '[:lower:]'`
 
+if [ -f ~/.vars ]; then
+  source ~/.vars
+fi
+
 stty stop undef
 
 export HISTSIZE=1000
@@ -467,3 +471,20 @@ function fkill {
 alias uuid4="python -c 'import uuid; import sys; sys.stdout.write(str(uuid.uuid4()))' | tee >( pbcopy)"
 
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
+
+function pw {
+  _oldumask=$(umask)
+  umask 077
+  _tmpfile=$(mktemp -u -t pw)
+  mkfifo $_tmpfile
+
+  gpg --quiet --batch -d $PASSWORD_FILE |
+   tee $_tmpfile |
+   ~/bin/pw.py -a |
+   fzf |
+   xargs ~/bin/pw.py <(cat $_tmpfile) -p |
+   pbcopy
+
+  rm $_tmpfile
+  umask $_oldumask
+}
