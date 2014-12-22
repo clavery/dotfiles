@@ -3,6 +3,8 @@
 [user]
   name = Charles Lavery
   email = charles.lavery@gmail.com
+[include]
+  path = ~/.gitconfig-local
 [color]
   branch = auto
   diff = auto
@@ -22,6 +24,7 @@
   hp = "!. ~/.githelpers && show_git_head"
   # interactive add with fzf (not the same as patch add)
   ia = !git ls-files -m | fzf -m | xargs git add
+  ic = !git ls-files -m | fzf -m | xargs git co
   # interactive select diff targets then difftool them
   d = !git ls-files -m | fzf -m | xargs -o git difftool
 [core]
@@ -69,8 +72,8 @@
 [mergetool "nbmerge"]
   cmd = nbmerge $LOCAL $BASE $REMOTE $MERGED
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
