@@ -79,7 +79,7 @@ export PAGER=less
 export MANPAGER=less
 
 # less options
-export LESS="--ignore-case -r"
+export LESS="--ignore-case -r -X -F"
 
 # cross-platform color ls
 ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || alias ls='ls -G'
