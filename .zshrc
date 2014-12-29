@@ -441,8 +441,10 @@ compctl -K _completemarks unmark
 
 _FMARKS=()
 function mf {
-  fullpath=$(cd $(dirname $1); echo $PWD/$(basename $1))   
-  _FMARKS+=("$fullpath")
+  for f in $*; do
+    fullpath=$(cd $(dirname "$f"); echo "$PWD/$(basename $f)")
+    _FMARKS+=("$fullpath")
+  done
 }
 function mfclear {
   _FMARKS=()
@@ -451,6 +453,11 @@ function mfmove {
   for item in ${_FMARKS[@]}; do
     echo $item
     mv "$item" "$1"
+  done
+}
+function mfprint {
+  for item in ${_FMARKS[@]}; do
+    echo $item
   done
 }
 
