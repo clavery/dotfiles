@@ -439,6 +439,20 @@ function _completemarks {
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
 
+_FMARKS=()
+function mf {
+  fullpath=$(cd $(dirname $1); echo $PWD/$(basename $1))   
+  _FMARKS+=("$fullpath")
+}
+function mfclear {
+  _FMARKS=()
+}
+function mfmove {
+  for item in ${_FMARKS[@]}; do
+    echo $item
+    mv "$item" "$1"
+  done
+}
 
 #templates
 export _TEMPLATE_PATH=$HOME/code/templates
