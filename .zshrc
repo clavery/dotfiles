@@ -82,12 +82,14 @@ export MANPAGER=less
 export LESS="--ignore-case -r -X -F"
 
 # cross-platform color ls
-ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || alias ls='ls -G'
-export CLICOLORS=1
+ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || true
+export CLICOLOR=1
 # bsd
 export LSCOLORS=exfxcxdxbxegedabagacad
 # gnu
 export LS_COLORS="di=34:ex=31:no=00:or=90;43:ln=target:ow=00;46"
+
+alias ll="ls -Alhtr"
 
 ########## PATHS ##########
 
@@ -481,7 +483,7 @@ function ec2_waitforinstance() {
 
 # fzf
 export FZF_DEFAULT_COMMAND="ag -l --hidden -g '' --ignore .git"
-if [ -x /usr/local/Cellar/fzf/0.8.6/bin/fzf ]; then
+if [ -x /usr/local/Cellar/fzf/0.8.8/bin/fzf ]; then
   source ~/.fzf.zsh
 fi
 
