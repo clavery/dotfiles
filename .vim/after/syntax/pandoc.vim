@@ -5,3 +5,5 @@ syntax keyword logStates LOG containedin=pandocAtxHeader
 syntax keyword holdStates HOLD WAITING CLIENT containedin=pandocAtxHeader
 syntax keyword doneStates DONE containedin=pandocAtxHeader
 syntax keyword canceledStates CANCELED DEFERRED containedin=pandocAtxHeader
+
+setlocal nonumber
