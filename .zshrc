@@ -138,7 +138,7 @@ cmd_exec_time() {
     local stop=$(date +%s)
     local start=${cmd_timestamp:-$stop}
     integer elapsed=$stop-$start
-    (($elapsed > 5)) && print -P '%F{yellow}${elapsed}s%f'
+    (($elapsed > 5)) && print -P '%F{yellow}${elapsed}s%f' && print -n "\a"
 }
 
 # are we in a git repo? helper function
