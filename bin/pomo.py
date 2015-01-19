@@ -39,7 +39,7 @@ class Pomo(object):
         say("{0} -- is finished".format(self.desc))
 
     def do_interval(self, interval):
-        minute = self.length - 1
+        minute = self.length - interval
 
         if minute in [24, 10, 5, 1]:
             self.report_remaining(minute)
