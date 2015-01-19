@@ -1,14 +1,14 @@
-# Setup fzf function
-# ------------------
+# Setup fzf
+# ---------
 unalias fzf 2> /dev/null
-fzf() {
-  /usr/bin/ruby --disable-gems /usr/local/Cellar/fzf/0.8.8/fzf "$@"
-}
-export -f fzf > /dev/null
+unset fzf 2> /dev/null
+if [[ ! "$PATH" =~ "/usr/local/Cellar/fzf/0.9.0/bin" ]]; then
+  export PATH="/usr/local/Cellar/fzf/0.9.0/bin:$PATH"
+fi
 
 # Auto-completion
 # ---------------
-[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.8.8/fzf-completion.zsh
+[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.9.0/fzf-completion.zsh
 
 # Key bindings
 # ------------
@@ -48,25 +48,16 @@ bindkey '^T' fzf-file-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
-  cd "${$(set -o nonomatch; command find * -path '*/\.*' -prune \
+  cd "${$(set -o nonomatch; command find -L * -path '*/\.*' -prune \
           -o -type d -print 2> /dev/null | fzf):-.}"
   zle reset-prompt
 }
 zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
 
-# Ctrl-P - cd into the selected directory
-fzf-dirs-widget() {
-  cd $(eval echo ${$(\dirs -p | fzf):-.})
-  zle reset-prompt
-}
-zle     -N    fzf-dirs-widget
-bindkey '^P' fzf-dirs-widget
-
-
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
-  LBUFFER=$(fc -l 1 | fzf +s +m -n..,1,2.. | sed "s/ *[0-9*]* *//")
+  LBUFFER=$(fc -l 1 | fzf +s +m -n2..,.. | sed "s/ *[0-9*]* *//")
   zle redisplay
 }
 zle     -N   fzf-history-widget
