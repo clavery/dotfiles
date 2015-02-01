@@ -3,6 +3,7 @@
 
 filetype off
 "let g:pathogen_disabled = ['ag.vim', 'commentary', 'ctrl-p', 'ctrlp-cmdpalette', 'editor-config', 'emmet', 'fugitive', 'gundo', 'handlebars', 'html5', 'javascript-libraries-syntax', 'json', 'jsx', 'multiple-cursors', 'nginx', 'postgresql', 'ps', 'psql', 'python', 'robot', 'scss', 'snippets', 'surround', 'syntastic', 'tagbar', 'ultisnips', 'vim-chrome-repl', 'vim-gnupg', 'vim-javascript', 'vim-jinja', 'vim-pandoc', 'vim-pandoc-after', 'vim-pandoc-syntax', 'vim-repeat', 'vim-signcolor', 'virtualenv', 'ycm']
+let g:pathogen_disabled = ['javascript-libraries-syntax']
 call pathogen#infect()
 
 filetype plugin indent on
