@@ -61,6 +61,8 @@ bindkey -e
 bindkey "^B" backward-word
 bindkey "^F" forward-word
 
+bindkey "^." insert-last-word
+
 # edit command line in vi with Ctrl-x Ctrl-e
 autoload -U edit-command-line
 zle -N edit-command-line
