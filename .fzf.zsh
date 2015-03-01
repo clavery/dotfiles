@@ -2,13 +2,13 @@
 # ---------
 unalias fzf 2> /dev/null
 unset fzf 2> /dev/null
-if [[ ! "$PATH" =~ "/usr/local/Cellar/fzf/0.9.0/bin" ]]; then
-  export PATH="/usr/local/Cellar/fzf/0.9.0/bin:$PATH"
+if [[ ! "$PATH" =~ "/usr/local/Cellar/fzf/0.9.1/bin" ]]; then
+  export PATH="/usr/local/Cellar/fzf/0.9.1/bin:$PATH"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.9.0/fzf-completion.zsh
+[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.9.1/fzf-completion.zsh
 
 # Key bindings
 # ------------
