@@ -2,9 +2,47 @@
 " Charles Lavery
 
 filetype off
-"let g:pathogen_disabled = ['ag.vim', 'commentary', 'ctrl-p', 'ctrlp-cmdpalette', 'editor-config', 'emmet', 'fugitive', 'gundo', 'handlebars', 'html5', 'javascript-libraries-syntax', 'json', 'jsx', 'multiple-cursors', 'nginx', 'postgresql', 'ps', 'psql', 'python', 'robot', 'scss', 'snippets', 'surround', 'syntastic', 'tagbar', 'ultisnips', 'vim-chrome-repl', 'vim-gnupg', 'vim-javascript', 'vim-jinja', 'vim-pandoc', 'vim-pandoc-after', 'vim-pandoc-syntax', 'vim-repeat', 'vim-signcolor', 'virtualenv', 'ycm']
-let g:pathogen_disabled = ['javascript-libraries-syntax']
-call pathogen#infect()
+
+call plug#begin('~/.vim/plugins')
+
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc-after'
+Plug 'othree/html5.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'SirVer/ultisnips'
+Plug 'klen/python-mode'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jamessan/vim-gnupg'
+Plug 'krisajenkins/vim-postgresql-syntax'
+Plug 'evanmiller/nginx-vim-syntax'
+Plug 'mxw/vim-jsx'
+Plug 'elzr/vim-json'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'mattn/emmet-vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'honza/vim-snippets'
+Plug 'clavery/vim-jinja'
+Plug 'pangloss/vim-javascript'
+
+Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
+
+Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
+Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
+
+function! BuildYCM(info)
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
+    !./install.sh
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+
+call plug#end()
 
 filetype plugin indent on
 syntax on

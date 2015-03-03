@@ -184,3 +184,6 @@
 [submodule ".vim/bundle/csharp"]
 	path = .vim/bundle/csharp
 	url = https://github.com/OrangeT/vim-csharp.git
+[submodule ".vim/bundle/salt-vim"]
+	path = .vim/bundle/salt-vim
+	url = https://github.com/saltstack/salt-vim.git
