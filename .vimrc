@@ -5,7 +5,6 @@ filetype off
 
 call plug#begin('~/.vim/plugins')
 
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -31,7 +30,8 @@ Plug 'clavery/vim-jinja'
 Plug 'pangloss/vim-javascript'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
-
+Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
+Plug 'ctrlpsession', { 'dir' : '~/.vim/ctrlpsession/', 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
 Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
@@ -438,8 +438,9 @@ let g:netrw_banner=0
 " CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
-noremap <C-s> :CtrlPSession<cr>
-nnoremap <C-q> :CtrlPCmdPalette<cr>
+nnoremap <C-s> :CtrlPSession<cr>
+nnoremap <C-p> :CtrlP<cr>
+
 " just use CWD
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']
