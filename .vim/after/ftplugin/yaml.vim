@@ -1,1 +1,1 @@
-setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4 autoindent
+setlocal tabstop=2 shiftwidth=2 expandtab softtabstop=2 autoindent
