@@ -1,0 +1,44 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "blockBindings": true,
+    "arrowFunctions": true,
+    "modules": true,
+    "classes": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "jsx": true,
+    "templateStrings": true,
+    "spread": true,
+    "destructuring" : true
+  },
+  "rules": {
+    "semi": 2,
+    "quotes": false,
+    "new-cap" :false,
+
+    "react/display-name": 1,
+    "react/jsx-quotes": 1,
+    "react/jsx-no-undef": 1,
+    "react/jsx-sort-props": 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-multi-comp": 1,
+    "react/no-unknown-property": 1,
+    "react/prop-types": 1,
+    "react/react-in-jsx-scope": 1,
+    "react/self-closing-comp": 1,
+    "react/wrap-multilines": 1
+  },
+  "plugins": [
+    "react"
+  ]
+}

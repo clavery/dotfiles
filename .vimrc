@@ -40,7 +40,13 @@ function! BuildYCM(info)
     !./install.sh
   endif
 endfunction
+function! BuildTern(info)
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
+    !npm install
+  endif
+endfunction
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'marijnh/tern_for_vim', { 'do': function('BuildTern') }
 
 call plug#end()
 
@@ -419,7 +425,7 @@ nnoremap <leader>c :SyntasticCheck<cr>
 nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
 let g:syntastic_json_checkers=['jsonlint']
-let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_scss_checkers=['scss_lint']
 
 
