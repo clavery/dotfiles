@@ -69,6 +69,7 @@ set sessionoptions=blank,buffers,curdir,help,winsize
 set exrc
 set secure
 set noshowmode
+set updatetime=1000
 set encoding=utf-8
 set fileencodings=utf-8,latin1,default
 set autoread
@@ -498,6 +499,10 @@ nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
 
 " vim-markdown
 let g:vim_markdown_initial_foldlevel=2
+
+" tern
+let g:tern_show_argument_hints='on_hold'
+let g:tern_show_signature_in_pum=1
 
 " vim-go
 let g:go_disable_autoinstall = 1
