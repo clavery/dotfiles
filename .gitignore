@@ -24,3 +24,5 @@ venv/
 doc/tags
 tags
 .vim/plugins/
+
+.tern-project
