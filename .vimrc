@@ -469,17 +469,9 @@ let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-
 let g:ycm_filetype_specific_completion_to_disable = { 'javascript' : 1 }
 
-" Gitgutter
-let g:gitgutter_map_keys = 0
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
-let g:gitgutter_enabled = 0
-let g:gitgutter_highlight_lines = 1
-nnoremap <leader>g :GitGutterToggle<cr>
-
+" Riv
 let g:riv_global_leader="<c-z>"
 
 " Pymode
@@ -495,7 +487,6 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_syntax_slow_sync = 0
 let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope_completion_bind = ''
-nnoremap <silent><Leader>pa <Esc>:PymodeLintAuto<CR>
 
 " vim-markdown
 let g:vim_markdown_initial_foldlevel=2
@@ -506,11 +497,6 @@ let g:tern_show_signature_in_pum=1
 
 " vim-go
 let g:go_disable_autoinstall = 1
-
-" tagbar
-let g:tagbar_zoomwidth = 0
-let g:tagbar_sort = 0
-nnoremap <silent> <F8> :TagbarToggle<cr>
 
 " vim-signcolor
 nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
