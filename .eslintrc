@@ -23,6 +23,9 @@
     "quotes": false,
     "new-cap" :false,
 
+    "valid-jsdoc" :true,
+    "radix": true,
+
     "react/display-name": 1,
     "react/jsx-quotes": 1,
     "react/jsx-no-undef": 1,
