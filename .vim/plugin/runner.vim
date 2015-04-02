@@ -24,22 +24,18 @@ function! runner#run() range
     let result = pyeval('serr if serr else p.stdout.read()')
   endif
 
-  if bufwinnr(bufnr("__OUT__")) == -1
-    " Open a new split and set it up.
-    botright 14split __OUT__
-    execute "setlocal filetype=" . filetype
-    execute "setlocal nonumber"
-    execute "setlocal norelativenumber"
-    setlocal buftype=nofile
-  else
-    exe bufwinnr(bufnr("__OUT__")) . "wincmd w"
-  endif
-
+  pedit __OUT__
+  wincmd P
+  setlocal buftype=nofile
+  execute "setlocal filetype=" . filetype
+  execute "setlocal nonumber"
+  execute "setlocal norelativenumber"
   execute "setlocal noreadonly"
+  
   normal! ggdG
   call append(line('$'), split(result, '\v\n'))
   execute "setlocal readonly"
-  exe "wincmd w"
+  exe "wincmd p"
 endfunction
 
 function! runner#RunShellCommand(cmdline)
