@@ -46,7 +46,7 @@ function! BuildTern(info)
   endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'marijnh/tern_for_vim', { 'do': function('BuildTern') }
+Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
 
 call plug#end()
 
@@ -492,7 +492,7 @@ let g:pymode_rope_completion_bind = ''
 let g:vim_markdown_initial_foldlevel=2
 
 " tern
-let g:tern_show_argument_hints='on_hold'
+let g:tern_show_argument_hints='no'
 let g:tern_show_signature_in_pum=1
 
 " vim-go

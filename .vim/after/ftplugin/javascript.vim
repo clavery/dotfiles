@@ -13,5 +13,6 @@ nnoremap <buffer> <silent> <leader>s :Runner<cr>
 nnoremap <buffer> <leader>td :TernDoc<cr>
 nnoremap <buffer> <leader>tp :TernDefPreview<cr>
 nnoremap <buffer> <leader>tg :TernDef<cr>
+nnoremap <buffer> <leader>tt :TernType<cr>
 
 nno <buffer> <silent> K :exe 'silent !open dash://js:'.expand("<cword>")<cr>
