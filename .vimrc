@@ -509,6 +509,9 @@ let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", 
 let g:pandoc#folding#fdc = 0
 let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
 
+let g:todo_journal_base="~/Dropbox/Todo/Journal"
+nnoremap <F4> :Journal<cr>
+
 " FUNCTIONS
 
 " Quickfix Window Toggle
