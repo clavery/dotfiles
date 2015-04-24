@@ -116,7 +116,7 @@ function removeFromPath() {
 case $HOST_OS in
   darwin)
     export MANPATH=/usr/local/share/man:/Applications/Xcode.app/Contents/Developer/usr/share/man:$MANPATH
-    setjdk 1.7
+    setjdk 1.8
   ;;
   linux)
     export JAVA_HOME="/usr/java"
