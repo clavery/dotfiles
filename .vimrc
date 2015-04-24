@@ -508,6 +508,7 @@ let g:pandoc#syntax#conceal#blacklist = ['titleblock', 'list', 'atx']
 let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", "cs", "html", "sh", "vim"]
 let g:pandoc#folding#fdc = 0
 let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
+let g:pandoc#hypertext#open_cmd = "e"
 
 let g:todo_journal_base="~/Dropbox/Todo/Journal"
 nnoremap <F4> :Journal<cr>
