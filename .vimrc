@@ -545,10 +545,10 @@ function! GitLogBalloonExpr()
     return result
   endif
 endfunction
-if has("balloon_eval")
-  set bexpr=GitLogBalloonExpr()
-  set ballooneval
-endif
+"if has("balloon_eval")
+"  set bexpr=GitLogBalloonExpr()
+"  set ballooneval
+"endif
 
 function! HiInterestingWord(n)
     " Save our location.

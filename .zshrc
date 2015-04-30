@@ -405,6 +405,9 @@ then
   source /usr/local/share/zsh/site-functions/go
 fi
 
+### Haskell
+export PATH=$PATH:/Users/clavery/Library/Haskell/bin
+
 #### ledger ####
 case $HOSTNAME in
   dasbook)
