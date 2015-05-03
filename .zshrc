@@ -516,3 +516,9 @@ function pw {
   rm $_tmpfile
   umask $_oldumask
 }
+
+# MONO DNX
+which dnvm.sh > /dev/null
+if [ $? -eq 0 ]; then
+  source dnvm.sh
+fi
