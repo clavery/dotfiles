@@ -388,6 +388,10 @@ autocmd FileType org setlocal suffixesadd=.rst,.org
 " Jinja2
 au BufRead *.j2 set ft=jinja
 
+" ISML/DWSCRIPT
+au BufRead *.isml set ft=isml
+au BufRead *.ds set ft=javascript
+
 " Org
 au BufRead *.org set ft=org
 
