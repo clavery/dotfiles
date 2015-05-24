@@ -28,6 +28,8 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'honza/vim-snippets'
 Plug 'clavery/vim-jinja'
 Plug 'pangloss/vim-javascript'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'altercation/vim-colors-solarized'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -46,7 +48,7 @@ function! BuildTern(info)
   endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
+"Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
 
 call plug#end()
 
@@ -215,8 +217,11 @@ set statusline +=0x%04B\           "character under cursor
 
 augroup insertModeEx
   au!
-  au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
-  au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
+  if &background == "light"
+  else
+    au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
+    au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
+  endif
 augroup END
 augroup vimrcEx
   au!
@@ -316,6 +321,17 @@ hi jinjaBlockName ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
 hi jinjaVariable term=underline ctermfg=208 guifg=#FD971F guibg=#3e3e3e
 hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
 hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
+
+func ToggleScheme()
+  if &background == "light"
+    set background=dark
+    colorscheme molokai
+  else
+    set background=light
+    colorscheme solarized
+  endif
+endfunc
+nnoremap <F5> :silent call ToggleScheme()<cr>
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
