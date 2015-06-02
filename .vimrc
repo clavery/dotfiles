@@ -621,6 +621,9 @@ nnoremap <leader>\ :MultipleCursorsFind <c-r>/<cr>
 
 nnoremap <leader><leader> <c-^>
 
+" fix issue with sh vim syntax setting iskeyword
+let g:sh_noisk=1
+
 " Load local overrides
 silent! source ~/.vimrc-local
 
