@@ -223,6 +223,13 @@ augroup insertModeEx
     au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
   endif
 augroup END
+
+augroup chdirCurrent
+  au!
+  autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
+  autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
+augroup END
+
 augroup vimrcEx
   au!
   " jump to last position
@@ -242,6 +249,7 @@ else
     au FocusLost * nested :silent! wa
   augroup END
 endif
+
 
 " MAPPINGS
 
@@ -329,6 +337,7 @@ func ToggleScheme()
   else
     set background=light
     colorscheme solarized
+    hi Normal guifg=#5D6569
   endif
 endfunc
 nnoremap <F5> :silent call ToggleScheme()<cr>
@@ -532,6 +541,9 @@ let g:pandoc#hypertext#open_cmd = "e"
 
 let g:todo_journal_base="~/Dropbox/Todo/Journal"
 nnoremap <F4> :Journal<cr>
+
+" jsx
+let g:jsx_ext_required = 0
 
 " FUNCTIONS
 
