@@ -30,6 +30,7 @@ Plug 'clavery/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
+Plug 'evidens/vim-twig'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
