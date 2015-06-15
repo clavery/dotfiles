@@ -48,25 +48,28 @@
  * @static
  */
 
-require(['/static/custom/jquery.handsontable.full.js']);
-
-CodeMirror.keyMap.default['Ctrl-W'] = 'delWordBefore';
-CodeMirror.keyMap.default['Ctrl-U'] = "delLineLeft";
+//require(['/static/custom/jquery.handsontable.full.js']);
 
 $([IPython.events]).on("app_initialized.NotebookApp", function () {
-    $('div#header').hide();
-    $('div#maintoolbar').hide();
+  CodeMirror.keyMap.default['Ctrl-W'] = 'delWordBefore';
+  CodeMirror.keyMap.default['Ctrl-U'] = "delLineLeft";
 });
 
+function _addJavascriptHighlight() {
+  var cells = IPython.notebook.get_cells();
+  cells.forEach(function(cell) {
+    if (cell.code_mirror && cell.code_mirror.options.mode === 'magic_javascript') {
+      cell.code_mirror.setOption('theme', 'monokai');
+    } else {
+      // reset
+      cell.code_mirror.setOption('theme', 'ipython')
+    }
+  });
+}
+$([IPython.events]).on("notebook_loaded.Notebook", function () {
+  _addJavascriptHighlight();
+});
 $([IPython.events]).on("selected_cell_type_changed.Notebook", function () {
-    var cells = IPython.notebook.get_cells();
-    cells.forEach(function(cell) {
-      if (cell.code_mirror && cell.code_mirror.options.mode === 'magic_javascript') {
-        cell.code_mirror.setOption('theme', 'monokai');
-      } else {
-        // reset
-        cell.code_mirror.setOption('theme', 'ipython')
-      }
-    });
+  _addJavascriptHighlight();
 });
 

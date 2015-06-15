@@ -15,3 +15,13 @@ This will always be an empty file in IPython
 .CodeMirror-code {
   font-family: 'Source Code Pro', monospace !important;
 }
+div#notebook, div.CodeMirror, div.output_area pre, div.output_wrapper, div.prompt {
+  font-family: 'Source Code Pro', monospace !important;
+}
+
+div#maintoolbar, div#menubar-container, #ipython_notebook {display: none !important;}
+
+#custControls {
+  margin: 8px 20px;
+  float: right;
+}
