@@ -231,6 +231,19 @@ augroup chdirCurrent
   autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
 augroup END
 
+function TabToggle()
+  if &expandtab
+    set shiftwidth=4
+    set softtabstop=0
+    set noexpandtab
+  else
+    set shiftwidth=4
+    set softtabstop=4
+    set expandtab
+  endif
+endfunction
+nmap <F9> :execute TabToggle()<CR>
+
 augroup vimrcEx
   au!
   " jump to last position
