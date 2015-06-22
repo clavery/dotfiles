@@ -25,3 +25,7 @@ div#maintoolbar, div#menubar-container, #ipython_notebook {display: none !import
   margin: 8px 20px;
   float: right;
 }
+
+.cm-s-solarized.CodeMirror {
+  box-shadow: none;
+}

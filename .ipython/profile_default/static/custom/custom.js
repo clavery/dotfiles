@@ -68,6 +68,11 @@ function _addJavascriptHighlight() {
 }
 $([IPython.events]).on("notebook_loaded.Notebook", function () {
   _addJavascriptHighlight();
+  var cells = IPython.notebook.get_cells();
+  cells.forEach(function(cell) {
+    //cell.code_mirror.setOption('theme', 'ipython');
+
+  });
 });
 $([IPython.events]).on("selected_cell_type_changed.Notebook", function () {
   _addJavascriptHighlight();
