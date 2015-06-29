@@ -5,6 +5,10 @@ if ( exists('g:loaded_ctrlp_session') && g:loaded_ctrlp_session )
 endif
 let g:loaded_ctrlp_session = 1
 
+if ( !exists('g:ctrlp_builtins') )
+  let g:ctrlp_builtins = ''
+endif
+
 let s:session_var = {
       \ 'init': 'ctrlp#session#init()',
       \ 'accept': 'ctrlp#session#accept',
@@ -51,7 +55,7 @@ endfunc
 
 
 " Give the extension an ID
-let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
+let s:id = g:ctrlp_builtins . len(g:ctrlp_ext_vars)
 " Allow it to be called later
 function! ctrlp#session#id()
   return s:id
