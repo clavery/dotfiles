@@ -55,7 +55,7 @@ endfunc
 
 
 " Give the extension an ID
-let s:id = g:ctrlp_builtins . len(g:ctrlp_ext_vars)
+let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
 " Allow it to be called later
 function! ctrlp#session#id()
   return s:id
