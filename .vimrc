@@ -557,6 +557,11 @@ let g:pandoc#hypertext#open_cmd = "e"
 let g:todo_journal_base="~/Dropbox/Todo/Journal"
 nnoremap <F4> :Journal<cr>
 
+nnoremap <F3> :set spell!<cr>
+
+" turn off help
+nnoremap <silent> <F1> :echo<cr>
+
 " jsx
 let g:jsx_ext_required = 0
 
