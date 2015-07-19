@@ -644,6 +644,9 @@ nnoremap <leader><leader> <c-^>
 " fix issue with sh vim syntax setting iskeyword
 let g:sh_noisk=1
 
+" fix unindent behavior
+inoremap # X^H#
+
 " Load local overrides
 silent! source ~/.vimrc-local
 
