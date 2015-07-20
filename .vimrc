@@ -645,7 +645,7 @@ nnoremap <leader><leader> <c-^>
 let g:sh_noisk=1
 
 " fix unindent behavior
-inoremap # X^H#
+inoremap # X#
 
 " Load local overrides
 silent! source ~/.vimrc-local
