@@ -4,7 +4,7 @@ Placeholder for custom user CSS
 mainly to be overridden in profile/static/custom/custom.css
 
 This will always be an empty file in IPython
-*/
+ */
 
 @import "/static/custom/jquery.handsontable.full.css";
 @import "/static/components/codemirror/theme/monokai.css";
@@ -29,3 +29,47 @@ div#maintoolbar, div#menubar-container, #ipython_notebook {display: none !import
 .cm-s-solarized.CodeMirror {
   box-shadow: none;
 }
+
+table.dataframe {
+  border-collapse: collapse;
+  border: none;
+  font-family: 'Source Code Pro', monospace !important;
+  /* width: 100%; */
+}
+table.dataframe tr {
+  border: none;
+}
+table.dataframe td, table.dataframe th {
+  min-width: 20px;
+  margin: 0;
+  border: 1px solid white;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+table.dataframe th:not(:empty) {
+  background-color: #fec;
+  text-align: left;
+  font-weight: bold;
+}
+table.dataframe tr:nth-child(2) th:empty {
+  border-left: none;
+  border-right: 1px dashed #888;
+}
+table.dataframe tr:nth-child(odd) td {
+  background-color: #f5f5f5;
+}
+table.dataframe td {
+  border: 2px solid #ccf;
+  background-color: #fff;
+}
+table.dataframe th {
+}
+table.dataframe > tbody > tr > th:not(:empty) {
+  padding-right: 10px;
+  text-align: right;
+  /* width: 100px; */
+}
+
+
+
+

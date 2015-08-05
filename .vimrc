@@ -446,7 +446,11 @@ augroup END
 " PLUGINS
 
 " ag
-nnoremap <leader>a :<C-U>Ag 
+function! SearchWithAg(ss)
+  exec "Ag! " . shellescape(a:ss)
+endfunction
+command! -nargs=1 S :call SearchWithAg(<q-args>)
+nnoremap <leader>a :<C-U>S 
 
 " emmet
 let g:user_emmet_install_global = 0
@@ -504,7 +508,7 @@ nnoremap <C-p> :CtrlP<cr>
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']
 let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
-
+let g:ctrlp_by_filename = 1
 
 " You Complete Me
 let g:ycm_auto_trigger = 0
