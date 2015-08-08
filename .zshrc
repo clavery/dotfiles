@@ -522,3 +522,11 @@ which dnvm.sh > /dev/null
 if [ $? -eq 0 ]; then
   source dnvm.sh
 fi
+
+# example from man pages
+eg() {
+  MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
+    | gsed --quiet --expression='/^E\(\x08.\)X\(\x08.\)\?A\(\x08.\)\?M\(\x08.\)\?P\(\x08.\)\?L\(\x08.\)\?E/{:a;p;n;/^[^ ]/q;ba}' \
+    | ${MANPAGER:-${PAGER:-pager -s}}
+}
+
