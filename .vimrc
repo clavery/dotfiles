@@ -32,6 +32,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'evidens/vim-twig'
 Plug 'mfukar/robotframework-vim'
+Plug 'unblevable/quick-scope'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -648,6 +649,33 @@ let g:sh_noisk=1
 
 " fix unindent behavior
 inoremap # X#
+
+" quick-scope only on movement
+" Insert into your .vimrc after quick-scope is loaded.
+" Obviously depends on <https://github.com/unblevable/quick-scope> being installed.
+
+" Thanks to @VanLaser for cleaning the code up and expanding capabilities to include e.g. `df`
+
+let g:qs_enable = 0
+let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
+
+function! Quick_scope_selective(movement)
+    let needs_disabling = 0
+    if !g:qs_enable
+        QuickScopeToggle
+        redraw
+        let needs_disabling = 1
+    endif
+    let letter = nr2char(getchar())
+    if needs_disabling
+        QuickScopeToggle
+    endif
+    return a:movement . letter
+endfunction
+
+for i in g:qs_enable_char_list
+  execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
+endfor
 
 " Load local overrides
 silent! source ~/.vimrc-local
