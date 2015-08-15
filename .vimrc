@@ -55,7 +55,7 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'davidhalter/jedi-vim', { 'do': function('BuildJEDI') }
+Plug 'clavery/jedi-vim', { 'do': function('BuildJEDI') }
 "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
 
