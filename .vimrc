@@ -13,9 +13,9 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'othree/html5.vim'
-Plug 'jmcantrell/vim-virtualenv'
 Plug 'SirVer/ultisnips'
-Plug 'klen/python-mode'
+"Plug 'jmcantrell/vim-virtualenv'
+"Plug 'klen/python-mode'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'krisajenkins/vim-postgresql-syntax'
@@ -40,6 +40,11 @@ Plug 'ctrlpsession', { 'frozen' : 1, 'dir' : '~/.vim/ctrlpsession/', 'on' : ['Ct
 Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
+function! BuildJEDI(info)
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
+    !git submodule update --init
+  endif
+endfunction
 function! BuildYCM(info)
   if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
     !./install.sh
@@ -50,7 +55,8 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'davidhalter/jedi-vim', { 'do': function('BuildJEDI') }
+"Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
 
 call plug#end()
@@ -140,7 +146,7 @@ augroup END
 set nrformats=
 set esckeys
 set foldlevelstart=99
-set completeopt=menuone,longest
+set completeopt=menu,preview
 
 if version >= 703
   set cryptmethod=blowfish
@@ -309,6 +315,7 @@ noremap <silent> <leader>k :lprev<cr>
 " Capitals save/quit too
 command! W :w
 command! Q :q
+command! Qa :qa
 command! Wq :wq
 command! WQ :wq
 command! Wqa :wqa
@@ -547,8 +554,10 @@ let g:tern_show_signature_in_pum=1
 " vim-go
 let g:go_disable_autoinstall = 1
 
-" vim-signcolor
-nnoremap <silent> <leader>q :call signcolor#toggle_signs_for_colors_in_buffer()<CR>
+" jedi
+let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = "2"
+let g:jedi#usages_command = "<leader>q"
 
 " pandoc
 let g:pandoc#after#modules#enabled = ["ultisnips"]
