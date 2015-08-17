@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import fileinput
 import re
 import sys
@@ -14,7 +16,7 @@ ACCT_RE = re.compile(r'''A:\s*(?P<account_name>.+)$
 def print_accounts():
     f = ''.join(fileinput.input())
     accounts = [ACCT_RE.search(g).group('account_name') for g in GROUPS_RE.split(f) if ACCT_RE.search(g)]
-    print '\n'.join(accounts)
+    print('\n'.join(accounts))
 
 def print_account_info(account_name):
     f = ''.join(fileinput.input())
