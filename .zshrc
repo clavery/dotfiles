@@ -482,8 +482,6 @@ function fkill {
 
 alias uuid4="python -c 'import uuid; import sys; sys.stdout.write(str(uuid.uuid4()))' | tee >( pbcopy)"
 
-export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
-
 function pw {
   _oldumask=$(umask)
   umask 077
