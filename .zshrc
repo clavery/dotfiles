@@ -344,33 +344,13 @@ export DEBEMAIL="charles.lavery@gmail.com"
 
 #### Python ####
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export WORKON_HOME=$HOME/.venv
-if [ -f /usr/bin/virtualenvwrapper.sh ]
-then
-  . /usr/bin/virtualenvwrapper.sh
+export WORKON_HOME=$HOME/.venv3
 
-  if [ -d /Users/chuck/.venv/default ]
-  then
-    workon default
-  fi
-  if [ -d /Users/clavery/.venv/default ]
-  then
-    workon default
-  fi
-fi
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]
+if [ -d $HOME/.venv3/default ]
 then
-  . /usr/local/bin/virtualenvwrapper.sh
-
-  if [ -d /Users/chuck/.venv/default ]
-  then
-    workon default
-  fi
-  if [ -d /Users/clavery/.venv/default ]
-  then
-    workon default
-  fi
+  . $HOME/.venv3/default/bin/activate
 fi
+
 # serves directory on localhost:8000
 alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
