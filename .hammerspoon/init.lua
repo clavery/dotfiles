@@ -10,9 +10,10 @@ end)
 
 
 -------
--- Fullscreen Window
+-- Window Management
 -------
 
+-- Fullscreen
 hs.hotkey.bind(hyper, "f", function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
@@ -23,6 +24,55 @@ hs.hotkey.bind(hyper, "f", function()
     f.y = max.y
     f.w = max.w
     f.h = max.h
+    win:setFrame(f)
+end)
+-- Left
+hs.hotkey.bind(hyper, "h", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "l", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "k", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h / 2
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "j", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y + (max.h / 2)
+    f.w = max.w
+    f.h = max.h / 2
     win:setFrame(f)
 end)
 
@@ -91,7 +141,7 @@ function mouseHighlight()
     -- Prepare a big red circle around the mouse pointer
     mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-40, mousepoint.y-40, 80, 80))
     mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
-    mouseCircle:setFill(false)
+    mouseCircle:setFill(true)
     mouseCircle:setStrokeWidth(5)
     mouseCircle:show()
 
