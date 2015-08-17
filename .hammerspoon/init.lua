@@ -84,5 +84,18 @@ end
 hs.hotkey.bind(hyper, "D", mouseHighlight)
 
 
+-------
+-- Alt Pasteboard
+-------
+
+function copyToAltPasteboard()
+  hs.pasteboard.setContents(hs.pasteboard.getContents(), "alt")
+end
+function copyFromAltPasteboard()
+  hs.pasteboard.setContents(hs.pasteboard.getContents("alt"))
+end
+hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
+hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
+
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
