@@ -76,6 +76,25 @@ hs.hotkey.bind(hyper, "j", function()
     win:setFrame(f)
 end)
 
+-- Window Hints
+hs.hints.showTitleThresh = 4
+hs.hints.fontName = "SourceCodePro-Bold"
+hs.hints.fontSize = 16
+hs.hotkey.bind(hyper, "i", function()
+  local windows = {}
+  local runningApps = hs.application.runningApplications()
+
+  for i,app in ipairs(runningApps) do
+    windows[#windows+1] = app:mainWindow()
+  end
+  hs.hints.windowHints(windows)
+end)
+hs.hotkey.bind(hyper, "o", function()
+  hs.hints.showTitleThresh = 10
+  hs.hints.windowHints(hs.window.focusedWindow():application():allWindows())
+  hs.hints.showTitleThresh = 4
+end)
+
 ---------
 -- Caffine replacement
 ---------
