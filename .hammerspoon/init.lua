@@ -1,0 +1,88 @@
+-- Include local machine variables
+require("localvars")
+
+
+local hyper = {"cmd", "alt", "ctrl"}
+
+hs.hotkey.bind(hyper, "R", function()
+  hs.reload()
+end)
+
+
+---------
+-- Caffine replacement
+---------
+
+local caffeine = hs.menubar.new()
+function setCaffeineDisplay(state)
+    if state then
+        caffeine:setTitle("A")
+    else
+        caffeine:setTitle("S")
+    end
+end
+
+function caffeineClicked()
+    setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+end
+
+if caffeine then
+    caffeine:setClickCallback(caffeineClicked)
+    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+end
+
+
+---------
+-- Set volume to 0 on external wifi change
+---------
+
+local wifiWatcher = nil
+local homeSSID = localHomeSSID
+local lastSSID = hs.wifi.currentNetwork()
+
+function ssidChangedCallback()
+    newSSID = hs.wifi.currentNetwork()
+
+    if newSSID ~= homeSSID and lastSSID == homeSSID then
+        hs.alert.show("Wifi Change - Zeroing Volume", 5)
+        hs.audiodevice.defaultOutputDevice():setVolume(0)
+    end
+
+    lastSSID = newSSID
+end
+
+wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+wifiWatcher:start()
+
+
+------
+-- Find mouse cursor
+------
+
+local mouseCircle = nil
+local mouseCircleTimer = nil
+function mouseHighlight()
+    -- Delete an existing highlight if it exists
+    if mouseCircle then
+        mouseCircle:delete()
+        if mouseCircleTimer then
+            mouseCircleTimer:stop()
+        end
+    end
+    -- Get the current co-ordinates of the mouse pointer
+    mousepoint = hs.mouse.get()
+    -- Prepare a big red circle around the mouse pointer
+    mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-40, mousepoint.y-40, 80, 80))
+    mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
+    mouseCircle:setFill(false)
+    mouseCircle:setStrokeWidth(5)
+    mouseCircle:show()
+
+    -- Set a timer to delete the circle after 3 seconds
+    mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
+end
+hs.hotkey.bind(hyper, "D", mouseHighlight)
+
+
+-- Show message when reloaded
+hs.alert.show("HS Config loaded")
