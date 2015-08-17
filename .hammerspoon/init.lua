@@ -2,7 +2,7 @@
 require("localvars")
 
 
-local hyper = {"cmd", "alt", "ctrl"}
+local hyper = {"cmd", "ctrl"}
 
 hs.hotkey.bind(hyper, "R", function()
   hs.reload()
@@ -106,9 +106,11 @@ hs.hotkey.bind(hyper, "D", mouseHighlight)
 -------
 
 function copyToAltPasteboard()
+  hs.alert.show("Copied to alt pasteboard", 1)
   hs.pasteboard.setContents(hs.pasteboard.getContents(), "alt")
 end
 function copyFromAltPasteboard()
+  hs.alert.show("Copied from alt pasteboard", 1)
   hs.pasteboard.setContents(hs.pasteboard.getContents("alt"))
 end
 hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
