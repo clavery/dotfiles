@@ -187,7 +187,7 @@ hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
 
 
 -------
--- Statuslet
+-- Statuses
 -------
 
 local statusText = nil
@@ -216,8 +216,14 @@ function renderStatuslets()
 end
 hs.hotkey.bind(hyper, "i", renderStatuslets)
 
-
-
+function describeApplicationState()
+  print('application:', hs.window.focusedWindow():application():title())
+  print('bundleId:', hs.window.focusedWindow():application():bundleID())
+  print('pid:', hs.window.focusedWindow():application():pid())
+  print('window id:', hs.window.focusedWindow():id())
+end
+hs.hotkey.bind(hyper, "w", describeApplicationState)
+hs.hotkey.bind(hyper, "q", hs.toggleConsole)
 
 
 
