@@ -9,6 +9,23 @@ hs.hotkey.bind(hyper, "R", function()
 end)
 
 
+-------
+-- Fullscreen Window
+-------
+
+hs.hotkey.bind(hyper, "f", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h
+    win:setFrame(f)
+end)
+
 ---------
 -- Caffine replacement
 ---------
@@ -16,9 +33,9 @@ end)
 local caffeine = hs.menubar.new()
 function setCaffeineDisplay(state)
     if state then
-        caffeine:setTitle("A")
+        caffeine:setTitle("☀")
     else
-        caffeine:setTitle("S")
+        caffeine:setTitle("☾")
     end
 end
 
