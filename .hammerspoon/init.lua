@@ -80,7 +80,7 @@ end)
 hs.hints.showTitleThresh = 4
 hs.hints.fontName = "SourceCodePro-Bold"
 hs.hints.fontSize = 16
-hs.hotkey.bind(hyper, "i", function()
+hs.hotkey.bind(hyper, "o", function()
   local windows = {}
   local runningApps = hs.application.runningApplications()
 
@@ -89,7 +89,7 @@ hs.hotkey.bind(hyper, "i", function()
   end
   hs.hints.windowHints(windows)
 end)
-hs.hotkey.bind(hyper, "o", function()
+hs.hotkey.bind(hyper, "p", function()
   hs.hints.showTitleThresh = 10
   hs.hints.windowHints(hs.window.focusedWindow():application():allWindows())
   hs.hints.showTitleThresh = 4
@@ -184,6 +184,42 @@ function copyFromAltPasteboard()
 end
 hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
 hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
+
+
+-------
+-- Statuslet
+-------
+
+local statusText = nil
+function renderStatuslets()
+  local win = hs.window.focusedWindow()
+  local screen = win:screen()
+  local max = screen:frame()
+  local textColor = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1}
+
+  if statusText then
+    statusText:delete()
+    statusText = nil
+    return
+  end
+
+  hs.http.asyncGet("https://httpbin.org/ip", nil, function(statusCode, body, headers)
+    local response = hs.json.decode(body)
+    local origin = response["origin"]
+
+    statusText = hs.drawing.text(hs.geometry.rect(max.x + (max.w / 2), 200, max.w / 2, (max.h - 200)), "External IP: " .. origin)
+    statusText:setTextFont("SourceCodePro-Bold")
+    statusText:setTextColor(textColor)
+    statusText:setTextSize(22)
+    statusText:show()
+  end)
+end
+hs.hotkey.bind(hyper, "i", renderStatuslets)
+
+
+
+
+
 
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
