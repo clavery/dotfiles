@@ -512,3 +512,5 @@ eg() {
     | ${MANPAGER:-${PAGER:-pager -s}}
 }
 
+alias iso8601="echo -n $(date +\"%Y%m%dT%H%M%S\") | pbcopy"
+
