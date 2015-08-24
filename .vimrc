@@ -390,20 +390,25 @@ match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 set fillchars=vert:\ ,diff:-
 high VertSplit guibg=#555555 ctermbg=239
 
-if &diff
+func! SetDiffMode()
   set scrollbind
 
   nmap dh :diffget //2<CR>
   nmap dl :diffget //3<CR>
+  nmap dg :diffget<CR>
+  nmap dp :diffput<CR>
   nmap du :diffup<CR>
 
   set diffopt+=vertical
 
-  set foldlevel=99
-  set norelativenumber
   syntax off
-"  hi Normal ctermfg=240 guibg=#888888
-endif
+endfunc
+func! SetDiffModeOff()
+  set noscrollbind
+  syntax on
+endfunc
+au FilterWritePre * if &diff | call SetDiffMode() | endif
+au BufEnter * if !&diff | call SetDiffModeOff() | endif
 
 
 " FILETYPES
