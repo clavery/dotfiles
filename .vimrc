@@ -33,6 +33,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'evidens/vim-twig'
 Plug 'mfukar/robotframework-vim'
 Plug 'unblevable/quick-scope'
+Plug 'junegunn/vim-peekaboo'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -578,6 +579,10 @@ nnoremap <silent> <F1> :echo<cr>
 
 " jsx
 let g:jsx_ext_required = 0
+
+" peekaboo
+"let g:peekaboo_compact = 1
+let g:peekaboo_delay = 750
 
 " FUNCTIONS
 

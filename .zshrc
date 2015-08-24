@@ -418,6 +418,9 @@ alias j=jump
 function mark { 
     mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
+function markprint {
+    readlink "$MARKPATH/$1"
+}
 function unmark { 
     rm "$MARKPATH/$1"
 }
@@ -428,6 +431,7 @@ function _completemarks {
   reply=($(ls $MARKPATH))
 }
 compctl -K _completemarks jump
+compctl -K _completemarks markprint
 compctl -K _completemarks unmark
 
 _FMARKS=()
