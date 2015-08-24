@@ -240,7 +240,7 @@ augroup chdirCurrent
   autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
 augroup END
 
-function TabToggle()
+function! TabToggle()
   if &expandtab
     set shiftwidth=4
     set softtabstop=0
@@ -354,7 +354,7 @@ hi jinjaVariable term=underline ctermfg=208 guifg=#FD971F guibg=#3e3e3e
 hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
 hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
 
-func ToggleScheme()
+func! ToggleScheme()
   if &background == "light"
     set background=dark
     colorscheme molokai
@@ -501,6 +501,10 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " matchit
 runtime macros/matchit.vim
+
+" fugitive (GIT)
+nnoremap gb :Gblame<cr>
+nnoremap ge :Gedit<cr>
 
 " netrw
 let g:explHideFiles='^\.,.*\.pyc$'

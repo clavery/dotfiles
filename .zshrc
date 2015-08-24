@@ -215,6 +215,7 @@ export PS2="%_ > "
 
 alias g=git
 alias gpush="git add . && git commit -a -m 'quick commit' && git push"
+alias gtop="cd $(git rev-parse --show-toplevel)"
 alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
 
 alias tmux="tmux -2 -u"
