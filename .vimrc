@@ -568,6 +568,7 @@ let g:go_disable_autoinstall = 1
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = "2"
 let g:jedi#usages_command = "<leader>q"
+let g:jedi#auto_vim_configuration = 0
 
 " pandoc
 let g:pandoc#after#modules#enabled = ["ultisnips"]
