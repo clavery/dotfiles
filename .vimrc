@@ -193,13 +193,11 @@ if $VIM_CRONTAB == "true"
 endif
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
-if version >= 703
-  set undodir=~/.undo
-  if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
-  endif
-  set undofile
+set undodir=~/.undo
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
 endif
+set undofile
 
 if has("gui_running")
   set guioptions-=T
@@ -258,7 +256,7 @@ function! TabToggle()
     set expandtab
   endif
 endfunction
-nmap <F9> :execute TabToggle()<CR>
+nnoremap <F9> :execute TabToggle()<CR>
 
 augroup vimrcEx
   au!
@@ -299,10 +297,10 @@ nnoremap <c-o> <c-o>zz
 
 
 " Ctrl-move for Window Movement
-nmap <silent> <C-Up> :wincmd k<cr>
-nmap <silent> <C-Down> :wincmd j<cr>
-nmap <silent> <C-Left> :wincmd h<cr>
-nmap <silent> <C-Right> :wincmd l<cr>
+nnoremap <silent> <C-Up> :wincmd k<cr>
+nnoremap <silent> <C-Down> :wincmd j<cr>
+nnoremap <silent> <C-Left> :wincmd h<cr>
+nnoremap <silent> <C-Right> :wincmd l<cr>
 nnoremap <C-k> <C-W>k
 nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
@@ -375,6 +373,14 @@ nnoremap <F5> :silent call ToggleScheme()<cr>
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+" Show git log in balloon
+function! SyntaxGroupBalloonExpr()
+  return join(map(synstack(v:beval_lnum, v:beval_col), 'synIDattr(v:val, "name")'), ',')
+endfunction
+if has("balloon_eval")
+  set bexpr=SyntaxGroupBalloonExpr()
+  nnoremap <F7> :set ballooneval!<CR>
+endif
 
 if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
