@@ -208,7 +208,7 @@ if has("gui_running")
 endif
 
 func! Fugitive_status()
-  if strlen(fugitive#head()) == 0
+  if strlen(fugitive#head()) != 0
     return '['.fugitive#head().']'
   else
     return ''
@@ -344,6 +344,15 @@ func! SetCustomColors()
   hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
   hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
 
+  hi VertSplit guibg=#555555 ctermbg=239
+
+  if has("gui")
+    highlight TabLineFill guifg=#293739 guibg=#ffffff
+    highlight TabLine guibg=#232526 gui=None
+    highlight TabLineSel guifg=#ef5939
+    highlight Cursor guibg=#FFFF00
+  endif
+
   augroup insertModeEx
     au!
     if &background == "light"
@@ -403,7 +412,6 @@ set pumheight=8
 match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 
 set fillchars=vert:\ ,diff:-
-high VertSplit guibg=#555555 ctermbg=239
 
 func! SetDiffMode()
   set scrollbind
