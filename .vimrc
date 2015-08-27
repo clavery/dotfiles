@@ -534,7 +534,10 @@ runtime macros/matchit.vim
 
 " fugitive (GIT)
 nnoremap gb :Gblame<cr>
-nnoremap ge :Gedit<cr>
+nnoremap gd :Gdiff<CR>
+nnoremap gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit<CR>
+
 
 " netrw
 let g:explHideFiles='^\.,.*\.pyc$'
