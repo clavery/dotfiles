@@ -71,6 +71,13 @@ set t_Co=256
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
 
+" ctrl-a/x scary
+nnoremap g<C-A> <C-A>
+nnoremap <C-A> <nop>
+nnoremap g<C-X> <C-X>
+nnoremap <C-X> <nop>
+
+
 nnoremap Q <nop>
 
 if has('mac')
