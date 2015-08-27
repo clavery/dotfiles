@@ -425,15 +425,27 @@ func! SetDiffMode()
   set diffopt+=vertical
 
   syntax off
+  let g:has_loaded_diff = 1
 endfunc
 func! SetDiffModeOff()
   set noscrollbind
   syntax on
 
+  nunmap dh
+  nunmap dl
+  nunmap dg
+  nunmap dp
+  nunmap du
+
   call SetCustomColors()
+  let g:has_loaded_diff = 0
 endfunc
+let g:has_loaded_diff = 0
+if &diff
+  let g:has_loaded_diff = 1
+endif
 au FilterWritePre * if &diff | call SetDiffMode() | endif
-au BufEnter * if !&diff | call SetDiffModeOff() | endif
+au BufEnter,BufLeave * if !&diff && g:has_loaded_diff == 1 | call SetDiffModeOff() | endif
 
 
 " FILETYPES
