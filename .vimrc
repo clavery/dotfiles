@@ -229,21 +229,6 @@ set statusline +=/%L               "total lines
 set statusline +=%3v\              "virtual column number
 set statusline +=0x%04B\           "character under cursor
 
-augroup insertModeEx
-  au!
-  if &background == "light"
-  else
-    au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
-    au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
-  endif
-augroup END
-
-augroup chdirCurrent
-  au!
-  autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
-  autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
-augroup END
-
 function! TabToggle()
   if &expandtab
     set shiftwidth=4
@@ -338,25 +323,43 @@ inoremap <c-a> <Home>
 inoremap <c-e> <End>
 
 " HIGHLIGHTING
-colorscheme molokai
-hi User1 ctermbg=239 ctermfg=6 guibg=#555555 guifg=#AE81FF
-hi User2 ctermbg=239 ctermfg=3 guibg=#555555 guifg=#66D9EF
-hi User3 ctermbg=239 ctermfg=7 guibg=#555555 guifg=#E6DB74
-hi User4 ctermbg=239 ctermfg=118
-hi User5 ctermbg=239 ctermfg=118
+func! SetCustomColors()
+  colorscheme molokai
+  hi User1 ctermbg=239 ctermfg=6 guibg=#555555 guifg=#AE81FF
+  hi User2 ctermbg=239 ctermfg=3 guibg=#555555 guifg=#66D9EF
+  hi User3 ctermbg=239 ctermfg=7 guibg=#555555 guifg=#E6DB74
+  hi User4 ctermbg=239 ctermfg=118
+  hi User5 ctermbg=239 ctermfg=118
 
-" jinja nice highlights
-hi jinjaSpecial guibg=#555555
-hi jinjaSpecial term=bold ctermfg=81 gui=italic guifg=#66D9EF guibg=#3e3e3e
-hi jinjaTagBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
-hi jinjaVarBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
-hi jinjaStatement term=bold ctermfg=161 guifg=#F92672 guibg=#3e3e3e
-hi jinjaOperator guibg=#3e3e3e
-hi jinjaFilter ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
-hi jinjaBlockName ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
-hi jinjaVariable term=underline ctermfg=208 guifg=#FD971F guibg=#3e3e3e
-hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
-hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
+  " jinja nice highlights
+  hi jinjaSpecial guibg=#555555
+  hi jinjaSpecial term=bold ctermfg=81 gui=italic guifg=#66D9EF guibg=#3e3e3e
+  hi jinjaTagBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
+  hi jinjaVarBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
+  hi jinjaStatement term=bold ctermfg=161 guifg=#F92672 guibg=#3e3e3e
+  hi jinjaOperator guibg=#3e3e3e
+  hi jinjaFilter ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
+  hi jinjaBlockName ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
+  hi jinjaVariable term=underline ctermfg=208 guifg=#FD971F guibg=#3e3e3e
+  hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
+  hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
+
+  augroup insertModeEx
+    au!
+    if &background == "light"
+    else
+      au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
+      au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
+    endif
+  augroup END
+
+  augroup chdirCurrent
+    au!
+    autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
+    autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
+  augroup END
+endfunc
+call SetCustomColors()
 
 func! ToggleScheme()
   if &background == "light"
@@ -418,6 +421,8 @@ endfunc
 func! SetDiffModeOff()
   set noscrollbind
   syntax on
+
+  call SetCustomColors()
 endfunc
 au FilterWritePre * if &diff | call SetDiffMode() | endif
 au BufEnter * if !&diff | call SetDiffModeOff() | endif
