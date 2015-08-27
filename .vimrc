@@ -77,7 +77,6 @@ nnoremap <C-A> <nop>
 nnoremap g<C-X> <C-X>
 nnoremap <C-X> <nop>
 
-
 nnoremap Q <nop>
 
 if has('mac')
@@ -406,11 +405,11 @@ high VertSplit guibg=#555555 ctermbg=239
 func! SetDiffMode()
   set scrollbind
 
-  nmap dh :diffget //2<CR>
-  nmap dl :diffget //3<CR>
-  nmap dg :diffget<CR>
-  nmap dp :diffput<CR>
-  nmap du :diffup<CR>
+  noremap dh :diffget //2<CR>
+  noremap dl :diffget //3<CR>
+  noremap dg :diffget<CR>
+  noremap dp :diffput<CR>
+  noremap du :diffup<CR>
 
   set diffopt+=vertical
 
@@ -506,7 +505,7 @@ let g:syntastic_scss_checkers=['scss_lint']
 
 
 " Gundo
-nmap <silent> <leader>u :GundoToggle<cr>
+nnoremap <silent> <leader>u :GundoToggle<cr>
 let g:gundo_help = 0
 
 " Ultisnips
