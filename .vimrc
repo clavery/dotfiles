@@ -265,6 +265,10 @@ endif
 
 " MAPPINGS
 
+" don't yank on change
+noremap C "_C
+noremap c "_c
+
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
