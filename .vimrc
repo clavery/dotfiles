@@ -150,7 +150,7 @@ augroup END
 "  au!
 "  au BufReadPost * :if &expandtab == 'noexpandtab' | setlocal listchars+=tab:\ \ | endif
 "augroup END
-set nrformats=
+set nrformats=hex,alpha
 set esckeys
 set foldlevelstart=99
 set completeopt=menu,preview
