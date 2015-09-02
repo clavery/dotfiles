@@ -381,6 +381,7 @@ fi
 #### golang ####
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOPATH=${HOME}/code/go
+export PATH=$PATH:$GOPATH/bin
 if [ -f /usr/local/share/zsh/site-functions/go ]
 then
   source /usr/local/share/zsh/site-functions/go

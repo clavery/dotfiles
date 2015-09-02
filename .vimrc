@@ -34,6 +34,8 @@ Plug 'evidens/vim-twig'
 Plug 'mfukar/robotframework-vim'
 Plug 'unblevable/quick-scope'
 Plug 'junegunn/vim-peekaboo'
+Plug 'fatih/vim-go'
+Plug 'majutsushi/tagbar'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -500,6 +502,9 @@ augroup END
 
 " PLUGINS
 
+" tagbar
+nnoremap <leader>t :TagbarToggle<CR>
+
 " ag
 function! SearchWithAg(ss)
   exec "Ag! " . shellescape(a:ss)
@@ -607,6 +612,13 @@ let g:tern_show_signature_in_pum=1
 
 " vim-go
 let g:go_disable_autoinstall = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
 
 " jedi
 let g:jedi#popup_on_dot = 0
