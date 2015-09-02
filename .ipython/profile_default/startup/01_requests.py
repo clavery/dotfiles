@@ -1,4 +1,5 @@
 
+from __future__ import print_function
 try:
 
     def in_ipynb():
@@ -38,7 +39,7 @@ try:
         if in_ipynb():
             display(HTML("<br>".join(parts)))
         else:
-            print "\n".join(parts)
+            print("\n".join(parts))
 
 
     def get_lexer(response):
