@@ -33,7 +33,6 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'evidens/vim-twig'
 Plug 'mfukar/robotframework-vim'
 Plug 'unblevable/quick-scope'
-Plug 'junegunn/vim-peekaboo'
 Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
 
@@ -758,5 +757,6 @@ endfor
 " Load local overrides
 silent! source ~/.vimrc-local
 
-
+"set verbosefile=~/.vimlog
+"set verbose=16
 " vim:foldmethod=marker foldlevel=0
