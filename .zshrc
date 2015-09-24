@@ -494,7 +494,7 @@ function pw {
   _tmpfile=$(mktemp -u -t pw)
   mkfifo $_tmpfile
 
-  gpg --quiet --batch -d $PASSWORD_FILE |
+  gpg2 --quiet --batch -d $PASSWORD_FILE |
    tee $_tmpfile |
    ~/bin/pw.py -a |
    fzf |
