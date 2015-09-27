@@ -29,7 +29,13 @@
   d = !git ls-files -m | fzf -m | xargs -o git difftool
 [core]
   excludesfile = ~/.gitignore
-  pager = less -FRSX
+  #pager = less -FRSX
+  pager = bash -lc 'diff-highlight | strip_diff_leading_symbols | less -r' -
+[color "diff-highlight"]
+  oldNormal = "red bold"
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
 [color "branch"]
   current = magenta
   local = yellow
