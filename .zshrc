@@ -196,7 +196,7 @@ list_colors() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples|beast|dasbook|gamma)
+  meeples|beast|dasbook|chucks)
     export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
     export RPROMPT='%F{237}${_VENV}%f'
     #export RPROMPT=""
@@ -296,8 +296,7 @@ zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):director
 
 # npm completion
 case $HOSTNAME in
-  dasbook|gamma)
-    . <(npm completion)
+  dasbook|chucks)
     ;;
   *)
     ;;
@@ -397,7 +396,7 @@ case $HOSTNAME in
     export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
     export LEDGER_PRICE_DB=~/Documents/ledger/prices.db
   ;;
-  gamma)
+  chucks)
     export LEDGER_FILE=/Volumes/Private/ledger/main.ledger
     export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
     export LEDGER_PRICE_DB=/Volumes/Private/ledger/prices.db
@@ -411,7 +410,7 @@ alias l="ledger"
 #marks
 export MARKPATH=$HOME/.marks
 function jump { 
-  if [ "$1" == "" ]; then
+  if [ "$1" = "" ]; then
     return
   fi
   cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
