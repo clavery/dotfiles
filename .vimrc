@@ -35,6 +35,7 @@ Plug 'mfukar/robotframework-vim'
 Plug 'unblevable/quick-scope'
 Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
+Plug 'ledger/vim-ledger'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -760,4 +761,6 @@ silent! source ~/.vimrc-local
 
 "set verbosefile=~/.vimlog
 "set verbose=16
+
+
 " vim:foldmethod=marker foldlevel=0

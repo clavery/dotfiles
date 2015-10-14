@@ -397,9 +397,9 @@ case $HOSTNAME in
     export LEDGER_PRICE_DB=~/Documents/ledger/prices.db
   ;;
   chucks)
-    export LEDGER_FILE=/Volumes/Private/ledger/main.ledger
+    export LEDGER_FILE=/Volumes/Chucks/ledger/main.ledger
     export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
-    export LEDGER_PRICE_DB=/Volumes/Private/ledger/prices.db
+    export LEDGER_PRICE_DB=/Volumes/Chucks/ledger/prices.db
   ;;
   *)
   ;;
