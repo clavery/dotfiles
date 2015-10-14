@@ -21,6 +21,7 @@
   lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan bold)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
   forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
   l = "!. ~/.githelpers && pretty_git_log"
+  r = "!. ~/.githelpers && pretty_git_log --since='2 weeks ago'"
   hp = "!. ~/.githelpers && show_git_head"
   # interactive add with fzf (not the same as patch add)
   ia = !git ls-files -m | fzf -m | xargs git add
