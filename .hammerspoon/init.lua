@@ -233,7 +233,7 @@ function setReminder()
   text returned of result
   ]])
   hs.timer.doAfter(10, function()
-    hs.notify.new({title="Reminder",informativeText=result, autoWithdraw=false}):send()
+    hs.notify.new({title="Reminder",informativeText=result, autoWithdraw=false,hasActionButton=false}):send()
   end)
   --hs.timer.doAfter(
 end
