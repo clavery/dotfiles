@@ -226,6 +226,21 @@ hs.hotkey.bind(hyper, "w", describeApplicationState)
 hs.hotkey.bind(hyper, "q", hs.toggleConsole)
 
 
+-- Input Boxes
+function setReminder()
+  success, result = hs.applescript.applescript([[
+  display dialog "Reminder text" default answer ""
+  text returned of result
+  ]])
+  hs.timer.doAfter(10, function()
+    hs.notify.new({title="Reminder",informativeText=result, autoWithdraw=false}):send()
+  end)
+  --hs.timer.doAfter(
+end
+hs.hotkey.bind(hyper, "y", setReminder)
+
 
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
+
+
