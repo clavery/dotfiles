@@ -36,6 +36,10 @@ Plug 'unblevable/quick-scope'
 Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
 Plug 'ledger/vim-ledger'
+Plug 'vim-scripts/paredit.vim'
+Plug 'guns/vim-clojure-static'
+Plug 'clavery/vim-dwre'
+
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -322,7 +326,7 @@ nnoremap <silent> <leader>/ :set hlsearch!<cr>
 nnoremap <silent> <leader>l :set list!<cr>
 nnoremap <silent> <leader>w :set wrap!<cr>
 
-nnoremap <leader>` "=strftime("%a %d %b %Y %X")<cr>P
+nnoremap <leader>` "=strftime("%FT%T%z")<cr>P
 
 "emacs begin/end
 inoremap <c-a> <Home>
@@ -484,10 +488,6 @@ autocmd FileType org setlocal suffixesadd=.rst,.org
 
 " Jinja2
 au BufRead *.j2 set ft=jinja
-
-" ISML/DWSCRIPT
-au BufRead *.isml set ft=isml
-au BufRead *.ds set ft=javascript
 
 " Org
 au BufRead *.org set ft=org
