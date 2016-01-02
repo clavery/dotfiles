@@ -39,6 +39,7 @@ Plug 'ledger/vim-ledger'
 Plug 'vim-scripts/paredit.vim'
 Plug 'guns/vim-clojure-static'
 Plug 'clavery/vim-dwre'
+Plug 'zah/nim.vim'
 
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
@@ -396,7 +397,12 @@ nnoremap <F5> :silent call ToggleScheme()<cr>
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 " Show git log in balloon
 function! SyntaxGroupBalloonExpr()
-  return join(map(synstack(v:beval_lnum, v:beval_col), 'synIDattr(v:val, "name")'), ',')
+  let groups=map(synstack(v:beval_lnum, v:beval_col), 'synIDattr(v:val, "name")')
+  if type(groups) == type([])
+    return join(groups, ',')
+  else
+    return ""
+  endif
 endfunction
 if has("balloon_eval")
   set bexpr=SyntaxGroupBalloonExpr()
