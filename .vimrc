@@ -47,6 +47,7 @@ Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
 Plug 'ctrlpsession', { 'frozen' : 1, 'dir' : '~/.vim/ctrlpsession/', 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
 Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
+Plug 'vim-srs', { 'dir' : '~/code/vim-srs/'}
 
 function! BuildJEDI(info)
   if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
@@ -66,6 +67,15 @@ endfunction
 Plug 'clavery/jedi-vim', { 'do': function('BuildJEDI') }
 "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
+
+" C#
+Plug 'tpope/vim-dispatch'
+function! BuildOMNISharp(info)
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
+    !cd omnisharp-roslyn && sh build.sh
+  endif
+endfunction
+Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
 
 call plug#end()
 
@@ -768,5 +778,9 @@ silent! source ~/.vimrc-local
 "set verbosefile=~/.vimlog
 "set verbose=16
 
+"omnisharp
+let g:OmniSharp_selector_ui = 'ctrlp'
+"let g:OmniSharp_server_type = 'v1'
+"let g:OmniSharp_server_type = 'roslyn'
 
 " vim:foldmethod=marker foldlevel=0

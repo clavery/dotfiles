@@ -504,11 +504,8 @@ function pw {
   umask $_oldumask
 }
 
-# MONO DNX
-which dnvm.sh > /dev/null
-if [ $? -eq 0 ]; then
-  source dnvm.sh
-fi
+# DNX
+source /Users/clavery/.dnx/dnvm/dnvm.sh
 
 # example from man pages
 eg() {

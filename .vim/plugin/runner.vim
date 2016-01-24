@@ -61,6 +61,7 @@ function! runner#RunShellCommand(cmdline)
   normal! ggdG
   execute 'silent $read !'. expanded_cmdline
   execute "setlocal readonly"
+  redraw!
   exe "wincmd w"
 endfunction
 
