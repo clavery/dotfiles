@@ -21,7 +21,7 @@ def print_accounts():
 def print_account_info(account_name):
     f = ''.join(fileinput.input())
     groups = [ACCT_RE.search(g) for g in GROUPS_RE.split(f) if ACCT_RE.search(g)]
-    matches = [m for m in groups if account_name in m.group('account_name')]
+    matches = [m for m in groups if account_name == m.group('account_name')]
     if matches:
         password = matches[0].group('password')
         username = matches[0].group('username')
