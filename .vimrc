@@ -70,12 +70,15 @@ Plug 'clavery/jedi-vim', { 'do': function('BuildJEDI') }
 
 " C#
 Plug 'tpope/vim-dispatch'
+Plug 'jpalardy/vim-slime'
 function! BuildOMNISharp(info)
   if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
     !cd omnisharp-roslyn && sh build.sh
   endif
 endfunction
 Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
+
+"Plug 'sjl/vitality.vim'
 
 call plug#end()
 
@@ -780,7 +783,10 @@ silent! source ~/.vimrc-local
 
 "omnisharp
 let g:OmniSharp_selector_ui = 'ctrlp'
+let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
 "let g:OmniSharp_server_type = 'v1'
 "let g:OmniSharp_server_type = 'roslyn'
+
 
 " vim:foldmethod=marker foldlevel=0
