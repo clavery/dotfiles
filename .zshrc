@@ -313,6 +313,9 @@ function genpass() {
 function genpass2() {
   LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1; echo
 }
+function genpass3() {
+  LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 16; echo
+}
 
 # GPG-agent for linux only (use MacGPG on OSX)
 export GPG_TTY=$(tty)

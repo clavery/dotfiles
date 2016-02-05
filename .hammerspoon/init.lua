@@ -232,7 +232,7 @@ function setReminder()
   display dialog "Reminder text" default answer ""
   text returned of result
   ]])
-  hs.timer.doAfter(10, function()
+  hs.timer.doAfter(60*10, function()
     hs.notify.new({title="Reminder",informativeText=result, autoWithdraw=false,hasActionButton=false}):send()
   end)
   --hs.timer.doAfter(

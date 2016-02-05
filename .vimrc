@@ -7,40 +7,34 @@ call plug#begin('~/.vim/plugins')
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
-"Plug 'jmcantrell/vim-virtualenv'
-"Plug 'klen/python-mode'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'krisajenkins/vim-postgresql-syntax'
-Plug 'evanmiller/nginx-vim-syntax'
 Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
 Plug 'elzr/vim-json'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'mattn/emmet-vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'honza/vim-snippets'
 Plug 'clavery/vim-jinja'
-Plug 'pangloss/vim-javascript'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
-Plug 'evidens/vim-twig'
 Plug 'mfukar/robotframework-vim'
 Plug 'unblevable/quick-scope'
 Plug 'fatih/vim-go'
-Plug 'majutsushi/tagbar'
 Plug 'ledger/vim-ledger'
-Plug 'vim-scripts/paredit.vim'
 Plug 'guns/vim-clojure-static'
 Plug 'clavery/vim-dwre'
 Plug 'zah/nim.vim'
-
+Plug 'tpope/vim-dispatch'
+Plug 'jpalardy/vim-slime'
+Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -49,36 +43,12 @@ Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 Plug 'vim-srs', { 'dir' : '~/code/vim-srs/'}
 
-function! BuildJEDI(info)
-  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
-    !git submodule update --init
-  endif
-endfunction
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
-    !./install.sh
-  endif
-endfunction
-function! BuildTern(info)
-  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
-    !npm install
-  endif
-endfunction
-Plug 'clavery/jedi-vim', { 'do': function('BuildJEDI') }
-"Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-"Plug 'clavery/tern_for_vim', { 'do': function('BuildTern') }
-
-" C#
-Plug 'tpope/vim-dispatch'
-Plug 'jpalardy/vim-slime'
 function! BuildOMNISharp(info)
   if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
     !cd omnisharp-roslyn && sh build.sh
   endif
 endfunction
 Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
-
-"Plug 'sjl/vitality.vim'
 
 call plug#end()
 
@@ -460,11 +430,11 @@ func! SetDiffModeOff()
   set noscrollbind
   syntax on
 
-  nunmap dh
-  nunmap dl
-  nunmap dg
-  nunmap dp
-  nunmap du
+  " nunmap dh
+  " nunmap dl
+  " nunmap dg
+  " nunmap dp
+  " nunmap du
 
   call SetCustomColors()
   let g:has_loaded_diff = 0
@@ -521,9 +491,6 @@ augroup END
 
 " PLUGINS
 
-" tagbar
-nnoremap <leader>t :TagbarToggle<CR>
-
 " ag
 function! SearchWithAg(ss)
   exec "Ag! " . shellescape(a:ss)
@@ -533,7 +500,7 @@ nnoremap <leader>a :<C-U>S
 
 " emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,jinja,handlebars,css,scss EmmetInstall
+autocmd FileType isml,html,jinja,handlebars,css,scss EmmetInstall
 
 " gpg
 let g:GPGPreferArmor = 1
