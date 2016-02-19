@@ -2,6 +2,7 @@
 require("localvars")
 
 
+local cmd = {"cmd"}
 local hyper = {"cmd", "ctrl"}
 
 hs.hotkey.bind(hyper, "R", function()
@@ -117,6 +118,15 @@ if caffeine then
     setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
+--
+--Terminal
+--
+hs.hotkey.bind(cmd, "k", function()
+  terminal = hs.window.find("terminal")
+  if terminal then
+    terminal:focus()
+  end
+end)
 
 ---------
 -- Set volume to 0 on external wifi change

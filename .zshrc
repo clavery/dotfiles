@@ -222,6 +222,8 @@ alias tmux="tmux -2 -u"
 alias attach="tmux -2 -u attach"
 alias ag="ag --pager less"
 
+alias ltail="less -Ri +F"
+
 # vim crontab fix
 alias crontab="VIM_CRONTAB=true crontab"
 

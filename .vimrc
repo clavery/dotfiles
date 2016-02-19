@@ -35,6 +35,9 @@ Plug 'zah/nim.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'jpalardy/vim-slime'
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'vim-scripts/dbext.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'tweekmonster/braceless.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -255,6 +258,9 @@ endif
 
 " MAPPINGS
 
+" default help in vert
+cnoremap help vert help
+
 " don't yank on change
 noremap C "_C
 noremap c "_c
@@ -378,7 +384,6 @@ nnoremap <F5> :silent call ToggleScheme()<cr>
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-" Show git log in balloon
 function! SyntaxGroupBalloonExpr()
   let groups=map(synstack(v:beval_lnum, v:beval_col), 'synIDattr(v:val, "name")')
   if type(groups) == type([])
@@ -493,10 +498,11 @@ augroup END
 
 " ag
 function! SearchWithAg(ss)
-  exec "Ag! " . shellescape(a:ss)
+  exec "Ag! " . shellescape(substitute(a:ss, "\\$", "\\\\$", "g"), 1)
 endfunction
 command! -nargs=1 S :call SearchWithAg(<q-args>)
 nnoremap <leader>a :<C-U>S 
+
 
 " emmet
 let g:user_emmet_install_global = 0
@@ -559,8 +565,15 @@ nnoremap <C-p> :CtrlP<cr>
 
 " just use CWD
 let g:ctrlp_working_path_mode = ''
-let g:ctrlp_user_command = ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)', '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)']
+
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)'],
+    \ },
+  \ 'fallback': '_D=$(pwd); find %s -type f | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)'
+  \ }
 let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_by_filename = 1
 
 " You Complete Me
@@ -715,7 +728,7 @@ let g:sh_noisk=1
 " fix unindent behavior
 inoremap # X#
 
-" quick-scope only on movement
+" quick-scope only on movementb
 " Insert into your .vimrc after quick-scope is loaded.
 " Obviously depends on <https://github.com/unblevable/quick-scope> being installed.
 
@@ -755,5 +768,7 @@ let g:slime_python_ipython = 1
 "let g:OmniSharp_server_type = 'v1'
 "let g:OmniSharp_server_type = 'roslyn'
 
+"braceless
+nnoremap <leader>h :BracelessEnable +Highlight<cr>
 
 " vim:foldmethod=marker foldlevel=0
