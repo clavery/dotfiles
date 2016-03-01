@@ -39,6 +39,7 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'tweekmonster/braceless.vim'
 
+
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
 Plug 'ctrlpsession', { 'frozen' : 1, 'dir' : '~/.vim/ctrlpsession/', 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
@@ -52,6 +53,16 @@ function! BuildOMNISharp(info)
   endif
 endfunction
 Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
+
+function! BuildVimProc(info)
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
+    !make -f make_mac.mak
+  endif
+endfunction
+Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimProc') }
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'ianks/vim-tsx'
 
 call plug#end()
 
