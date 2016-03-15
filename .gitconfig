@@ -31,7 +31,7 @@
 [core]
   excludesfile = ~/.gitignore
   #pager = less -FRSX
-  pager = bash -lc 'diff-highlight | strip_diff_leading_symbols | less -r' -
+  pager = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
 [color "diff-highlight"]
   oldNormal = "red bold"
   oldHighlight = "red bold 52"

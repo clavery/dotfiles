@@ -64,6 +64,8 @@ try:
             content = response.content
             if 'json' in response.headers["content-type"]:
                 content = json.dumps(response.json(), indent=4)
+            elif 'xml' in response.headers["content-type"]:
+                content = ET.tostring(ET.fromstring(response.text), pretty_print=True).decode("utf-8")
 
             response_highlighted = highlight(content, lexer, formatter)
             output(header_highlighted, response_highlighted)

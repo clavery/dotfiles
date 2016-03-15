@@ -782,4 +782,7 @@ let g:slime_python_ipython = 1
 "braceless
 nnoremap <leader>h :BracelessEnable +Highlight<cr>
 
+"typescript
+let g:tsuquyomi_disable_quickfix = 1
+
 " vim:foldmethod=marker foldlevel=0
