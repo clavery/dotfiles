@@ -29,7 +29,7 @@
   # interactive select diff targets then difftool them
   d = !git ls-files -m | fzf -m | xargs -o git difftool
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/clavery/.gitignore
   #pager = less -FRSX
   pager = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
 [color "diff-highlight"]
@@ -80,8 +80,8 @@
 [mergetool "nbmerge"]
   cmd = nbmerge $LOCAL $BASE $REMOTE $MERGED
 [difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path = 
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
 [mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
