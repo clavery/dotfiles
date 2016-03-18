@@ -121,9 +121,13 @@ end
 --
 --Terminal
 --
+local lastwindow = nil
 hs.hotkey.bind(cmd, "k", function()
   terminal = hs.window.find("terminal")
-  if terminal then
+  if (hs.window.focusedWindow() == terminal and lastwindow) then
+    lastwindow:focus()
+  elseif terminal then
+    lastwindow = hs.window.focusedWindow()
     terminal:focus()
   end
 end)
