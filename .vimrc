@@ -38,6 +38,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'vim-scripts/dbext.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'tweekmonster/braceless.vim'
+Plug 'robbles/logstash.vim'
 
 
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }

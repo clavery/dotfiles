@@ -16,22 +16,18 @@
   s = status --short -b
   a = add
   last = difftool HEAD^..HEAD --
-  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   graph = log --all --graph --decorate --oneline -n30
   lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan bold)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
-  forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
-  l = "!. ~/.githelpers && pretty_git_log"
-  r = "!. ~/.githelpers && pretty_git_log --since='2 weeks ago'"
-  hp = "!. ~/.githelpers && show_git_head"
-  # interactive add with fzf (not the same as patch add)
+  l = log -p --color
   ia = !git ls-files -m | fzf -m | xargs git add
   ic = !git ls-files -m | fzf -m | xargs git co
-  # interactive select diff targets then difftool them
-  d = !git ls-files -m | fzf -m | xargs -o git difftool
+  id = !git ls-files -m | fzf -m | xargs -o git difftool
 [core]
-	excludesfile = /Users/clavery/.gitignore
-  #pager = less -FRSX
-  pager = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
+  excludesfile = /Users/clavery/.gitignore
+[pager]
+  log = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
+  diff = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
+  show = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
 [color "diff-highlight"]
   oldNormal = "red bold"
   oldHighlight = "red bold 52"

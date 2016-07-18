@@ -356,6 +356,10 @@ then
   . $HOME/.venv3/default/bin/activate
 fi
 
+function venv2 {
+  . $HOME/.venv/default/bin/activate
+}
+
 # serves directory on localhost:8000
 alias shs="python -m SimpleHTTPServer"
 # simple smtp server on port 1025, outputs to stdout
