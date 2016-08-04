@@ -179,7 +179,8 @@ precmd() {
     # • ○ ± ☿ ⭑  ☉
     _VENV="○"
   } elif [[ -n "$VIRTUAL_ENV" ]] {
-    _VENV="${VIRTUAL_ENV:t} "
+    _V=$(dirname $VIRTUAL_ENV)
+    _VENV="${_V:t} "
   } else {
     _VENV=""
   }
@@ -351,14 +352,26 @@ export DEBEMAIL="charles.lavery@gmail.com"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WORKON_HOME=$HOME/.venv3
 
-if [ -d $HOME/.venv3/default ]
+if [ -d $HOME/.venv/default ]
 then
-  . $HOME/.venv3/default/bin/activate
+  . $HOME/.venv/default/bin/activate
 fi
 
 function venv2 {
   . $HOME/.venv/default/bin/activate
 }
+function venv3 {
+  . $HOME/.venv3/default/bin/activate
+}
+
+function venv {
+  if [ -f env/bin/activate ]; then
+    . env/bin/activate
+  else
+    echo "No venv found"
+  fi
+}
+
 
 # serves directory on localhost:8000
 alias shs="python -m SimpleHTTPServer"
@@ -415,6 +428,20 @@ case $HOSTNAME in
 esac
 alias l="ledger"
 
+#docker
+export DOCKERSCRIPTPATH=$HOME/.dockerscripts
+function d {
+  if [ "$1" = "" ]; then
+    return
+  fi
+  if [ -f "${DOCKERSCRIPTPATH}/${1}" ]; then
+    . "${DOCKERSCRIPTPATH}/${1}"
+  fi
+}
+function _completedocker {
+  reply=($(ls $DOCKERSCRIPTPATH))
+}
+compctl -K _completedocker d
 
 #marks
 export MARKPATH=$HOME/.marks
@@ -525,3 +552,6 @@ eg() {
 
 alias iso8601="echo -n $(date +\"%Y%m%dT%H%M%S\") | pbcopy"
 
+if [ -f ~/.homebrew ]; then
+  source ~/.homebrew
+fi

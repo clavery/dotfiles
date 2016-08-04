@@ -52,30 +52,6 @@ hs.hotkey.bind(hyper, "l", function()
     f.h = max.h
     win:setFrame(f)
 end)
-hs.hotkey.bind(hyper, "k", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
-
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w
-    f.h = max.h / 2
-    win:setFrame(f)
-end)
-hs.hotkey.bind(hyper, "j", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
-
-    f.x = max.x
-    f.y = max.y + (max.h / 2)
-    f.w = max.w
-    f.h = max.h / 2
-    win:setFrame(f)
-end)
 
 -- Window Hints
 hs.hints.showTitleThresh = 4
@@ -122,7 +98,7 @@ end
 --Terminal
 --
 local lastwindow = nil
-hs.hotkey.bind(cmd, "k", function()
+hs.hotkey.bind(hyper, "k", function()
   terminal = hs.window.find("terminal")
   if (hs.window.focusedWindow() == terminal and lastwindow) then
     lastwindow:focus()
@@ -144,7 +120,7 @@ function ssidChangedCallback()
     newSSID = hs.wifi.currentNetwork()
 
     if newSSID ~= homeSSID and lastSSID == homeSSID then
-        hs.alert.show("Wifi Change - Zeroing Volume", 5)
+        hs.alert.show("Wifi Change - Zeroing Volume (" .. newSSID .. ")", 5)
         hs.audiodevice.defaultOutputDevice():setVolume(0)
     end
 
@@ -199,7 +175,10 @@ end
 hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
 hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
 
-
+function grid()
+  hs.grid.show()
+end
+hs.hotkey.bind(hyper, "g", grid)
 -------
 -- Statuses
 -------
@@ -240,20 +219,127 @@ hs.hotkey.bind(hyper, "w", describeApplicationState)
 hs.hotkey.bind(hyper, "q", hs.toggleConsole)
 
 
--- Input Boxes
-function setReminder()
-  success, result = hs.applescript.applescript([[
-  display dialog "Reminder text" default answer ""
-  text returned of result
-  ]])
-  hs.timer.doAfter(60*10, function()
-    hs.notify.new({title="Reminder",informativeText=result, autoWithdraw=false,hasActionButton=false}):send()
-  end)
-  --hs.timer.doAfter(
+-- Chooser Boxes
+local chooser = nil
+
+local function createNewTimer(seconds, message)
+    hs.timer.doAfter(seconds, function()
+      hs.notify.new({title="Reminder",informativeText=message, autoWithdraw=false,hasActionButton=false}):send()
+      local sound = hs.sound.getByName("Glass")
+      sound:loopSound(true)
+      sound:play()
+      hs.timer.doAfter(2.5, function()
+        sound:stop()
+      end)
+    end)
 end
-hs.hotkey.bind(hyper, "y", setReminder)
 
+function toPath(...) return table.concat({...}, '/') end
 
+function appendToFile(file, text)
+  if text == '' then return end
+
+  local f = io.open(file, 'a')
+  f:write(tostring(text) .. '\n')
+  f:close()
+end
+
+function splitline(str, pat)
+  local t = {}  -- NOTE: use {n = 0} in Lua-5.0
+  local fpat = "(.-)" .. pat
+  local lastEnd = 1
+  local s, e, cap = str:find(fpat, 1)
+  while s do
+    if s ~= 1 or cap ~= "" then
+      table.insert(t,cap)
+    end
+    lastEnd = e+1
+    s, e, cap = str:find(fpat, lastEnd)
+  end
+  if lastEnd <= #str then
+    cap = str:sub(lastEnd)
+    table.insert(t, cap)
+  end
+  return t
+end
+
+local function parseLine(line)
+  local message
+  local seconds = 10*60
+  local parts = splitline(line, ' ')
+  local first = table.remove(parts, 1)
+  local rest = table.concat(parts, ' ')
+
+  -- TODO: allow 10s, 10m, 1h, etc???
+  if tonumber(first) ~= nil then
+    local minutes = tonumber(first)
+    seconds = math.max(1, math.floor(minutes * 60))
+    message = rest
+  else
+    message = first .. ' ' .. rest
+  end
+
+  createNewTimer(seconds, message)
+end
+
+local commands = {
+  {
+    ['text'] = 'File task...',
+    ['subText'] = 'File a new task/note',
+    ['command'] = 'newnote',
+  },
+  {
+    ['text'] = 'New Timer...',
+    ['subText'] = 'Create a Timer',
+    ['command'] = 'newtimer',
+  },
+}
+
+local homeDir = os.getenv('HOME')
+
+function choice()
+  chooser = hs.chooser.new(function(choice)
+    if choice.command == 'newtimer' then
+      parseLine(tostring(chooser:query()))
+    elseif choice.command == 'newnote' then
+      appendToFile(toPath(homeDir, "Dropbox", "Todo", "unfiled.md"), "- " .. chooser:query())
+    end
+  end)
+  chooser:choices(commands)
+  chooser:rows(#commands)
+  chooser:queryChangedCallback(function() end)
+  chooser:show()
+end
+hs.hotkey.bind(hyper, "y", choice)
+
+local visible = false
+local view = nil
+local function createView()
+  if visible then
+    view.hide()
+    visible = false
+  else
+    local screen = hs.screen.mainScreen()
+    local viewRect = screen:frame():scale(0.5):move({x=0, y=-20})
+    view = hs.webview.new(viewRect, {
+      javaScriptEnabled=false,
+      -- developerExtrasEnabled=true,
+    })
+    local masks = hs.webview.windowMasks
+    view:windowStyle(
+      masks.borderless |
+      masks.utility |
+      masks.HUD |
+      masks.nonactivating
+    )
+    view:windowTitle("Foobar")
+    view:setLevel(hs.drawing.windowLevels.overlay)
+    view:html("<strong> this is a test html</strong>")
+    view:show()
+    visible = true
+  end
+end
+hs.hotkey.bind(hyper, "p", createView)
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
 
