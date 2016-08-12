@@ -555,3 +555,9 @@ alias iso8601="echo -n $(date +\"%Y%m%dT%H%M%S\") | pbcopy"
 if [ -f ~/.homebrew ]; then
   source ~/.homebrew
 fi
+
+
+function todo {
+  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md -c "vs unfiled.md";
+  cd -
+}

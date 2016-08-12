@@ -231,10 +231,21 @@ local function createNewTimer(seconds, message)
       hs.timer.doAfter(2.5, function()
         sound:stop()
       end)
+
+      hs.messages.iMessage("charles.lavery@gmail.com", message)
     end)
 end
 
 function toPath(...) return table.concat({...}, '/') end
+
+function readAll(file)
+    local f = io.open(file, "rb")
+    print(file)
+    print(f)
+    local content = f:read("*all")
+    f:close()
+    return content
+end
 
 function appendToFile(file, text)
   if text == '' then return end
@@ -312,13 +323,37 @@ function choice()
 end
 hs.hotkey.bind(hyper, "y", choice)
 
-local visible = false
+function generateHtml()
+  local focusedApp = hs.application.frontmostApplication()
+  local appName = focusedApp:name()
+  local html = [[
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style type="text/css">
+            *{margin:0; padding:0;}
+            html, body{ 
+              background-color:#eee;
+              font-family: arial;
+              font-size: 13px;
+              padding: 30px;
+            }
+              li.title{ text-align:center;}
+            ul, li{list-style: inside none; padding: 0 0 5px;}
+        </style>
+        </head>
+        <body>
+        ]]..readAll("/Users/clavery/Dropbox/Todo/Wiki/Cheatsheets/"..appName..".html")..[[
+        </body>
+        </html>
+
+  ]]
+  return html
+end
+
 local view = nil
 local function createView()
-  if visible then
-    view.hide()
-    visible = false
-  else
+  if not view then
     local screen = hs.screen.mainScreen()
     local viewRect = screen:frame():scale(0.5):move({x=0, y=-20})
     view = hs.webview.new(viewRect, {
@@ -334,13 +369,19 @@ local function createView()
     )
     view:windowTitle("Foobar")
     view:setLevel(hs.drawing.windowLevels.overlay)
-    view:html("<strong> this is a test html</strong>")
+    view:html(generateHtml())
+    view:allowGestures(true)
     view:show()
-    visible = true
+    print("showing window")
+  else
+    print("deleting window")
+    view:delete()
+    view=nil
   end
 end
 hs.hotkey.bind(hyper, "p", createView)
+
+
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
-
 
