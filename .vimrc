@@ -53,7 +53,7 @@ function! BuildOMNISharp(info)
     !cd omnisharp-roslyn && sh build.sh
   endif
 endfunction
-Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
+"Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
 
 function! BuildVimProc(info)
   if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
