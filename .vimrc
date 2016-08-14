@@ -541,6 +541,8 @@ let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_scss_checkers=['scss_lint']
 
+" javascript
+let g:javascript_plugin_jsdoc = 1
 
 " Gundo
 nnoremap <silent> <leader>u :GundoToggle<cr>
