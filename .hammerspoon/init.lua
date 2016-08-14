@@ -382,6 +382,42 @@ end
 hs.hotkey.bind(hyper, "p", createView)
 
 
+-- screenshots with 
+local screenshotbucket = s3bucket
+function execute(command)
+    -- returns success, error code, output.
+    local f = io.popen(command..' 2>&1 && echo " $?"')
+    local output = f:read"*a"
+    local begin, finish, code = output:find" (%d+)\n$"
+    output, code = output:sub(1, begin -1), tonumber(code)
+    return code == 0 and true or false, code, output
+end
+function string.ends(String,End)
+   return End=='' or string.sub(String,-string.len(End))==End
+end
+function urlencode(str)
+   if (str) then
+      str = string.gsub (str, "\n", "\r\n")
+      str = string.gsub (str, " ", "%%20")
+   end
+   return str    
+end
+local lastscreenshot = nil
+function uploadscreenshots(changes)
+  for key,value in pairs(changes) do 
+    if value:ends(".png") and value ~= last then
+      success, code, output = execute(string.format("/Users/clavery/.venv/default/bin/aws --profile personal s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
+
+      local file = string.match(value, "^.+/(.+)$")
+      message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
+      hs.notify.new({title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
+      hs.pasteboard.setContents(message)
+      last = value
+    end
+  end
+end
+
+hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/Screenshots/", uploadscreenshots):start()
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
 
