@@ -561,3 +561,7 @@ function todo {
   cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md -c "vs unfiled.md";
   cd -
 }
+
+function gist {
+  pbpaste | command gist -p -f $1 -d "$(echo ${@:2})"
+}
