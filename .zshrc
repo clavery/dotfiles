@@ -563,5 +563,5 @@ function todo {
 }
 
 function gist {
-  pbpaste | command gist -p -f $1 -d "$(echo ${@:2})"
+  pbpaste | command gist -p -f $1 -d "$(echo ${@:2})" | tee >(pbcopy) | cat
 }
