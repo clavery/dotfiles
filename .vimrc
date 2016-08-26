@@ -65,6 +65,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/tsuquyomi'
 Plug 'ianks/vim-tsx'
 
+Plug 'metakirby5/codi.vim'
+
 call plug#end()
 
 filetype plugin indent on
@@ -291,6 +293,8 @@ nnoremap <c-o> <c-o>zz
 "inoremap <c-i> <c-x><c-i>
 "inoremap <c-o> <c-x><c-o>
 
+" switch buffers
+nnoremap <BS> <C-^>
 
 " Ctrl-move for Window Movement
 nnoremap <silent> <C-Up> :wincmd k<cr>

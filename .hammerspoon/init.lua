@@ -120,7 +120,7 @@ function ssidChangedCallback()
     newSSID = hs.wifi.currentNetwork()
 
     if newSSID ~= homeSSID and lastSSID == homeSSID then
-        hs.alert.show("Wifi Change - Zeroing Volume (" .. newSSID .. ")", 5)
+        hs.alert.show("Wifi Change - Zeroing Volume", 5)
         hs.audiodevice.defaultOutputDevice():setVolume(0)
     end
 
@@ -293,11 +293,36 @@ local function parseLine(line)
   createNewTimer(seconds, message)
 end
 
+local homeDir = os.getenv('HOME')
+
+local function parseTimeEntry(line)
+  local message
+  local time
+  local parts = splitline(line, ' ')
+
+  local timeraw = table.remove(parts, 1)
+  local project = table.remove(parts, 1)
+
+  local message = table.concat(parts, ' ')
+
+  local date = os.date("%Y/%m/%d")
+
+  time = tonumber(timeraw)
+
+  appendToFile(toPath(homeDir, "Dropbox", "Todo", "timesheet.csv"), date .. "," .. string.upper(project) ..",".. time ..",Application Development,".. string.upper(project) .. ": " .. message)
+  print("foo")
+end
+
 local commands = {
   {
     ['text'] = 'File task...',
     ['subText'] = 'File a new task/note',
     ['command'] = 'newnote',
+  },
+  {
+    ['text'] = 'Time Entry',
+    ['subText'] = 'File a timesheet entry',
+    ['command'] = 'newtime',
   },
   {
     ['text'] = 'New Timer...',
@@ -306,7 +331,6 @@ local commands = {
   },
 }
 
-local homeDir = os.getenv('HOME')
 
 function choice()
   chooser = hs.chooser.new(function(choice)
@@ -314,6 +338,8 @@ function choice()
       parseLine(tostring(chooser:query()))
     elseif choice.command == 'newnote' then
       appendToFile(toPath(homeDir, "Dropbox", "Todo", "unfiled.md"), "- " .. chooser:query())
+    elseif choice.command == 'newtime' then
+      parseTimeEntry(tostring(chooser:query()))
     end
   end)
   chooser:choices(commands)

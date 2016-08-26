@@ -565,3 +565,13 @@ function todo {
 function gist {
   pbpaste | command gist -p -f $1 -d "$(echo ${@:2})" | tee >(pbcopy) | cat
 }
+
+function codi() {                                                                                                                             ○
+  mvim $2 -c \
+    "let g:startify_disable_at_vimenter = 1 |\
+    set bt=nofile ls=0 noru nonu nornu |\
+    hi ColorColumn ctermbg=NONE |\
+    hi VertSplit ctermbg=NONE |\
+    hi NonText ctermfg=0 |\
+    Codi ${1:-python}"
+}
