@@ -14,6 +14,35 @@ end)
 -- Window Management
 -------
 
+-- Screens
+--Predicate that checks if a window belongs to a screen
+function isInScreen(screen, win)
+  return win:screen() == screen
+end
+
+-- Brings focus to the scren by setting focus on the front-most application in it.
+-- Also move the mouse cursor to the center of the screen. This is because
+-- Mission Control gestures & keyboard shortcuts are anchored, oddly, on where the
+-- mouse is focused.
+function focusScreen(screen)
+  --Get windows within screen, ordered from front to back.
+  --If no windows exist, bring focus to desktop. Otherwise, set focus on
+  --front-most application window.
+  local windows = hs.fnutils.filter(
+      hs.window.orderedWindows(),
+      hs.fnutils.partial(isInScreen, screen))
+  local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
+  windowToFocus:focus()
+
+  -- Move mouse to center of screen
+  local pt = hs.geometry.rectMidPoint(windowToFocus:frame())
+  hs.mouse.setAbsolutePosition(pt)
+end
+hs.hotkey.bind({"alt"}, "`", function ()
+  focusScreen(hs.window.focusedWindow():screen():next())
+end)
+
+
 -- Fullscreen
 hs.hotkey.bind(hyper, "f", function()
     local win = hs.window.focusedWindow()
@@ -52,24 +81,78 @@ hs.hotkey.bind(hyper, "l", function()
     f.h = max.h
     win:setFrame(f)
 end)
+hs.hotkey.bind(hyper, "k", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
 
--- Window Hints
-hs.hints.showTitleThresh = 4
-hs.hints.fontName = "SourceCodePro-Bold"
-hs.hints.fontSize = 16
-hs.hotkey.bind(hyper, "o", function()
-  local windows = {}
-  local runningApps = hs.application.runningApplications()
-
-  for i,app in ipairs(runningApps) do
-    windows[#windows+1] = app:mainWindow()
-  end
-  hs.hints.windowHints(windows)
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+    f.h = max.h / 2
+    win:setFrame(f)
 end)
-hs.hotkey.bind(hyper, "p", function()
-  hs.hints.showTitleThresh = 10
-  hs.hints.windowHints(hs.window.focusedWindow():application():allWindows())
-  hs.hints.showTitleThresh = 4
+hs.hotkey.bind(hyper, "j", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y + (max.h / 2)
+    f.w = max.w
+    f.h = max.h / 2
+    win:setFrame(f)
+end)
+
+hs.hotkey.bind(hyper, "n", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x 
+    f.y = max.y + (max.h / 2)
+    f.w = max.w / 2
+    f.h = max.h / 2
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "m", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y + (max.h / 2)
+    f.w = max.w / 2
+    f.h = max.h / 2
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "o", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 2)
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h / 2
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "u", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w / 2
+    f.h = max.h / 2
+    win:setFrame(f)
 end)
 
 ---------
@@ -98,7 +181,7 @@ end
 --Terminal
 --
 local lastwindow = nil
-hs.hotkey.bind(hyper, "k", function()
+hs.hotkey.bind(hyper, "c", function()
   terminal = hs.window.find("terminal")
   if (hs.window.focusedWindow() == terminal and lastwindow) then
     lastwindow:focus()
@@ -161,25 +244,6 @@ hs.hotkey.bind(hyper, "D", mouseHighlight)
 
 
 -------
--- Alt Pasteboard
--------
-
-function copyToAltPasteboard()
-  hs.alert.show("Copied to alt pasteboard", 1)
-  hs.pasteboard.setContents(hs.pasteboard.getContents(), "alt")
-end
-function copyFromAltPasteboard()
-  hs.alert.show("Copied from alt pasteboard", 1)
-  hs.pasteboard.setContents(hs.pasteboard.getContents("alt"))
-end
-hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
-hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
-
-function grid()
-  hs.grid.show()
-end
-hs.hotkey.bind(hyper, "g", grid)
--------
 -- Statuses
 -------
 
@@ -240,8 +304,6 @@ function toPath(...) return table.concat({...}, '/') end
 
 function readAll(file)
     local f = io.open(file, "rb")
-    print(file)
-    print(f)
     local content = f:read("*all")
     f:close()
     return content
@@ -310,7 +372,6 @@ local function parseTimeEntry(line)
   time = tonumber(timeraw)
 
   appendToFile(toPath(homeDir, "Dropbox", "Todo", "timesheet.csv"), date .. "," .. string.upper(project) ..",".. time ..",Application Development,".. string.upper(project) .. ": " .. message)
-  print("foo")
 end
 
 local commands = {
@@ -398,9 +459,7 @@ local function createView()
     view:html(generateHtml())
     view:allowGestures(true)
     view:show()
-    print("showing window")
   else
-    print("deleting window")
     view:delete()
     view=nil
   end
