@@ -540,6 +540,22 @@ function pw {
   umask $_oldumask
 }
 
+function totp {
+  _oldumask=$(umask)
+  umask 077
+  _tmpfile=$(mktemp -u -t pw)
+  mkfifo $_tmpfile
+
+  gpg2 --quiet --batch -d $PASSWORD_FILE |
+   tee $_tmpfile |
+   ~/bin/totp.py -a |
+   fzf |
+   xargs ~/bin/totp.py <(cat $_tmpfile) -p |
+   pbcopy
+
+  rm $_tmpfile
+  umask $_oldumask
+}
 # DNX
 source /Users/clavery/.dnx/dnvm/dnvm.sh
 
