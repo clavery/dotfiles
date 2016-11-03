@@ -22,6 +22,7 @@
   ia = !git ls-files -m | fzf -m | xargs git add
   ic = !git ls-files -m | fzf -m | xargs git co
   id = !git ls-files -m | fzf -m | xargs -o git difftool
+  frb = !git fetch && git rebase origin/develop
 [core]
   excludesfile = /Users/clavery/.gitignore
 [pager]

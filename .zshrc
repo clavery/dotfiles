@@ -591,3 +591,8 @@ function codi() {                                                               
     hi NonText ctermfg=0 |\
     Codi ${1:-python}"
 }
+
+function next_release() {
+  tickets=`g lg HEAD^..develop | grep -oe "JSS-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
+  open "https://pixelmedia.atlassian.net/issues/?jql=resolution = Unresolved and key in ($tickets)"
+}

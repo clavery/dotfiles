@@ -244,6 +244,25 @@ hs.hotkey.bind(hyper, "D", mouseHighlight)
 
 
 -------
+-- Alt Pasteboard
+-------
+
+function copyToAltPasteboard()
+  hs.alert.show("Copied to alt pasteboard", 1)
+  hs.pasteboard.setContents(hs.pasteboard.getContents(), "alt")
+end
+function copyFromAltPasteboard()
+  hs.alert.show("Copied from alt pasteboard", 1)
+  hs.pasteboard.setContents(hs.pasteboard.getContents("alt"))
+end
+hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
+hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
+
+function grid()
+  hs.grid.show()
+end
+hs.hotkey.bind(hyper, "g", grid)
+-------
 -- Statuses
 -------
 
@@ -487,6 +506,7 @@ function urlencode(str)
    end
    return str    
 end
+
 local lastscreenshot = nil
 function uploadscreenshots(changes)
   for key,value in pairs(changes) do 
@@ -495,7 +515,9 @@ function uploadscreenshots(changes)
 
       local file = string.match(value, "^.+/(.+)$")
       message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
-      hs.notify.new({title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
+      hs.notify.new(function ()
+        hs.execute("open -R '" .. value .. "'")
+      end, {title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
       hs.pasteboard.setContents(message)
       last = value
     end

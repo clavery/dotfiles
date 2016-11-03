@@ -66,6 +66,7 @@ Plug 'Quramy/tsuquyomi'
 Plug 'ianks/vim-tsx'
 
 Plug 'metakirby5/codi.vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 
@@ -431,7 +432,7 @@ set pumheight=8
 " highlight VCS markers
 match ErrorMsg '^\(<\|=\|>\||\)\{7\}\([^=].\+\)\?$'
 
-set fillchars=vert:\ ,diff:-
+set fillchars=vert:│,diff:-
 
 func! SetDiffMode()
   set scrollbind
