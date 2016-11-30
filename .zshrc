@@ -574,7 +574,7 @@ fi
 
 
 function todo {
-  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md -c "vs unfiled.md";
+  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md -c "vs personal.md";
   cd -
 }
 
