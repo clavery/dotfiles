@@ -197,7 +197,7 @@ list_colors() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples|beast|dasbook|chucks)
+  meeples|beast|dasbook|chucks|dyan)
     export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
     export RPROMPT='%F{237}${_VENV}%f'
     #export RPROMPT=""
@@ -420,7 +420,6 @@ case $HOSTNAME in
   ;;
   chucks)
     export LEDGER_FILE=/Volumes/Chucks/ledger/main.ledger
-    export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
     export LEDGER_PRICE_DB=/Volumes/Chucks/ledger/prices.db
   ;;
   *)
@@ -557,7 +556,9 @@ function totp {
   umask $_oldumask
 }
 # DNX
-source /Users/clavery/.dnx/dnvm/dnvm.sh
+if [ -f /Users/clavery/.dnx/dnvm/dnvm.sh ]; then
+  source /Users/clavery/.dnx/dnvm/dnvm.sh
+fi
 
 # example from man pages
 eg() {

@@ -26,9 +26,9 @@
 [core]
   excludesfile = /Users/clavery/.gitignore
 [pager]
-  log = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
-  diff = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
-  show = bash -lc '/usr/local/bin/diff-highlight | strip_diff_leading_symbols | less -r' -
+  log = bash -lc '/usr/local/bin/diff-highlight | less -r' -
+  diff = bash -lc '/usr/local/bin/diff-highlight | less -r' -
+  show = bash -lc '/usr/local/bin/diff-highlight | less -r' -
 [color "diff-highlight"]
   oldNormal = "red bold"
   oldHighlight = "red bold 52"
