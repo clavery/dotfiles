@@ -34,6 +34,7 @@ try:
     from IPython.display import HTML, display
     from IPython.core.magic import (Magics, magics_class, line_magic,
                                     cell_magic, line_cell_magic)
+    from lxml import etree as ET
 
     def output(*parts):
         if in_ipynb():
@@ -65,7 +66,7 @@ try:
             if 'json' in response.headers["content-type"]:
                 content = json.dumps(response.json(), indent=4)
             elif 'xml' in response.headers["content-type"]:
-                content = ET.tostring(ET.fromstring(response.text), pretty_print=True).decode("utf-8")
+                content = ET.tostring(ET.fromstring(response.content), pretty_print=True).decode("utf-8")
 
             response_highlighted = highlight(content, lexer, formatter)
             output(header_highlighted, response_highlighted)
