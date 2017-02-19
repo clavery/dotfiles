@@ -597,3 +597,19 @@ function next_release() {
   tickets=`g lg HEAD^..develop | grep -oe "JSS-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
   open "https://pixelmedia.atlassian.net/issues/?jql=resolution = Unresolved and key in ($tickets)"
 }
+
+function review() {
+  if [ -d "../branches/$1" ]; then
+    cd "../branches/$1";
+    return;
+  fi
+
+  git branch $1 origin/$1
+  git worktree add "../branches/$1" $1
+  cd "../branches/$1";
+  ln -s "$OLDPWD/node_modules" .
+}
+function _completereview {
+  reply=($(git branch -r | grep origin | sed 's/origin\///'))
+}
+compctl -K _completereview review

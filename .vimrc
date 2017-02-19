@@ -548,6 +548,8 @@ let g:syntastic_scss_checkers=['scss_lint']
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
+autocmd FileType json set formatprg=python\ -mjson.tool
+
 
 " Gundo
 nnoremap <silent> <leader>u :GundoToggle<cr>

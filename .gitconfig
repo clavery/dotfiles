@@ -11,6 +11,7 @@
   interactive = auto
   status = auto
 [alias]
+  wt = worktree
   co = checkout
   cm = commit
   s = status --short -b
@@ -24,7 +25,7 @@
   id = !git ls-files -m | fzf -m | xargs -o git difftool
   frb = !git fetch && git rebase origin/develop
 [core]
-  excludesfile = /Users/clavery/.gitignore
+	excludesfile = /Users/clavery/.gitignore
 [pager]
   log = bash -lc '/usr/local/bin/diff-highlight | less -r' -
   diff = bash -lc '/usr/local/bin/diff-highlight | less -r' -
@@ -76,9 +77,3 @@
   textconv = gpg --decrypt
 [mergetool "nbmerge"]
   cmd = nbmerge $LOCAL $BASE $REMOTE $MERGED
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true

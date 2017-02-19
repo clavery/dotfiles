@@ -244,25 +244,6 @@ hs.hotkey.bind(hyper, "D", mouseHighlight)
 
 
 -------
--- Alt Pasteboard
--------
-
-function copyToAltPasteboard()
-  hs.alert.show("Copied to alt pasteboard", 1)
-  hs.pasteboard.setContents(hs.pasteboard.getContents(), "alt")
-end
-function copyFromAltPasteboard()
-  hs.alert.show("Copied from alt pasteboard", 1)
-  hs.pasteboard.setContents(hs.pasteboard.getContents("alt"))
-end
-hs.hotkey.bind(hyper, "C", copyToAltPasteboard)
-hs.hotkey.bind(hyper, "V", copyFromAltPasteboard)
-
-function grid()
-  hs.grid.show()
-end
-hs.hotkey.bind(hyper, "g", grid)
--------
 -- Statuses
 -------
 
