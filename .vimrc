@@ -795,4 +795,10 @@ nnoremap <leader>h :BracelessEnable +Highlight<cr>
 "typescript
 let g:tsuquyomi_disable_quickfix = 1
 
+
+" DWRE
+nnoremap <leader>da :DWREAdd<cr>
+nnoremap <leader>dd :DWREDel<cr>
+nnoremap <leader>dr :DWREReset<cr>
+nnoremap <leader>dg :DWREDebug<cr>
 " vim:foldmethod=marker foldlevel=0
