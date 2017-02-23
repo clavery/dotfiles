@@ -12,61 +12,30 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
-Plug 'krisajenkins/vim-postgresql-syntax'
-Plug 'mxw/vim-jsx'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-Plug 'mattn/emmet-vim'
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'honza/vim-snippets'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'altercation/vim-colors-solarized'
-Plug 'mfukar/robotframework-vim'
-Plug 'unblevable/quick-scope'
-Plug 'fatih/vim-go'
 Plug 'ledger/vim-ledger'
-Plug 'guns/vim-clojure-static'
 Plug 'clavery/vim-dwre'
-Plug 'zah/nim.vim'
-Plug 'tpope/vim-dispatch'
-Plug 'jpalardy/vim-slime'
 Plug 'hynek/vim-python-pep8-indent'
-Plug 'vim-scripts/dbext.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'tweekmonster/braceless.vim'
 Plug 'robbles/logstash.vim'
 
-
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
-Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
-Plug 'ctrlpsession', { 'frozen' : 1, 'dir' : '~/.vim/ctrlpsession/', 'on' : ['CtrlP', 'CtrlPBuffer', 'CtrlPSession'] }
+Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
 Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 Plug 'vim-srs', { 'dir' : '~/code/vim-srs/'}
 
-function! BuildOMNISharp(info)
-  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
-    !cd omnisharp-roslyn && sh build.sh
-  endif
-endfunction
-"Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOMNISharp') }
-
-function! BuildVimProc(info)
-  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
-    !make -f make_mac.mak
-  endif
-endfunction
-Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimProc') }
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'ianks/vim-tsx'
-
-Plug 'metakirby5/codi.vim'
-Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 
@@ -233,7 +202,7 @@ set statusline +=%(\ [%n%M%R%W]%)                "modified flag
 set statusline +=%=%{&ff}/%{strlen(&fenc)?&fenc:'none'}            "file format
 set statusline +=%2*%y%*                "file type
 set statusline +=\ %l             "current line
-set statusline +=/%L               "total lines
+set statusline +=/%L\ \                "total lines
 set statusline +=%3v\              "virtual column number
 set statusline +=0x%04B\           "character under cursor
 
@@ -289,10 +258,6 @@ nnoremap g; g;zz
 nnoremap g, g,zz
 
 nnoremap <c-o> <c-o>zz
-
-" autocomplete
-"inoremap <c-i> <c-x><c-i>
-"inoremap <c-o> <c-x><c-o>
 
 " switch buffers
 nnoremap <BS> <C-^>
@@ -520,11 +485,6 @@ endfunction
 command! -nargs=1 S :call SearchWithAg(<q-args>)
 nnoremap <leader>a :<C-U>S 
 
-
-" emmet
-let g:user_emmet_install_global = 0
-autocmd FileType isml,html,jinja,handlebars,css,scss EmmetInstall
-
 " gpg
 let g:GPGPreferArmor = 1
 let g:GPGDefaultRecipients = ['9B5B4181']
@@ -550,7 +510,6 @@ let g:syntastic_scss_checkers=['scss_lint']
 let g:javascript_plugin_jsdoc = 1
 autocmd FileType json set formatprg=python\ -mjson.tool
 
-
 " Gundo
 nnoremap <silent> <leader>u :GundoToggle<cr>
 let g:gundo_help = 0
@@ -560,18 +519,8 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsExpandTrigger="<c-j>"
 
-" supertab
-let g:SuperTabDefaultCompletionType = "context"
-
 " matchit
 runtime macros/matchit.vim
-
-" fugitive (GIT)
-nnoremap gb :Gblame<cr>
-nnoremap gd :Gdiff<CR>
-nnoremap gs :Gstatus<CR>
-nnoremap <leader>gc :Gcommit<CR>
-
 
 " netrw
 let g:explHideFiles='^\.,.*\.pyc$'
@@ -581,7 +530,6 @@ let g:netrw_banner=0
 " CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
-nnoremap <C-s> :CtrlPSession<cr>
 nnoremap <C-p> :CtrlP<cr>
 
 " just use CWD
@@ -597,56 +545,6 @@ let g:ctrlp_match_window = 'bottom,btt,min:1,max:16'
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_by_filename = 1
 
-" You Complete Me
-let g:ycm_auto_trigger = 0
-let g:ycm_min_num_identifier_candidate_chars = 1
-let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-let g:ycm_filetype_specific_completion_to_disable = { 'javascript' : 1 }
-
-" Riv
-let g:riv_global_leader="<c-z>"
-
-" Pymode
-let g:pydoc_open_cmd = 'vsplit'
-let g:pymode_warnings = 1
-let g:pymode_lint_write = 0
-let g:pymode_lint_on_write = 0
-let g:pymode_folding = 0
-let g:pymode_indent = 1
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_syntax_slow_sync = 0
-let g:pymode_rope_goto_definition_cmd = 'e'
-let g:pymode_rope_completion_bind = ''
-
-" vim-markdown
-let g:vim_markdown_initial_foldlevel=2
-
-" tern
-let g:tern_show_argument_hints='no'
-let g:tern_show_signature_in_pum=1
-
-" vim-go
-let g:go_disable_autoinstall = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_fmt_autosave = 0
-
-" jedi
-let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = "2"
-let g:jedi#usages_command = "<leader>q"
-let g:jedi#auto_vim_configuration = 0
-
 " pandoc
 let g:pandoc#after#modules#enabled = ["ultisnips"]
 "let g:pandoc#syntax#conceal#use = 0
@@ -657,7 +555,7 @@ let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templ
 let g:pandoc#hypertext#open_cmd = "e"
 
 let g:todo_journal_base="~/Dropbox/Todo/Journal"
-nnoremap <F4> :Journal<cr>
+"nnoremap <F4> :Journal<cr>
 
 nnoremap <F3> :set spell!<cr>
 
@@ -666,10 +564,6 @@ nnoremap <silent> <F1> :echo<cr>
 
 " jsx
 let g:jsx_ext_required = 0
-
-" peekaboo
-"let g:peekaboo_compact = 1
-let g:peekaboo_delay = 750
 
 " FUNCTIONS
 
@@ -741,64 +635,19 @@ hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
 hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
 hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
-nnoremap <leader><leader> <c-^>
-
 " fix issue with sh vim syntax setting iskeyword
 let g:sh_noisk=1
 
 " fix unindent behavior
 inoremap # X#
 
-" quick-scope only on movementb
-" Insert into your .vimrc after quick-scope is loaded.
-" Obviously depends on <https://github.com/unblevable/quick-scope> being installed.
-
-" Thanks to @VanLaser for cleaning the code up and expanding capabilities to include e.g. `df`
-
-let g:qs_enable = 0
-let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
-
-function! Quick_scope_selective(movement)
-    let needs_disabling = 0
-    if !g:qs_enable
-        QuickScopeToggle
-        redraw
-        let needs_disabling = 1
-    endif
-    let letter = nr2char(getchar())
-    if needs_disabling
-        QuickScopeToggle
-    endif
-    return a:movement . letter
-endfunction
-
-for i in g:qs_enable_char_list
-  execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
-endfor
-
-" Load local overrides
-silent! source ~/.vimrc-local
-
-"set verbosefile=~/.vimlog
-"set verbose=16
-
-"omnisharp
-let g:OmniSharp_selector_ui = 'ctrlp'
-let g:slime_target = "tmux"
-let g:slime_python_ipython = 1
-"let g:OmniSharp_server_type = 'v1'
-"let g:OmniSharp_server_type = 'roslyn'
-
-"braceless
-nnoremap <leader>h :BracelessEnable +Highlight<cr>
-
-"typescript
-let g:tsuquyomi_disable_quickfix = 1
-
-
 " DWRE
 nnoremap <leader>da :DWREAdd<cr>
 nnoremap <leader>dd :DWREDel<cr>
 nnoremap <leader>dr :DWREReset<cr>
 nnoremap <leader>dg :DWREDebug<cr>
+
+" Load local overrides
+silent! source ~/.vimrc-local
+
 " vim:foldmethod=marker foldlevel=0
