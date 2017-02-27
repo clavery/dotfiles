@@ -36,9 +36,9 @@ setopt HISTIGNOREDUPS
 setopt HISTIGNORESPACE
 setopt LONGLISTJOBS
 setopt MULTIOS
-setopt PRINTEIGHTBIT 
-setopt RMSTARSILENT 
-setopt SHORTLOOPS  
+setopt PRINTEIGHTBIT
+setopt RMSTARSILENT
+setopt SHORTLOOPS
 setopt CLOBBER
 unsetopt CORRECT
 
@@ -57,11 +57,8 @@ select-word-style bash
 # emacs mode
 bindkey -e
 
-# better for gnu screen
 bindkey "^B" backward-word
 bindkey "^F" forward-word
-
-bindkey "^." insert-last-word
 
 # edit command line in vi with Ctrl-x Ctrl-e
 autoload -U edit-command-line
@@ -215,7 +212,6 @@ export PS2="%_ > "
 ######### Aliases #########
 
 alias g=git
-#alias gpush="git add . && git commit -a -m 'quick commit' && git push"
 alias gtop='cd $(git rev-parse --show-toplevel)'
 alias git-not-mod='git ls-files -mo | xargs -n1 echo -not -path | xargs find *'
 
@@ -297,14 +293,6 @@ zstyle ':completion:*:*:coffee:*' file-patterns '*.coffee:globbed-files *(-/):di
 zstyle ':completion:*:*:node:*' file-patterns '*.js:globbed-files *(-/):directories' '*:all-files'
 zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):directories' '*:all-files'
 
-# npm completion
-case $HOSTNAME in
-  dasbook|chucks)
-    ;;
-  *)
-    ;;
-esac
-
 # grep
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
@@ -317,7 +305,10 @@ function genpass2() {
   LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1; echo
 }
 function genpass3() {
-  LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 16; echo
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
+  LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4; echo
 }
 
 # GPG-agent for linux only (use MacGPG on OSX)
@@ -341,7 +332,7 @@ fi
 
 # git completion fixes
 __git_files () { 
-  _wanted files expl 'local files' _files     
+  _wanted files expl 'local files' _files
 }
 
 # debian development
@@ -350,7 +341,6 @@ export DEBEMAIL="charles.lavery@gmail.com"
 
 #### Python ####
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export WORKON_HOME=$HOME/.venv3
 
 if [ -d $HOME/.venv/default ]
 then
@@ -386,31 +376,6 @@ case $HOST_OS in
   ;;
 esac
 
-#### ruby ####
-if [ -d /usr/local/opt/ruby/bin ]
-then
-  export PATH=$PATH:/usr/local/opt/ruby/bin
-fi
-
-#### postgres ####
-if [ -d /Applications/Postgres93.app/Contents/MacOS/bin ]
-then
-  export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
-fi
-
-
-#### golang ####
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-export GOPATH=${HOME}/code/go
-export PATH=$PATH:$GOPATH/bin
-if [ -f /usr/local/share/zsh/site-functions/go ]
-then
-  source /usr/local/share/zsh/site-functions/go
-fi
-
-### Haskell
-export PATH=$PATH:/Users/clavery/Library/Haskell/bin
-
 #### ledger ####
 case $HOSTNAME in
   dasbook)
@@ -426,21 +391,6 @@ case $HOSTNAME in
   ;;
 esac
 alias l="ledger"
-
-#docker
-export DOCKERSCRIPTPATH=$HOME/.dockerscripts
-function d {
-  if [ "$1" = "" ]; then
-    return
-  fi
-  if [ -f "${DOCKERSCRIPTPATH}/${1}" ]; then
-    . "${DOCKERSCRIPTPATH}/${1}"
-  fi
-}
-function _completedocker {
-  reply=($(ls $DOCKERSCRIPTPATH))
-}
-compctl -K _completedocker d
 
 #marks
 export MARKPATH=$HOME/.marks
@@ -470,28 +420,6 @@ compctl -K _completemarks jump
 compctl -K _completemarks markprint
 compctl -K _completemarks unmark
 
-_FMARKS=()
-function mf {
-  for f in $*; do
-    fullpath=$(cd $(dirname "$f"); echo "$PWD/$(basename $f)")
-    _FMARKS+=("$fullpath")
-  done
-}
-function mfclear {
-  _FMARKS=()
-}
-function mfmove {
-  for item in ${_FMARKS[@]}; do
-    echo $item
-    mv "$item" "$1"
-  done
-}
-function mfprint {
-  for item in ${_FMARKS[@]}; do
-    echo $item
-  done
-}
-
 #templates
 export _TEMPLATE_PATH=$HOME/code/templates
 alias template="${_TEMPLATE_PATH}/template"
@@ -520,7 +448,7 @@ function fkill {
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
 
-alias uuid4="python -c 'import uuid; import sys; sys.stdout.write(str(uuid.uuid4()))' | tee >( pbcopy)"
+alias uuid4="python -c 'import uuid; import sys; print str(uuid.uuid4())'"
 
 function pw {
   _oldumask=$(umask)
@@ -555,10 +483,6 @@ function totp {
   rm $_tmpfile
   umask $_oldumask
 }
-# DNX
-if [ -f /Users/clavery/.dnx/dnvm/dnvm.sh ]; then
-  source /Users/clavery/.dnx/dnvm/dnvm.sh
-fi
 
 # example from man pages
 eg() {
@@ -567,15 +491,10 @@ eg() {
     | ${MANPAGER:-${PAGER:-pager -s}}
 }
 
-alias iso8601="echo -n $(date +\"%Y%m%dT%H%M%S\") | pbcopy"
-
-if [ -f ~/.homebrew ]; then
-  source ~/.homebrew
-fi
-
+alias iso8601="echo $(date +\"%Y%m%dT%H%M%S\")"
 
 function todo {
-  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md -c "vs personal.md";
+  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md;
   cd -
 }
 
@@ -583,18 +502,8 @@ function gist {
   pbpaste | command gist -p -f $1 -d "$(echo ${@:2})" | tee >(pbcopy) | cat
 }
 
-function codi() {                                                                                                                             ○
-  mvim $2 -c \
-    "let g:startify_disable_at_vimenter = 1 |\
-    set bt=nofile ls=0 noru nonu nornu |\
-    hi ColorColumn ctermbg=NONE |\
-    hi VertSplit ctermbg=NONE |\
-    hi NonText ctermfg=0 |\
-    Codi ${1:-python}"
-}
-
 function next_release() {
-  tickets=`g lg HEAD^..develop | grep -oe "JSS-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
+  tickets=`g lg HEAD^..develop | grep -oe "$1-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
   open "https://pixelmedia.atlassian.net/issues/?jql=resolution = Unresolved and key in ($tickets)"
 }
 
@@ -608,6 +517,8 @@ function review() {
   git worktree add "../branches/$1" $1
   cd "../branches/$1";
   ln -s "$OLDPWD/node_modules" .
+  ln -s "$OLDPWD/.agignore" .
+  ln -s "$OLDPWD/.custignore" .
 }
 function _completereview {
   reply=($(git branch -r | grep origin | sed 's/origin\///'))
