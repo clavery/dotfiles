@@ -642,10 +642,10 @@ let g:sh_noisk=1
 inoremap # X#
 
 " DWRE
-nnoremap <leader>da :DWREAdd<cr>
-nnoremap <leader>dd :DWREDel<cr>
-nnoremap <leader>dr :DWREReset<cr>
-nnoremap <leader>dg :DWREDebug<cr>
+autocmd FileType dsscript nnoremap <buffer> <leader>da :DWREAdd<cr>
+autocmd FileType dsscript nnoremap <buffer> <leader>dd :DWREDel<cr>
+autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
+autocmd FileType dsscript nnoremap <buffer> <leader>dg :DWREDebug<cr>
 
 " Load local overrides
 silent! source ~/.vimrc-local
