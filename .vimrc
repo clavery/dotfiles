@@ -5,6 +5,7 @@ filetype off
 
 call plug#begin('~/.vim/plugins')
 
+Plug 'sudar/vim-arduino-syntax'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -12,7 +13,7 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
@@ -243,7 +244,7 @@ endif
 " MAPPINGS
 
 " default help in vert
-cnoremap help vert help
+"cnoremap help vert help
 
 " don't yank on change
 noremap C "_C
@@ -402,11 +403,11 @@ set fillchars=vert:│,diff:-
 func! SetDiffMode()
   set scrollbind
 
-  noremap dh :diffget //2<CR>
-  noremap dl :diffget //3<CR>
-  noremap dg :diffget<CR>
-  noremap dp :diffput<CR>
-  noremap du :diffup<CR>
+  noremap <leader>dh :diffget //2<CR>
+  noremap <leader>dl :diffget //3<CR>
+  noremap <leader>dg :diffget<CR>
+  noremap <leader>dp :diffput<CR>
+  noremap <leader>du :diffup<CR>
 
   set diffopt+=vertical
 
@@ -646,6 +647,8 @@ autocmd FileType dsscript nnoremap <buffer> <leader>da :DWREAdd<cr>
 autocmd FileType dsscript nnoremap <buffer> <leader>dd :DWREDel<cr>
 autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
 autocmd FileType dsscript nnoremap <buffer> <leader>dg :DWREDebug<cr>
+
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 
 " Load local overrides
 silent! source ~/.vimrc-local
