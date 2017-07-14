@@ -558,6 +558,7 @@
 
 import io
 import os
+import re
 from notebook.utils import to_api_path
 
 _script_exporter = None
@@ -585,6 +586,8 @@ def script_post_save(model, os_path, contents_manager, **kwargs):
     script_fname = base + resources.get('output_extension', '.txt')
     log.info("Saving script /%s", to_api_path(script_fname, contents_manager.root_dir))
 
+    input_prompt = re.compile(r'^# In\[((\d+)|(\s+))\]:$')
+    script = "\n".join([l for l in script.split('\n') if not input_prompt.match(l)])
     with io.open(script_fname, 'w', encoding='utf-8') as f:
         f.write(script)
 

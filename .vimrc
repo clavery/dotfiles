@@ -500,7 +500,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_balloons = 0
 let g:syntastic_stl_format = '%E{[%e:%F]}'
-nnoremap <leader>c :SyntasticCheck<cr>
+nnoremap <silent> <leader>c :SyntasticCheck<cr>
 nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
 let g:syntastic_json_checkers=['jsonlint']

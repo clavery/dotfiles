@@ -243,6 +243,10 @@ end
 hs.hotkey.bind(hyper, "D", mouseHighlight)
 
 
+function grid()
+  hs.grid.show()
+end
+hs.hotkey.bind(hyper, "g", grid)
 -------
 -- Statuses
 -------

@@ -14,6 +14,7 @@ stty stop undef
 
 export HISTSIZE=1000
 export EDITOR=vim
+export BROWSER=open
 
 export PROMPT_EOL_MARK=''
 
@@ -347,14 +348,11 @@ then
   . $HOME/.venv/default/bin/activate
 fi
 
-function venv2 {
-  . $HOME/.venv/default/bin/activate
-}
-function venv3 {
-  . $HOME/.venv3/default/bin/activate
-}
-
 function venv {
+  if [ -n "$1" ]; then
+    . $HOME/.venv/$1/bin/activate
+    return
+  fi
   if [ -f env/bin/activate ]; then
     . env/bin/activate
   else
@@ -524,3 +522,5 @@ function _completereview {
   reply=($(git branch -r | grep origin | sed 's/origin\///'))
 }
 compctl -K _completereview review
+
+
