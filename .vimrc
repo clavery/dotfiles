@@ -29,6 +29,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
 
+Plug 'ternjs/tern_for_vim'
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
 Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
@@ -37,6 +38,8 @@ Plug 'vim-srs', { 'dir' : '~/code/vim-srs/'}
 
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
+Plug 'fleischie/vim-styled-components'
+Plug 'hail2u/vim-css3-syntax'
 
 call plug#end()
 
@@ -649,6 +652,9 @@ autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
 autocmd FileType dsscript nnoremap <buffer> <leader>dg :DWREDebug<cr>
 
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+
+" close preview window
+nnoremap <silent> <leader>gp :pclose<cr>
 
 " Load local overrides
 silent! source ~/.vimrc-local

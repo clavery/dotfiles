@@ -524,3 +524,23 @@ function _completereview {
 compctl -K _completereview review
 
 
+# usage = `any gulp` to search for running procs
+function any() {
+    emulate -L zsh
+    unsetopt KSH_ARRAYS
+    if [[ -z "$1" ]] ; then
+        echo "any - grep for process(es) by keyword" >&2
+        echo "Usage: any " >&2 ; return 1
+    else
+        ps xauwww | grep -i --color=auto "[${1[1]}]${1[2,-1]}"
+    fi
+}
+
+function defi() {
+  if [[ $# -ge 2 ]] then
+    echo "defi: too many arguments" >&2
+    return 1
+  else
+    curl "dict://dict.org/d:$1" | less
+  fi
+}

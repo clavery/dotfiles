@@ -1,6 +1,7 @@
 -- Include local machine variables
 require("localvars")
 
+local log = hs.logger.new('init','debug')
 
 local cmd = {"cmd"}
 local hyper = {"cmd", "ctrl"}
@@ -321,6 +322,30 @@ function appendToFile(file, text)
   f:close()
 end
 
+function prependToFile(file, text)
+  if text == '' then return end
+
+  local out = io.open(file, 'r')
+
+  local lines = {}
+  for line in out:lines() do
+    table.insert(lines, line)
+  end
+
+  out:close()
+
+  table.insert(lines, 1, tostring(text))
+
+  local out = io.open(file .. '.tmp', 'w')
+  for _, line in ipairs(lines) do
+    out:write(line .. "\n")
+  end
+  out:close()
+
+  os.remove(file)
+  os.rename(file .. ".tmp", file)
+end
+
 function splitline(str, pat)
   local t = {}  -- NOTE: use {n = 0} in Lua-5.0
   local fpat = "(.-)" .. pat
@@ -356,6 +381,7 @@ local function parseLine(line)
     message = first .. ' ' .. rest
   end
 
+  log.i("Setting timer for " .. seconds .. " seconds")
   createNewTimer(seconds, message)
 end
 
@@ -380,9 +406,14 @@ end
 
 local commands = {
   {
-    ['text'] = 'File task...',
+    ['text'] = 'File work task...',
     ['subText'] = 'File a new task/note',
     ['command'] = 'newnote',
+  },
+  {
+    ['text'] = 'File personal task...',
+    ['subText'] = 'File a new task/note',
+    ['command'] = 'newnotepersonal',
   },
   {
     ['text'] = 'Time Entry',
@@ -402,7 +433,9 @@ function choice()
     if choice.command == 'newtimer' then
       parseLine(tostring(chooser:query()))
     elseif choice.command == 'newnote' then
-      appendToFile(toPath(homeDir, "Dropbox", "Todo", "unfiled.md"), "- " .. chooser:query())
+      prependToFile(toPath(homeDir, "Dropbox", "Todo", "pixelmedia.txt"), "- " .. chooser:query())
+    elseif choice.command == 'newnotepersonal' then
+      prependToFile(toPath(homeDir, "Dropbox", "Todo", "personal.txt"), "- " .. chooser:query())
     elseif choice.command == 'newtime' then
       parseTimeEntry(tostring(chooser:query()))
     end
