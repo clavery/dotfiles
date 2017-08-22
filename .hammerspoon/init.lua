@@ -430,6 +430,9 @@ local commands = {
 
 function choice()
   chooser = hs.chooser.new(function(choice)
+    if not choice then
+      return
+    end
     if choice.command == 'newtimer' then
       parseLine(tostring(chooser:query()))
     elseif choice.command == 'newnote' then
