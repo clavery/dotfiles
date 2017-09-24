@@ -13,6 +13,7 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
+Plug 'jpalardy/vim-slime'
 "Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
@@ -32,9 +33,8 @@ Plug 'robbles/logstash.vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
-Plug 'scrooloose/syntastic', { 'on':  ['SyntasticCheck', 'Errors'] }
+Plug 'w0rp/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
-Plug 'vim-srs', { 'dir' : '~/code/vim-srs/'}
 
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
@@ -503,12 +503,29 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_balloons = 0
 let g:syntastic_stl_format = '%E{[%e:%F]}'
-nnoremap <silent> <leader>c :SyntasticCheck<cr>
-nnoremap <silent> <leader>e :Errors<cr>
+" nnoremap <silent> <leader>c :SyntasticCheck<cr>
+" nnoremap <silent> <leader>e :Errors<cr>
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute", "trimming empty"]
 let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_scss_checkers=['scss_lint']
+
+let g:syntastic_dsscript_checkers=['eslint']
+
+" ale
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'dsscript': ['eslint'],
+\}
+let g:ale_linter_aliases = {'dsscript': 'javascript'}
+let g:ale_linter_aliases = {'isml': 'html'}
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'dsscript': ['eslint'],
+\}
+nnoremap <silent> <leader>ef :ALEFix<cr>
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '➧'
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
@@ -570,6 +587,7 @@ nnoremap <silent> <F1> :echo<cr>
 let g:jsx_ext_required = 0
 
 " FUNCTIONS
+7
 
 " Quickfix Window Toggle
 nnoremap <leader>o :call QuickfixToggle()<cr>
@@ -583,11 +601,22 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+nnoremap <leader>el :call LLToggle()<cr>
+let g:ll_is_open = 0
+function! LLToggle()
+    if g:ll_is_open
+        lclose
+        let g:ll_is_open = 0
+    else
+        botright lopen
+        let g:ll_is_open = 1
+    endif
+endfunction
 
 " Shell execution
 let g:runner_default_command = 'zsh'
 let g:runner_default_ft = 'text'
-let g:runner_ignore_stderr = 1
+let g:runner_ignore_stderr = 0
 vnoremap <silent> <leader>s :Runner<cr>
 nnoremap <silent> <leader>s :Runner<cr>
 
@@ -655,6 +684,8 @@ autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | end
 
 " close preview window
 nnoremap <silent> <leader>gp :pclose<cr>
+
+let g:slime_target = "tmux"
 
 " Load local overrides
 silent! source ~/.vimrc-local

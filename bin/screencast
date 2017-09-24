@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+osascript <<EOF
+tell application "QuickTime Player"
+    activate
+    new screen recording
+    delay 1
+    tell application "System Events" to key code 49
+    delay 1
+end tell
+EOF

@@ -532,7 +532,7 @@ local lastscreenshot = nil
 function uploadscreenshots(changes)
   for key,value in pairs(changes) do 
     if value:ends(".png") and value ~= last then
-      success, code, output = execute(string.format("/Users/clavery/.venv/default/bin/aws --profile personal s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
+      success, code, output = execute(string.format("/Users/clavery/.venv3/default/bin/aws --profile personal s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
 
       local file = string.match(value, "^.+/(.+)$")
       message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
@@ -545,7 +545,33 @@ function uploadscreenshots(changes)
   end
 end
 
+function convertscreencasts(changes)
+  for key,value in pairs(changes) do 
+    if value:ends(".mov") and value ~= last then
+      success, code, output = execute(string.format("/Users/clavery/bin/convertmovtogif %q", value))
+  log.i(output)
+    end
+  end
+end
+function uploadscreencasts(changes)
+  for key,value in pairs(changes) do 
+    if value:ends(".gif") and value ~= last then
+      success, code, output = execute(string.format("/Users/clavery/.venv3/default/bin/aws --profile personal s3 cp %q s3://%s/screencasts/ --acl public-read", value, screenshotbucket))
+
+      local file = string.match(value, "^.+/(.+)$")
+      message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screencasts/" .. urlencode(file)
+      hs.notify.new(function ()
+        hs.execute("open -R '" .. value .. "'")
+      end, {title="Screencast",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
+      hs.pasteboard.setContents(message)
+      last = value
+    end
+  end
+end
+
 hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/Screenshots/", uploadscreenshots):start()
+hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screencasts/", convertscreencasts):start()
+hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screencasts/", uploadscreencasts):start()
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
 

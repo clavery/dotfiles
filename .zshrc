@@ -275,9 +275,11 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:*:*:jobs' list-colors '=(#b) #(%[0-9]#)*=0=01;31'
 
 # use /etc/hosts and known_hosts for hostname completion
+[ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | grep -e 'Host ' | sed 's/Host //' | paste -sd " " -)) || _ssh_config=()
 [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
+  "$_ssh_config[@]"
   "$_ssh_hosts[@]"
   "$_etc_hosts[@]"
   `hostname`
@@ -343,14 +345,14 @@ export DEBEMAIL="charles.lavery@gmail.com"
 #### Python ####
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if [ -d $HOME/.venv/default ]
+if [ -d $HOME/.venv3/default ]
 then
-  . $HOME/.venv/default/bin/activate
+  . $HOME/.venv3/default/bin/activate
 fi
 
 function venv {
   if [ -n "$1" ]; then
-    . $HOME/.venv/$1/bin/activate
+    . $HOME/.venv3/$1/bin/activate
     return
   fi
   if [ -f env/bin/activate ]; then
@@ -388,7 +390,18 @@ case $HOSTNAME in
   *)
   ;;
 esac
-alias l="ledger"
+function l {
+  if [ $# == 1 ] && [ -f "scripts/$1" ]; then
+    scripts/$1
+  else
+    ledger $@
+  fi
+}
+function _completeledger {
+  reply=("cash_on_hand" "savings_rate" "balance" "register" "accounts" "updateprices")
+}
+compctl -K _completeledger l
+
 
 #marks
 export MARKPATH=$HOME/.marks
@@ -492,7 +505,7 @@ eg() {
 alias iso8601="echo $(date +\"%Y%m%dT%H%M%S\")"
 
 function todo {
-  cd ~/Dropbox/Todo && mvim pixelmedia.md personal.md;
+  cd ~/Dropbox/Todo && mvim pixelmedia.txt personal.txt;
   cd -
 }
 
@@ -544,3 +557,6 @@ function defi() {
     curl "dict://dict.org/d:$1" | less
   fi
 }
+
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"  
