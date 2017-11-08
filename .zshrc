@@ -327,7 +327,9 @@ if [[ $HOST_OS == 'linux' ]]; then
   gpg-agent > /dev/null 2>&1
   if [[ $? != 0 ]]; then
     gpg-agent --enable-ssh-support --daemon --write-env-file "${HOME}/.gpg-agent-info" > /dev/null 2>&1
-    . "${HOME}/.gpg-agent-info"
+    if [ -f "${HOME}/.gpg-agent-info" ]; then
+      . "${HOME}/.gpg-agent-info"
+    fi
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
   fi
@@ -559,4 +561,27 @@ function defi() {
 }
 
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"  
+[ -f "$NVM_DIR/nvm.sh" ] && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -f "$NVM_DIR/bash_completion" ] && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+

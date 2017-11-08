@@ -1,0 +1,15 @@
+snippet task "task" bw
+- project: ${1:XXX}
+  issuetype: ${2:Task|Sub-task}
+  summary: $3
+  description: |
+    $4
+  components: $5
+  estimate: ${6:1h}
+endsnippet
+snippet subtask "subtask" bw
+- summary: $1
+  description: |
+    $2
+  estimate: ${3:2h}
+endsnippet

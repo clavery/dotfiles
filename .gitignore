@@ -26,3 +26,4 @@ tags
 .vim/plugins/
 
 .tern-project
+.nvmrc

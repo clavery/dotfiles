@@ -14,14 +14,10 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'jpalardy/vim-slime'
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'elzr/vim-json'
-Plug 'cakebaker/scss-syntax.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ledger/vim-ledger'
@@ -29,6 +25,7 @@ Plug 'clavery/vim-dwre'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
+Plug 'junegunn/fzf'
 
 Plug 'ternjs/tern_for_vim'
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
@@ -36,10 +33,15 @@ Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
 Plug 'w0rp/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
-Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
-Plug 'fleischie/vim-styled-components'
-Plug 'hail2u/vim-css3-syntax'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'ianks/vim-tsx'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'posva/vim-vue'
+" Plug 'cakebaker/scss-syntax.vim'
+" Plug 'hail2u/vim-css3-syntax'
+" Plug 'elzr/vim-json'
+Plug 'clavery/vim-styled-components', {'branch': 'rewrite'}
 
 call plug#end()
 
@@ -48,6 +50,10 @@ syntax on
 
 set nocompatible
 set t_Co=256
+
+if $TERM == 'xterm-256color'
+  set termguicolors
+endif
 
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
@@ -59,10 +65,6 @@ nnoremap g<C-X> <C-X>
 nnoremap <C-X> <nop>
 
 nnoremap Q <nop>
-
-if has('mac')
-  set macmeta
-endif
 
 set sessionoptions=blank,buffers,curdir,help,winsize
 set exrc
@@ -87,7 +89,7 @@ set ruler
 set showcmd
 set incsearch
 set scrolloff=4
-set synmaxcol=500
+set synmaxcol=300
 set nohlsearch
 set tabstop=2
 set shiftwidth=2
@@ -101,6 +103,7 @@ set noshowmatch
 set matchtime=2 " show paren matches quickly
 set shortmess=lmnrxoOItTA
 set ignorecase
+set infercase
 set smartcase
 set ttyfast
 set gdefault " change behavior of /g option
@@ -112,6 +115,7 @@ set showbreak=↪
 set wildmenu
 set wildmode=list:longest
 set smartindent
+set breakindent
 set laststatus=2
 set foldlevelstart=0
 set splitbelow
@@ -132,13 +136,8 @@ augroup END
 "  au BufReadPost * :if &expandtab == 'noexpandtab' | setlocal listchars+=tab:\ \ | endif
 "augroup END
 set nrformats=hex,alpha
-set esckeys
 set foldlevelstart=99
 set completeopt=menu,preview
-
-if version >= 703
-  set cryptmethod=blowfish
-endif
 
 " Turn off sounds
 set noerrorbells
@@ -517,15 +516,16 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'dsscript': ['eslint'],
 \}
-let g:ale_linter_aliases = {'dsscript': 'javascript'}
-let g:ale_linter_aliases = {'isml': 'html'}
+let g:ale_linter_aliases = {'dsscript': 'javascript', 'isml': 'html'}
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'dsscript': ['eslint'],
+\   'xml': ['dwrexmllint'],
 \}
 nnoremap <silent> <leader>ef :ALEFix<cr>
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '➧'
+let g:ale_xml_dwrexmllint_schema_path = '/Users/clavery/code/dwre/dwre-dwre-tools/dwre_tools/schemas/'
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
@@ -536,9 +536,10 @@ nnoremap <silent> <leader>u :GundoToggle<cr>
 let g:gundo_help = 0
 
 " Ultisnips
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips/'
 
 " matchit
 runtime macros/matchit.vim
@@ -570,11 +571,11 @@ let g:ctrlp_by_filename = 1
 let g:pandoc#after#modules#enabled = ["ultisnips"]
 "let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#syntax#conceal#blacklist = ['titleblock', 'list', 'atx']
-let g:pandoc#syntax#codeblocks#embeds#langs  = ["python", "javascript", "ruby", "cs", "html", "sh", "vim"]
+let g:pandoc#syntax#codeblocks#embeds#langs = []
 let g:pandoc#folding#fdc = 0
 let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
 let g:pandoc#hypertext#open_cmd = "e"
-
+autocmd FileType pandoc syntax sync fromstart
 let g:todo_journal_base="~/Dropbox/Todo/Journal"
 "nnoremap <F4> :Journal<cr>
 
@@ -587,7 +588,6 @@ nnoremap <silent> <F1> :echo<cr>
 let g:jsx_ext_required = 0
 
 " FUNCTIONS
-7
 
 " Quickfix Window Toggle
 nnoremap <leader>o :call QuickfixToggle()<cr>
@@ -687,6 +687,11 @@ nnoremap <silent> <leader>gp :pclose<cr>
 
 let g:slime_target = "tmux"
 
+" word under cursor change
+nnoremap c* *Ncgn
+nnoremap c# #NcgN
+
+command! -range=% JIRA <line1>,<line2>w !python ~/bin/jira.py
 " Load local overrides
 silent! source ~/.vimrc-local
 
