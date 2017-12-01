@@ -226,7 +226,7 @@ alias ltail="less -Ri +F"
 alias crontab="VIM_CRONTAB=true crontab"
 
 alias history='fc -l 1'
-alias dirs='dirs -vp'
+alias dirs='dirs -vp | sort -nr'
 
 # don't send screen...
 alias ssh='TERM=xterm-256color ssh'
@@ -461,7 +461,7 @@ function fkill {
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
 
-alias uuid4="python -c 'import uuid; import sys; print str(uuid.uuid4())'"
+alias uuid4="python -c 'import uuid; import sys; print(str(uuid.uuid4()))'"
 
 function pw {
   _oldumask=$(umask)
@@ -478,6 +478,15 @@ function pw {
 
   rm $_tmpfile
   umask $_oldumask
+}
+function cs {
+  echo -n $(credstash get $(credstash keys | fzf)) | tee >(pbcopy)
+}
+function aws {
+  (
+  AWS_PROFILE="${AWS_PROFILE:-default}"
+  aws-vault exec "$AWS_PROFILE" -- command aws "$@"
+  )
 }
 
 function totp {

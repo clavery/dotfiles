@@ -17,3 +17,5 @@ nnoremap <buffer> <C-]> :TernDef<cr>
 nnoremap <buffer> <leader>tt :TernType<cr>
 
 nno <buffer> <silent> K :exe 'silent !open dash://js:'.expand("<cword>")<cr>
+
+nnoremap <buffer> gp :silent %!prettier --stdin --single-quote<CR>

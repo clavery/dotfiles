@@ -8,5 +8,5 @@ setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4 autoindent
 
 setlocal formatprg=yapf\ --style='{COLUMN_LIMIT:100}'
 
-setlocal errorformat=%f:%l:\ %m
-setlocal makeprg=pylint\ --reports=n\ --output-format=parseable
+setlocal errorformat=%f:%l:%c:\ %t%n\ %m
+setlocal makeprg=flake8

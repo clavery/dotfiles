@@ -21,13 +21,12 @@ Plug 'jamessan/vim-gnupg'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ledger/vim-ledger'
-Plug 'clavery/vim-dwre'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
 Plug 'junegunn/fzf'
 
-Plug 'ternjs/tern_for_vim'
+"Plug 'ternjs/tern_for_vim'
 Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
 Plug 'w0rp/ale'
@@ -37,11 +36,17 @@ Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 " Plug 'ianks/vim-tsx'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'clavery/vim-dwre'
 Plug 'posva/vim-vue'
 " Plug 'cakebaker/scss-syntax.vim'
 " Plug 'hail2u/vim-css3-syntax'
 " Plug 'elzr/vim-json'
 Plug 'clavery/vim-styled-components', {'branch': 'rewrite'}
+" Plug 'styled-components/vim-styled-components', {'branch': 'rewrite'}
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 call plug#end()
 
@@ -125,16 +130,16 @@ set nowritebackup
 set noswapfile
 set list
 set listchars=tab:▸\ ,trail:•,nbsp:␣,extends:…,precedes:…
+augroup PreviewWindow
+  au BufAdd * if &previewwindow | setlocal laststatus=0 | endif
+  au BufAdd * if &previewwindow | setlocal nonumber | endif
+augroup END
 augroup trailing
     au!
     au InsertEnter * :set listchars-=trail:•
     au InsertLeave * :set listchars+=trail:•
 augroup END
-"augroup tabonoff
-"  " remove tab from listchars if using tab indent style
-"  au!
-"  au BufReadPost * :if &expandtab == 'noexpandtab' | setlocal listchars+=tab:\ \ | endif
-"augroup END
+
 set nrformats=hex,alpha
 set foldlevelstart=99
 set completeopt=menu,preview
@@ -302,6 +307,7 @@ nnoremap <silent> <leader>l :set list!<cr>
 nnoremap <silent> <leader>w :set wrap!<cr>
 
 nnoremap <leader>` "=strftime("%FT%T%z")<cr>P
+inoremap <C-D> <C-o>"=strftime("%FT%T%z")<cr>
 
 "emacs begin/end
 inoremap <c-a> <Home>
@@ -514,8 +520,13 @@ let g:syntastic_dsscript_checkers=['eslint']
 " ale
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'javascript.jsx': ['eslint'],
 \   'dsscript': ['eslint'],
+\   'python': ['autopep8'],
 \}
+let g:ale_python_autopep8_options = '--aggressive --aggressive'
+" let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_linter_aliases = {'dsscript': 'javascript', 'isml': 'html'}
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -690,6 +701,34 @@ let g:slime_target = "tmux"
 " word under cursor change
 nnoremap c* *Ncgn
 nnoremap c# #NcgN
+
+"let g:lsp_async_completion = 1
+" if executable('javascript-typescript-stdio')
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'javascript-typescript-stdio',
+"         \ 'cmd': {server_info->['javascript-typescript-stdio']},
+"         \ 'whitelist': ['javascript', 'javascript.jsx'],
+"         \ })
+"   autocmd FileType javascript setlocal omnifunc=lsp#complete
+"   autocmd FileType javascript.jsx setlocal omnifunc=lsp#complete
+" endif
+
+
+
+" if executable('pyls')
+"     " pip install python-language-server
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'pyls',
+"         \ 'cmd': {server_info->['pyls']},
+"         \ 'whitelist': ['python'],
+"         \ })
+"   autocmd FileType python setlocal omnifunc=lsp#complete
+" endif
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+
+" " for asyncomplete.vim log
+" let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
 command! -range=% JIRA <line1>,<line2>w !python ~/bin/jira.py
 " Load local overrides
