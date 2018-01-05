@@ -532,7 +532,7 @@ local lastscreenshot = nil
 function uploadscreenshots(changes)
   for key,value in pairs(changes) do 
     if value:ends(".png") and value ~= last then
-      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.venv3/default/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
+      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.venv/default/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
 
       local file = string.match(value, "^.+/(.+)$")
       message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
@@ -556,7 +556,7 @@ end
 function uploadscreencasts(changes)
   for key,value in pairs(changes) do 
     if value:ends(".gif") and value ~= last then
-      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.venv3/default/bin/aws s3 cp %q s3://%s/screencasts/ --acl public-read", value, screenshotbucket))
+      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.venv/default/bin/aws s3 cp %q s3://%s/screencasts/ --acl public-read", value, screenshotbucket))
 
       local file = string.match(value, "^.+/(.+)$")
       message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screencasts/" .. urlencode(file)

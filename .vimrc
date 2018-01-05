@@ -27,9 +27,9 @@ Plug 'robbles/logstash.vim'
 Plug 'junegunn/fzf'
 
 "Plug 'ternjs/tern_for_vim'
-Plug 'sjl/gundo.vim', { 'on':  ['GundoToggle'] }
+Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', { 'branch' : 'v1.0.x' }
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
 " Plug 'leafgarland/typescript-vim'
@@ -47,6 +47,7 @@ Plug 'clavery/vim-styled-components', {'branch': 'rewrite'}
 " Plug 'prabirshrestha/vim-lsp'
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'neowit/vim-force.com'
 
 call plug#end()
 
@@ -71,6 +72,7 @@ nnoremap <C-X> <nop>
 
 nnoremap Q <nop>
 
+set autowrite
 set sessionoptions=blank,buffers,curdir,help,winsize
 set exrc
 set secure
@@ -526,7 +528,6 @@ let g:ale_fixers = {
 \}
 let g:ale_python_autopep8_options = '--aggressive --aggressive'
 " let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_linter_aliases = {'dsscript': 'javascript', 'isml': 'html'}
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -536,15 +537,15 @@ let g:ale_linters = {
 nnoremap <silent> <leader>ef :ALEFix<cr>
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '➧'
+let g:ale_echo_cursor = 1
 let g:ale_xml_dwrexmllint_schema_path = '/Users/clavery/code/dwre/dwre-dwre-tools/dwre_tools/schemas/'
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
 autocmd FileType json set formatprg=python\ -mjson.tool
 
-" Gundo
-nnoremap <silent> <leader>u :GundoToggle<cr>
-let g:gundo_help = 0
+" Undo tree
+nnoremap <silent> <leader>u :UndotreeToggle<cr>
 
 " Ultisnips
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -734,4 +735,10 @@ command! -range=% JIRA <line1>,<line2>w !python ~/bin/jira.py
 " Load local overrides
 silent! source ~/.vimrc-local
 
+" force.com
+let g:apex_tooling_force_dot_com_path = $HOME.'/.vim/tooling-force.com-0.4.0.2.jar'
+let g:apex_backup_folder = $HOME.'/.salesforce/backup'
+let g:apex_temp_folder = $HOME.'/.salesforce/temp'
+let g:apex_properties_folder = $HOME.'/.salesforce/properties'
+let g:apex_server_port = 9898
 " vim:foldmethod=marker foldlevel=0

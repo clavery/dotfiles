@@ -347,14 +347,14 @@ export DEBEMAIL="charles.lavery@gmail.com"
 #### Python ####
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if [ -d $HOME/.venv3/default ]
+if [ -d $HOME/.venv/default ]
 then
-  . $HOME/.venv3/default/bin/activate
+  . $HOME/.venv/default/bin/activate
 fi
 
 function venv {
   if [ -n "$1" ]; then
-    . $HOME/.venv3/$1/bin/activate
+    . $HOME/.venv/$1/bin/activate
     return
   fi
   if [ -f env/bin/activate ]; then
@@ -479,8 +479,11 @@ function pw {
   rm $_tmpfile
   umask $_oldumask
 }
+function vault {
+  aws-vault exec default -- $@
+}
 function cs {
-  echo -n $(credstash get $(credstash keys | fzf)) | tee >(pbcopy)
+  echo -n $(vault dwre cred get $(vault dwre cred list | fzf)) | tee >(pbcopy)
 }
 function aws {
   (
@@ -540,6 +543,7 @@ function review() {
   cd "../branches/$1";
   ln -s "$OLDPWD/node_modules" .
   ln -s "$OLDPWD/.agignore" .
+  ln -s "$OLDPWD/.nvmrc" .
   ln -s "$OLDPWD/.custignore" .
 }
 function _completereview {
@@ -571,7 +575,7 @@ function defi() {
 
 export NVM_DIR="$HOME/.nvm"
 [ -f "$NVM_DIR/nvm.sh" ] && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -f "$NVM_DIR/bash_completion" ] && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#[ -f "$NVM_DIR/bash_completion" ] && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 autoload -U add-zsh-hook
 load-nvmrc() {
