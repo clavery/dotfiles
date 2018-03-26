@@ -18,7 +18,7 @@
   a = add
   last = difftool HEAD^..HEAD --
   graph = log --all --graph --decorate --oneline -n30
-  lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan bold)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
   l = log -p --color
   ia = !git ls-files -m | fzf -m | xargs git add
   ic = !git ls-files -m | fzf -m | xargs git co
@@ -82,4 +82,5 @@
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Users/clavery/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  trustExitCode = true
+

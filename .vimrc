@@ -25,11 +25,13 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
 Plug 'junegunn/fzf'
+Plug 'tpope/vim-dadbod'
 
 "Plug 'ternjs/tern_for_vim'
 Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
-Plug 'w0rp/ale', { 'branch' : 'v1.0.x' }
+"Plug 'w0rp/ale', { 'branch' : 'v1.0.x' }
+Plug 'clavery/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
 " Plug 'leafgarland/typescript-vim'
@@ -48,6 +50,7 @@ Plug 'clavery/vim-styled-components', {'branch': 'rewrite'}
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'neowit/vim-force.com'
+Plug 'mhartington/oceanic-next'
 
 call plug#end()
 
@@ -58,7 +61,9 @@ set nocompatible
 set t_Co=256
 
 if $TERM == 'xterm-256color'
-  set termguicolors
+  if (has("termguicolors"))
+    set termguicolors
+  endif
 endif
 
 let mapleader = "\<Space>"
@@ -394,7 +399,8 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Source\ Code\ Pro:h14
+  "set guifont=Source\ Code\ Pro:h14
+  set guifont=Consolas:h15
   "set guifont=Source\ Code\ Pro\ Light:h14
   "set guifont=Sauce\ Code\ Powerline:h14
 endif

@@ -479,6 +479,12 @@ function pw {
   rm $_tmpfile
   umask $_oldumask
 }
+function dpw {
+  dwre pw list |
+    fzf |
+    xargs dwre pw get |
+    pbcopy
+}
 function vault {
   aws-vault exec default -- $@
 }
@@ -596,8 +602,9 @@ load-nvmrc() {
   fi
 }
 if [ -f "$NVM_DIR/nvm.sh" ]; then
-  add-zsh-hook chpwd load-nvmrc
-  load-nvmrc
+  #add-zsh-hook chpwd load-nvmrc
+  #load-nvmrc
 fi
 
-
+# fix high sierra bullshit
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
