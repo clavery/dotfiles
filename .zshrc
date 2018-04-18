@@ -95,7 +95,7 @@ alias ll="ls -Alhtr"
 
 fpath=($HOME/dotfiles/.completions/src/ $fpath)
 
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 function setjdk() {
   if [ $# -ne 0 ]; then
@@ -308,10 +308,10 @@ function genpass2() {
   LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1; echo
 }
 function genpass3() {
-  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
-  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
-  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4) "
-  LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 4; echo
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5) "
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5) "
+  echo -n "$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5) "
+  LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5; echo
 }
 
 # GPG-agent for linux only (use MacGPG on OSX)
@@ -347,11 +347,6 @@ export DEBEMAIL="charles.lavery@gmail.com"
 #### Python ####
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if [ -d $HOME/.venv/default ]
-then
-  . $HOME/.venv/default/bin/activate
-fi
-
 function venv {
   if [ -n "$1" ]; then
     . $HOME/.venv/$1/bin/activate
@@ -381,9 +376,9 @@ esac
 #### ledger ####
 case $HOSTNAME in
   dasbook)
-    export LEDGER_FILE=~/Documents/ledger/main.ledger
     export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
-    export LEDGER_PRICE_DB=~/Documents/ledger/prices.db
+    export LEDGER_FILE=/Volumes/Chucks/ledger/main.ledger
+    export LEDGER_PRICE_DB=/Volumes/Chucks/ledger/prices.db
   ;;
   chucks)
     export LEDGER_FILE=/Volumes/Chucks/ledger/main.ledger
@@ -393,14 +388,16 @@ case $HOSTNAME in
   ;;
 esac
 function l {
-  if [ $# == 1 ] && [ -f "scripts/$1" ]; then
-    scripts/$1
+  if [ $# -gt 0 ] && [ -f "scripts/$1" ]; then
+    script=$1
+    shift
+    scripts/$script "$@"
   else
     ledger $@
   fi
 }
 function _completeledger {
-  reply=("cash_on_hand" "savings_rate" "balance" "register" "accounts" "updateprices")
+  reply=("emergency" "cash_on_hand" "savings_rate" "balance" "register" "accounts" "updateprices")
 }
 compctl -K _completeledger l
 
