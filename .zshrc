@@ -531,7 +531,7 @@ function gist {
 }
 
 function next_release() {
-  tickets=`g lg HEAD^..develop | grep -oe "$1-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
+  tickets=`git log --format="%C(auto) %h %s" HEAD^..develop | grep -oe "$1-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
   open "https://pixelmedia.atlassian.net/issues/?jql=resolution = Unresolved and key in ($tickets)"
 }
 

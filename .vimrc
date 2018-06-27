@@ -26,6 +26,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
 Plug 'junegunn/fzf'
 Plug 'tpope/vim-dadbod'
+Plug 'vim-python/python-syntax'
 
 "Plug 'ternjs/tern_for_vim'
 Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
@@ -553,6 +554,8 @@ autocmd FileType json set formatprg=python\ -mjson.tool
 " Undo tree
 nnoremap <silent> <leader>u :UndotreeToggle<cr>
 
+let g:python_highlight_all = 1
+
 " Ultisnips
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -737,7 +740,8 @@ nnoremap c# #NcgN
 " " for asyncomplete.vim log
 " let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
-command! -range=% JIRA <line1>,<line2>w !python ~/bin/jira.py
+command! -range=% JIRA <line1>,<line2>w !~/bin/jira.py
+command! -range=% LOG <line1>,<line2>w !~/bin/log.py
 " Load local overrides
 silent! source ~/.vimrc-local
 

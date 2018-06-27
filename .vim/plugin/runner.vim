@@ -12,16 +12,16 @@ function! runner#run() range
   let filetype = exists('b:runner_ft') ? b:runner_ft : g:runner_default_ft
   let ignore_stderr = exists('b:runner_ignore_stderr') ? b:runner_ignore_stderr : g:runner_ignore_stderr
 
-  python import vim, subprocess
-  python p=subprocess.Popen(vim.eval('runner_command').split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  python p.stdin.write(vim.eval('tocmd'))
-  python p.stdin.close()
-  python serr = p.stderr.read()
+  pythonx import vim, subprocess
+  pythonx p=subprocess.Popen(vim.eval('runner_command').split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  pythonx p.stdin.write(vim.eval('tocmd').encode('utf-8'))
+  pythonx p.stdin.close()
+  pythonx serr = p.stderr.read()
 
   if ignore_stderr
-    let result = pyeval('p.stdout.read()')
+    let result = pyxeval('p.stdout.read()')
   else
-    let result = pyeval('serr if serr else p.stdout.read()')
+    let result = pyxeval('serr if serr else p.stdout.read()')
   endif
 
   pedit __OUT__
