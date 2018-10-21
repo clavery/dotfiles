@@ -31,15 +31,15 @@ Plug 'vim-python/python-syntax'
 "Plug 'ternjs/tern_for_vim'
 Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
-"Plug 'w0rp/ale', { 'branch' : 'v1.0.x' }
-Plug 'clavery/ale'
+Plug 'w0rp/ale'
+"Plug 'clavery/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
 " Plug 'leafgarland/typescript-vim'
 " Plug 'ianks/vim-tsx'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'clavery/vim-dwre'
+Plug '~/code/dwre/vim-dwre/'
 Plug 'posva/vim-vue'
 " Plug 'cakebaker/scss-syntax.vim'
 " Plug 'hail2u/vim-css3-syntax'
@@ -209,6 +209,7 @@ func! Fugitive_status()
 endfunc
 
 set statusline =
+set statusline +=\ %(%3*%{!empty(g:DWREDebugStatus)?'['.g:DWREDebugStatus.']':''}%0*%)
 set statusline +=\ %(%3*%{!empty(v:this_session)?'['.ctrlp#session#name_from_file(v:this_session).']':''}%0*%)
 set statusline +=\ %(%1*%{exists('g:loaded_fugitive')?Fugitive_status():''}%0*%)
 set statusline +=\ %f            " path
@@ -379,7 +380,7 @@ func! ToggleScheme()
     hi Normal guifg=#5D6569
   endif
 endfunc
-nnoremap <F5> :silent call ToggleScheme()<cr>
+nnoremap <F4> :silent call ToggleScheme()<cr>
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
@@ -541,6 +542,10 @@ let g:ale_linters = {
 \   'dsscript': ['eslint'],
 \   'xml': ['dwrexmllint'],
 \}
+"let g:ale_fix_on_save = 1
+"let g:ale_fixers['javascript'] = ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace']
+"let g:ale_fixers['dsscript'] = ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace']
+
 nnoremap <silent> <leader>ef :ALEFix<cr>
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '➧'
@@ -696,10 +701,34 @@ let g:sh_noisk=1
 inoremap # X#
 
 " DWRE
+" override terminal open to be vertical split instead of horizontal
+let g:DWREDebugVertical = 1
+
+" add a breakpoint
 autocmd FileType dsscript nnoremap <buffer> <leader>da :DWREAdd<cr>
+" delete the breakpoint
 autocmd FileType dsscript nnoremap <buffer> <leader>dd :DWREDel<cr>
+" clear all breakpoints
 autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
-autocmd FileType dsscript nnoremap <buffer> <leader>dg :DWREDebug<cr>
+
+" launch the debugger or continue execution
+nnoremap <f5> :DWREDebugStartContinue<cr>
+" next statement
+nnoremap <f6> :DWREDebugNext<cr>
+" jump into function
+nnoremap <f7> :DWREDebugInto<cr>
+" jump out of function
+nnoremap <f8> :DWREDebugOut<cr>
+" stop debugging and terminate debugger
+nnoremap <f9> :DWREDebugStop<cr>
+" Jump to current halted location, if halted
+nnoremap <leader>dj :silent DWREDebugJump<cr>
+" Print info on expression under cursor
+autocmd FileType dsscript nnoremap <buffer> K :DWREDebugPrint<cr>
+
+" highlight line of current location
+highlight DWRELocation guibg=#666666
+
 
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 

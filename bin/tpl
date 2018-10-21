@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+from jinja2 import Template
+import fileinput
+import os
+tpl = Template("".join([l for l in fileinput.input()]))
+print(tpl.render(**os.environ))
