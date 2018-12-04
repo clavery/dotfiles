@@ -15,6 +15,7 @@ stty stop undef
 export HISTSIZE=1000
 export EDITOR=vim
 export BROWSER=open
+export TERM=screen-256color
 
 export PROMPT_EOL_MARK=''
 

@@ -1,4 +1,4 @@
-#!/Users/clavery/.venv/tools/bin/python
+#!/Users/clavery/bin/env/bin/python
 import requests
 import yaml
 import webbrowser
@@ -90,6 +90,7 @@ for issue in yaml.load(yamldata):
     try:
         issue_id = create_issue_from_dict(issue)
     except requests.HTTPError as e:
+        print(e.response.status_code)
         print(e.response.json())
         sys.exit(1)
     issues.append(issue_id)

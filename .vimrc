@@ -39,7 +39,7 @@ Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 " Plug 'ianks/vim-tsx'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug '~/code/dwre/vim-dwre/'
+Plug '~/code/pxl/vim-dwre/'
 Plug 'posva/vim-vue'
 " Plug 'cakebaker/scss-syntax.vim'
 " Plug 'hail2u/vim-css3-syntax'
@@ -209,7 +209,7 @@ func! Fugitive_status()
 endfunc
 
 set statusline =
-set statusline +=\ %(%3*%{!empty(g:DWREDebugStatus)?'['.g:DWREDebugStatus.']':''}%0*%)
+"set statusline +=\ %(%3*%{!empty(g:DWREDebugStatus)?'['.g:DWREDebugStatus.']':''}%0*%)
 set statusline +=\ %(%3*%{!empty(v:this_session)?'['.ctrlp#session#name_from_file(v:this_session).']':''}%0*%)
 set statusline +=\ %(%1*%{exists('g:loaded_fugitive')?Fugitive_status():''}%0*%)
 set statusline +=\ %f            " path
@@ -401,10 +401,11 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  "set guifont=Source\ Code\ Pro:h14
+  "set guifont=Source\ Code\ Pro\ Medium:h14
   set guifont=Consolas:h15
   "set guifont=Source\ Code\ Pro\ Light:h14
   "set guifont=Sauce\ Code\ Powerline:h14
+  "set guifont=Inconsolata:h16
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI

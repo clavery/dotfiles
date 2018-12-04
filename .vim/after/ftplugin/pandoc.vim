@@ -8,7 +8,7 @@ setlocal iskeyword=48-57,a-z,A-Z,192-255,$,.,+
 command! -range=% PDF <line1>,<line2>w !pandoc -f markdown -s --toc -V geometry:margin=1in --variable mainfont="DejaVu Serif" --variable sansfont=Arial -o $TMPDIR/%:t:r.pdf && open $TMPDIR/%:t:r.pdf
 command! -range=% PDF2 <line1>,<line2>w !pandoc -f markdown -s -o $TMPDIR/%:t:r.pdf && open $TMPDIR/%:t:r.pdf
 command! -range=% PDFPlain <line1>,<line2>w !pandoc -f markdown -s --variable monofont="Source Code Pro" --variable mainfont="Helvetica" --variable sansfont="Helvetica" -o $TMPDIR/%:t:r.pdf && open $TMPDIR/%:t:r.pdf
-command! -range=% HTML <line1>,<line2>w !cd $TMPDIR && pandoc -f markdown -s --toc --filter pandoc-plantuml-filter -o $TMPDIR/%:t:r.html && open $TMPDIR/%:t:r.html
+command! -range=% HTML <line1>,<line2>w !cd $TMPDIR && pandoc -f markdown -s --toc --filter pandoc-plantuml -o $TMPDIR/%:t:r.html && open $TMPDIR/%:t:r.html
 command! -range=% DOCX <line1>,<line2>w !pandoc --reference-doc=/Users/clavery/Dropbox/Todo/Wiki/PixelMedia/reference.docx -f markdown -s --toc --filter pandoc-plantuml-filter -o $TMPDIR/%:t:r.docx && open $TMPDIR/%:t:r.docx
 command! -range=% SLIDES <line1>,<line2>w !cd $TMPDIR && pandoc -f markdown -t revealjs -s -V revealjs-url='file:///Users/clavery/code/reveal.js/' --slide-level 2 -o $TMPDIR/%:t:r.html && open $TMPDIR/%:t:r.html
 

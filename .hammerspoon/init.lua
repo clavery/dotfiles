@@ -513,12 +513,16 @@ function execute(command)
     -- returns success, error code, output.
     local f = io.popen(command..' 2>&1 && echo " $?"')
     local output = f:read"*a"
+    print(output) 
     local begin, finish, code = output:find" (%d+)\n$"
     output, code = output:sub(1, begin -1), tonumber(code)
     return code == 0 and true or false, code, output
 end
 function string.ends(String,End)
    return End=='' or string.sub(String,-string.len(End))==End
+end
+function string.starts(String,Start)
+   return string.sub(String,1,string.len(Start))==Start
 end
 function urlencode(str)
    if (str) then
@@ -532,15 +536,20 @@ local lastscreenshot = nil
 function uploadscreenshots(changes)
   for key,value in pairs(changes) do 
     if value:ends(".png") and value ~= last then
-      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.local/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
+      if string.starts(value, os.getenv("HOME") .. "/Documents/Screenshots/.") then
+        print(value)
+      else
+        string.format("/usr/local/bin/aws-vault exec personal -- /usr/local/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket)
+        success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /usr/local/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
 
-      local file = string.match(value, "^.+/(.+)$")
-      message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
-      hs.notify.new(function ()
-        hs.execute("open -R '" .. value .. "'")
-      end, {title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
-      hs.pasteboard.setContents(message)
-      last = value
+        local file = string.match(value, "^.+/(.+)$")
+        message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
+        hs.notify.new(function ()
+          hs.execute("open -R '" .. value .. "'")
+        end, {title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
+        hs.pasteboard.setContents(message)
+        last = value
+      end
     end
   end
 end
