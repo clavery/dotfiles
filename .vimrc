@@ -5,53 +5,38 @@ filetype off
 
 call plug#begin('~/.vim/plugins')
 
-Plug 'sudar/vim-arduino-syntax'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'jpalardy/vim-slime'
+
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'altercation/vim-colors-solarized'
+Plug 'andreyorst/SimpleWorkspaces.vim'
+
+Plug 'chriskempson/base16-vim'
 Plug 'ledger/vim-ledger'
-Plug 'hynek/vim-python-pep8-indent'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'robbles/logstash.vim'
-Plug 'junegunn/fzf'
-Plug 'tpope/vim-dadbod'
+Plug 'justinmk/vim-sneak'
+
+Plug 'hynek/vim-python-pep8-indent'
 Plug 'vim-python/python-syntax'
 
-"Plug 'ternjs/tern_for_vim'
 Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
 Plug 'w0rp/ale'
-"Plug 'clavery/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
-" Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug '~/code/pxl/vim-dwre/'
-Plug 'posva/vim-vue'
-" Plug 'cakebaker/scss-syntax.vim'
-" Plug 'hail2u/vim-css3-syntax'
-" Plug 'elzr/vim-json'
-Plug 'clavery/vim-styled-components', {'branch': 'rewrite'}
-" Plug 'styled-components/vim-styled-components', {'branch': 'rewrite'}
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'neowit/vim-force.com'
-Plug 'mhartington/oceanic-next'
+Plug 'styled-components/vim-styled-components'
 
 call plug#end()
 
@@ -69,14 +54,6 @@ endif
 
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
-
-" ctrl-a/x scary
-nnoremap g<C-A> <C-A>
-nnoremap <C-A> <nop>
-nnoremap g<C-X> <C-X>
-nnoremap <C-X> <nop>
-
-nnoremap Q <nop>
 
 set autowrite
 set sessionoptions=blank,buffers,curdir,help,winsize
@@ -138,6 +115,16 @@ set nowritebackup
 set noswapfile
 set list
 set listchars=tab:▸\ ,trail:•,nbsp:␣,extends:…,precedes:…
+
+set nrformats=hex,alpha
+set foldlevelstart=99
+set completeopt=menu,preview
+
+" Turn off sounds
+set noerrorbells
+set visualbell
+set t_vb=
+
 augroup PreviewWindow
   au BufAdd * if &previewwindow | setlocal laststatus=0 | endif
   au BufAdd * if &previewwindow | setlocal nonumber | endif
@@ -148,14 +135,13 @@ augroup trailing
     au InsertLeave * :set listchars+=trail:•
 augroup END
 
-set nrformats=hex,alpha
-set foldlevelstart=99
-set completeopt=menu,preview
+" ctrl-a/x scary
+nnoremap g<C-A> <C-A>
+nnoremap <C-A> <nop>
+nnoremap g<C-X> <C-X>
+nnoremap <C-X> <nop>
 
-" Turn off sounds
-set noerrorbells
-set visualbell
-set t_vb=
+nnoremap Q <nop>
 
 " Ignored folders
 if has("Win32")
@@ -171,11 +157,6 @@ else
   set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
   set wildignore+=*.DS_Store
   set wildignore+=lib
-endif
-
-" disable mouse
-if has('mouse')
-  set mouse=
 endif
 
 " fix crontab -e
@@ -211,7 +192,7 @@ endfunc
 set statusline =
 "set statusline +=\ %(%3*%{!empty(g:DWREDebugStatus)?'['.g:DWREDebugStatus.']':''}%0*%)
 set statusline +=\ %(%3*%{!empty(v:this_session)?'['.ctrlp#session#name_from_file(v:this_session).']':''}%0*%)
-set statusline +=\ %(%1*%{exists('g:loaded_fugitive')?Fugitive_status():''}%0*%)
+set statusline +=\ %(%{exists('g:loaded_fugitive')?Fugitive_status():''}%0*%)
 set statusline +=\ %f            " path
 set statusline +=%(\ [%n%M%R%W]%)                "modified flag
 
@@ -258,7 +239,6 @@ endif
 
 
 " MAPPINGS
-
 " default help in vert
 "cnoremap help vert help
 
@@ -325,26 +305,13 @@ inoremap <c-e> <End>
 " HIGHLIGHTING
 func! SetCustomColors()
   colorscheme molokai
-  hi User1 ctermbg=239 ctermfg=6 guibg=#555555 guifg=#AE81FF
-  hi User2 ctermbg=239 ctermfg=3 guibg=#555555 guifg=#66D9EF
-  hi User3 ctermbg=239 ctermfg=7 guibg=#555555 guifg=#E6DB74
-  hi User4 ctermbg=239 ctermfg=118
-  hi User5 ctermbg=239 ctermfg=118
+  "colorscheme base16-gruvbox-dark-medium
 
-  " jinja nice highlights
-  hi jinjaSpecial guibg=#555555
-  hi jinjaSpecial term=bold ctermfg=81 gui=italic guifg=#66D9EF guibg=#3e3e3e
-  hi jinjaTagBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
-  hi jinjaVarBlock term=underline ctermfg=118 guifg=#00ffff guibg=#3e3e3e
-  hi jinjaStatement term=bold ctermfg=161 guifg=#F92672 guibg=#3e3e3e
-  hi jinjaOperator guibg=#3e3e3e
-  hi jinjaFilter ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
-  hi jinjaBlockName ctermfg=118 guifg=#A6E22E guibg=#3e3e3e
-  hi jinjaVariable term=underline ctermfg=208 guifg=#FD971F guibg=#3e3e3e
-  hi jinjaString term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
-  hi jinjaNumber term=underline ctermfg=135 guifg=#AE81FF guibg=#3e3e3e
-
-  hi VertSplit guibg=#555555 ctermbg=239
+  hi VertSplit guibg=#888888 guifg=#888888 ctermbg=239 ctermfg=239
+  hi Folded guifg=#999999 guibg=NONE
+  hi StatusLine ctermbg=0
+  hi StatusLineNC ctermbg=0
+  hi LineNr ctermbg=242 ctermfg=0
 
   if has("gui")
     highlight TabLineFill guifg=#293739 guibg=#ffffff
@@ -355,11 +322,8 @@ func! SetCustomColors()
 
   augroup insertModeEx
     au!
-    if &background == "light"
-    else
-      au InsertEnter * hi StatusLine ctermfg=2 guifg=#A6E22E
-      au InsertLeave * hi StatusLine ctermfg=253 guifg=#eeeeee
-    endif
+    au InsertEnter * hi StatusLine ctermfg=2 ctermbg=0 guifg=#A6E22E
+    au InsertLeave * hi StatusLine ctermfg=253 ctermbg=0 guifg=#bdae93
   augroup END
 
   augroup chdirCurrent
@@ -367,12 +331,22 @@ func! SetCustomColors()
     autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
     autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
   augroup END
+
+  " disable syntax for large files
+  autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 endfunc
 call SetCustomColors()
+
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
 
 func! ToggleScheme()
   if &background == "light"
     set background=dark
+    "colorscheme base16-gruvbox-dark-soft
     colorscheme molokai
   else
     set background=light
@@ -384,33 +358,16 @@ nnoremap <F4> :silent call ToggleScheme()<cr>
 
 " show syntax group under cursor
 command! SyntaxGroup echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-function! SyntaxGroupBalloonExpr()
-  let groups=map(synstack(v:beval_lnum, v:beval_col), 'synIDattr(v:val, "name")')
-  if type(groups) == type([])
-    return join(groups, ',')
-  else
-    return ""
-  endif
-endfunction
-if has("balloon_eval")
-  set bexpr=SyntaxGroupBalloonExpr()
-  nnoremap <F7> :set ballooneval!<CR>
-endif
 
 if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  "set guifont=Source\ Code\ Pro\ Medium:h14
-  set guifont=Consolas:h15
-  "set guifont=Source\ Code\ Pro\ Light:h14
-  "set guifont=Sauce\ Code\ Powerline:h14
-  "set guifont=Inconsolata:h16
+  set guifont=Source\ Code\ Pro\ Regular:h14
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI
 endif
-
 
 set pumheight=8
 
@@ -551,7 +508,7 @@ nnoremap <silent> <leader>ef :ALEFix<cr>
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '➧'
 let g:ale_echo_cursor = 1
-let g:ale_xml_dwrexmllint_schema_path = '/Users/clavery/code/dwre/dwre-dwre-tools/dwre_tools/schemas/'
+let g:ale_xml_dwrexmllint_schema_path = '/Users/clavery/code/pxl/dwre-dwre-tools/dwre_tools/schemas/'
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
@@ -575,15 +532,21 @@ runtime macros/matchit.vim
 let g:explHideFiles='^\.,.*\.pyc$'
 let g:netrw_liststyle=3
 let g:netrw_banner=0
+let g:netrw_sort_direction='reverse'
+let g:netrw_winsize=30
+let g:netrw_browse_split=4
+let g:netrw_altv=1
 
 " CTRLP
 let g:ctrlp_map = '<c-p>'
 nnoremap <C-e> :CtrlPBuffer<cr>
 nnoremap <C-p> :CtrlP<cr>
 
+" terminal
+tnoremap <Esc> <C-W>N
+
 " just use CWD
 let g:ctrlp_working_path_mode = ''
-
 let g:ctrlp_user_command = {
   \ 'types': {
     \ 1: ['.git', '_D=$(pwd); cd %s && git ls-files . -co --exclude-standard | ([ -f ~/.custignore ] && grep -E -v -f ~/.custignore || grep .) | ([ -f $_D/.custignore ] && grep -E -v -f $_D/.custignore || grep .)'],
@@ -599,7 +562,7 @@ let g:pandoc#after#modules#enabled = ["ultisnips"]
 "let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#syntax#conceal#blacklist = ['titleblock', 'list', 'atx']
 let g:pandoc#syntax#codeblocks#embeds#langs = []
-let g:pandoc#folding#fdc = 0
+"let g:pandoc#folding#fdc = 0
 let g:pandoc#modules#disabled = ['chdir', 'bibliographies', 'completion', 'templates', 'commands']
 let g:pandoc#hypertext#open_cmd = "e"
 autocmd FileType pandoc syntax sync fromstart
@@ -731,54 +694,19 @@ autocmd FileType dsscript nnoremap <buffer> K :DWREDebugPrint<cr>
 highlight DWRELocation guibg=#666666
 
 
-autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
-
 " close preview window
 nnoremap <silent> <leader>gp :pclose<cr>
 
+" vim-slime
 let g:slime_target = "tmux"
-
-" word under cursor change
-nnoremap c* *Ncgn
-nnoremap c# #NcgN
-
-"let g:lsp_async_completion = 1
-" if executable('javascript-typescript-stdio')
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'javascript-typescript-stdio',
-"         \ 'cmd': {server_info->['javascript-typescript-stdio']},
-"         \ 'whitelist': ['javascript', 'javascript.jsx'],
-"         \ })
-"   autocmd FileType javascript setlocal omnifunc=lsp#complete
-"   autocmd FileType javascript.jsx setlocal omnifunc=lsp#complete
-" endif
-
-
-
-" if executable('pyls')
-"     " pip install python-language-server
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'pyls',
-"         \ 'cmd': {server_info->['pyls']},
-"         \ 'whitelist': ['python'],
-"         \ })
-"   autocmd FileType python setlocal omnifunc=lsp#complete
-" endif
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/vim-lsp.log')
-
-" " for asyncomplete.vim log
-" let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
 command! -range=% JIRA <line1>,<line2>w !~/bin/jira.py
 command! -range=% LOG <line1>,<line2>w !~/bin/log.py
+
+" vim sneak
+let g:sneak#label = 1
+
 " Load local overrides
 silent! source ~/.vimrc-local
 
-" force.com
-let g:apex_tooling_force_dot_com_path = $HOME.'/.vim/tooling-force.com-0.4.0.2.jar'
-let g:apex_backup_folder = $HOME.'/.salesforce/backup'
-let g:apex_temp_folder = $HOME.'/.salesforce/temp'
-let g:apex_properties_folder = $HOME.'/.salesforce/properties'
-let g:apex_server_port = 9898
 " vim:foldmethod=marker foldlevel=0

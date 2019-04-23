@@ -467,7 +467,7 @@ function pw {
   _tmpfile=$(mktemp -u -t pw)
   mkfifo $_tmpfile
 
-  gpg2 --quiet --batch -d $PASSWORD_FILE |
+  gpg --quiet --batch -d $PASSWORD_FILE |
    tee $_tmpfile |
    ~/bin/pw.py -a |
    fzf |
@@ -502,7 +502,7 @@ function totp {
   _tmpfile=$(mktemp -u -t pw)
   mkfifo $_tmpfile
 
-  gpg2 --quiet --batch -d $PASSWORD_FILE |
+  gpg --quiet --batch -d $PASSWORD_FILE |
    tee $_tmpfile |
    ~/bin/totp.py -a |
    fzf |
@@ -545,10 +545,13 @@ function review() {
   git branch $1 origin/$1
   git worktree add "../branches/$1" $1
   cd "../branches/$1";
-  ln -s "$OLDPWD/node_modules" .
-  ln -s "$OLDPWD/.agignore" .
-  ln -s "$OLDPWD/.nvmrc" .
-  ln -s "$OLDPWD/.custignore" .
+  if [ -f "$OLDPWD/.custignore" ]; then
+    cp "$OLDPWD/.custignore" .
+  fi
+  if [ -f "$OLDPWD/.custignore" ]; then
+    cp "$OLDPWD/.agignore" .
+  fi
+  print -S "yarn install && dwre sync -d && yarn start"
 }
 function _completereview {
   reply=($(git branch -r | grep origin | sed 's/origin\///'))
@@ -583,3 +586,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # fix high sierra bullshit
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+export GOPATH=$HOME/code/go

@@ -27,3 +27,4 @@ tags
 
 .tern-project
 .nvmrc
+bin/env

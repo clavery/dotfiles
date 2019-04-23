@@ -79,7 +79,6 @@ def create_issue_from_dict(data):
 
             resp = requests.post("{}issue".format(BASE_URL), json=js, auth=AUTH)
             resp.raise_for_status()
-        
     return key
 
 
