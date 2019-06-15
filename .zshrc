@@ -196,7 +196,7 @@ list_colors() {
 
 PROMPT=''
 case $HOSTNAME in
-  meeples|beast|dasbook|chucks|dyan)
+  meeples|beast|dasbook|chucks|chucksmbp)
     export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
     export RPROMPT='%F{237}${_VENV}%f'
     #export RPROMPT=""

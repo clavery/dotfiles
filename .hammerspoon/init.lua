@@ -1,5 +1,7 @@
 -- Include local machine variables
 require("localvars")
+-- localHomeSSID = "ssidhere"
+-- s3bucket = "bucketname"
 
 local log = hs.logger.new('init','debug')
 
@@ -44,6 +46,14 @@ hs.hotkey.bind({"alt"}, "`", function ()
 end)
 
 
+hs.hotkey.bind(hyper, "p", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenEast(true, true, 0)
+end)
+hs.hotkey.bind(hyper, "o", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenWest(true, true, 0)
+end)
 -- Fullscreen
 hs.hotkey.bind(hyper, "f", function()
     local win = hs.window.focusedWindow()
@@ -127,18 +137,6 @@ hs.hotkey.bind(hyper, "m", function()
 
     f.x = max.x + (max.w / 2)
     f.y = max.y + (max.h / 2)
-    f.w = max.w / 2
-    f.h = max.h / 2
-    win:setFrame(f)
-end)
-hs.hotkey.bind(hyper, "o", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
-
-    f.x = max.x + (max.w / 2)
-    f.y = max.y
     f.w = max.w / 2
     f.h = max.h / 2
     win:setFrame(f)
@@ -390,6 +388,7 @@ hs.hotkey.bind(hyper, "q", hs.toggleConsole)
 
 -- Chooser Boxes
 local chooser = nil
+local phone = localPhoneNumber
 
 local function createNewTimer(seconds, message)
     hs.timer.doAfter(seconds, function()
@@ -401,7 +400,7 @@ local function createNewTimer(seconds, message)
         sound:stop()
       end)
 
-      hs.messages.iMessage("charles.lavery@gmail.com", message)
+      hs.messages.iMessage(phone, message)
     end)
 end
 
@@ -483,6 +482,7 @@ local function parseLine(line)
 
   log.i("Setting timer for " .. seconds .. " seconds")
   createNewTimer(seconds, message)
+  hs.notify.new({title="Timer Set",informativeText="Setting timer for " .. seconds/60 .. " minutes", autoWithdraw=true,hasActionButton=false}):send()
 end
 
 local homeDir = os.getenv('HOME')
@@ -549,63 +549,6 @@ function choice()
   chooser:show()
 end
 hs.hotkey.bind(hyper, "y", choice)
-
-function generateHtml()
-  local focusedApp = hs.application.frontmostApplication()
-  local appName = focusedApp:name()
-  local html = [[
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <style type="text/css">
-            *{margin:0; padding:0;}
-            html, body{ 
-              background-color:#eee;
-              font-family: arial;
-              font-size: 13px;
-              padding: 30px;
-            }
-              li.title{ text-align:center;}
-            ul, li{list-style: inside none; padding: 0 0 5px;}
-        </style>
-        </head>
-        <body>
-        ]]..readAll("/Users/clavery/Dropbox/Todo/Wiki/Cheatsheets/"..appName..".html")..[[
-        </body>
-        </html>
-
-  ]]
-  return html
-end
-
-local view = nil
-local function createView()
-  if not view then
-    local screen = hs.screen.mainScreen()
-    local viewRect = screen:frame():scale(0.5):move({x=0, y=-20})
-    view = hs.webview.new(viewRect, {
-      javaScriptEnabled=false,
-      -- developerExtrasEnabled=true,
-    })
-    local masks = hs.webview.windowMasks
-    view:windowStyle(
-      masks.borderless |
-      masks.utility |
-      masks.HUD |
-      masks.nonactivating
-    )
-    view:windowTitle("Foobar")
-    view:setLevel(hs.drawing.windowLevels.overlay)
-    view:html(generateHtml())
-    view:allowGestures(true)
-    view:show()
-  else
-    view:delete()
-    view=nil
-  end
-end
-hs.hotkey.bind(hyper, "p", createView)
-
 
 -- screenshots with 
 local screenshotbucket = s3bucket

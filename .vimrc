@@ -55,6 +55,10 @@ endif
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
 
+inoremap jk <Esc>`^
+"inoremap kj <c-c>`^
+"inoremap <Esc> <nop>
+
 set autowrite
 set sessionoptions=blank,buffers,curdir,help,winsize
 set exrc
@@ -296,7 +300,7 @@ nnoremap <silent> <leader>l :set list!<cr>
 nnoremap <silent> <leader>w :set wrap!<cr>
 
 nnoremap <leader>` "=strftime("%FT%T%z")<cr>P
-inoremap <C-D> <C-o>"=strftime("%FT%T%z")<cr>
+"inoremap <C-D> <C-o>"=strftime("%FT%T%z")<cr>
 
 "emacs begin/end
 inoremap <c-a> <Home>
@@ -363,7 +367,7 @@ if has("linux")
   set guifont=DejaVu\ Sans\ Mono\ 13
 endif
 if has("mac")
-  set guifont=Source\ Code\ Pro\ Regular:h14
+  set guifont=SourceCodePro-Regular:h16
 endif
 if has("win32")
   set guifont=Consolas:h13:cANSI

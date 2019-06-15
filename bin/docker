@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if ! /usr/local/bin/docker system info &>/dev/null; then
+  echo "Starting docker..."
+
+  open -g -a Docker.app || exit
+
+  i=0
+  while ! /usr/local/bin/docker system info &>/dev/null; do
+  (( i++ == 0 )) && printf %s '-- Waiting for Docker to finish starting up...' || printf '.'
+  sleep 1
+  done
+  (( i )) && printf '\n'
+fi
+
+exec /usr/local/bin/docker $@
