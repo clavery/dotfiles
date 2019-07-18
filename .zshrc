@@ -580,9 +580,23 @@ function defi() {
   fi
 }
 
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//' | sed 's/\\/\\\\/g')
+}
+zle -N fzffindhistory fh
+bindkey '^R' fzffindhistory
+
 export NVM_DIR="$HOME/.nvm"
 [ -f "$NVM_DIR/nvm.sh" ] && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -f "$NVM_DIR/bash_completion" ] && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# support encrypted netrc
+alias curl="gpg --batch -q -d ~/.netrc.gpg | curl --netrc-file /dev/stdin"
+
+# git management
+git_create_repo() {
+  curl -q ${GIT_URL}/api/v1/user/repos -XPOST --data "name=$1&private=true" 2>/dev/null | jq -r .ssh_url | xargs echo "git remote add origin" | tee /dev/tty | print -S
+}
 
 # fix high sierra bullshit
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES

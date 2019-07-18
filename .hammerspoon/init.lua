@@ -154,6 +154,11 @@ hs.hotkey.bind(hyper, "u", function()
     win:setFrame(f)
 end)
 
+switcher = hs.window.switcher.new()
+-- Window hints
+hs.hotkey.bind(hyper, ";", function()
+  switcher:next()
+end)
 -- Fuzzy Window Switcher
 
 _fuzzyChoices = nil
@@ -247,7 +252,7 @@ function windowFuzzySearch()
   _fuzzyChooser:show()
 end
 
-hs.hotkey.bind("ctrl-cmd", "e", function()
+hs.hotkey.bind(hyper, "e", function()
   windowFuzzySearch()
 end)
 
@@ -301,7 +306,7 @@ local lastSSID = hs.wifi.currentNetwork()
 function ssidChangedCallback()
     newSSID = hs.wifi.currentNetwork()
 
-    if newSSID ~= homeSSID and lastSSID == homeSSID then
+    if newSSID ~= lastSSID then
         hs.alert.show("Wifi Change - Zeroing Volume", 5)
         hs.audiodevice.defaultOutputDevice():setVolume(0)
     end
@@ -545,7 +550,7 @@ function choice()
   end)
   chooser:choices(commands)
   chooser:rows(#commands)
-  chooser:queryChangedCallback(function() end)
+  chooser:queryChangedCallback(function(query) end)
   chooser:show()
 end
 hs.hotkey.bind(hyper, "y", choice)
@@ -582,48 +587,64 @@ function uploadscreenshots(changes)
       if string.starts(value, os.getenv("HOME") .. "/Documents/screenshots/.") then
         print(value)
       else
-        string.format("/usr/local/bin/aws-vault exec personal -- /usr/local/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket)
-        success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /usr/local/bin/aws s3 cp %q s3://%s/screenshots/ --acl public-read", value, screenshotbucket))
-
-        local file = string.match(value, "^.+/(.+)$")
-        message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
-        hs.notify.new(function ()
-          hs.execute("open -R '" .. value .. "'")
-        end, {title="Screenshot",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
-        hs.pasteboard.setContents(message)
+        local task = hs.task.new("/usr/local/bin/aws-vault", function()
+          local file = string.match(value, "^.+/(.+)$")
+          message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screenshots/" .. urlencode(file)
+          hs.notify.new(function ()
+            hs.execute("open -R '" .. value .. "'")
+          end, {title="Screenshot",informativeText=message, autoWithdraw=false, hasActionButton=false}):send()
+          hs.pasteboard.setContents(message)
+        end, {"exec", "personal", "--", "/usr/local/bin/aws", "s3", "cp", value, string.format("s3://%s/screenshots/", screenshotbucket), "--acl", "public-read"})
+        task:start()
+        last = value
+      end
+    elseif value:ends(".gif") and value ~= last then
+      if string.starts(value, os.getenv("HOME") .. "/Documents/screenshots/.") then
+        print(value)
+      else
+        local task = hs.task.new("/usr/local/bin/aws-vault", function()
+          local file = string.match(value, "^.+/(.+)$")
+          message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screencasts/" .. urlencode(file)
+          hs.notify.new(function ()
+            hs.execute("open -R '" .. value .. "'")
+          end, {title="Screencast",informativeText=message, autoWithdraw=false, hasActionButton=false}):send()
+          hs.pasteboard.setContents(message)
+        end, {"exec", "personal", "--", "/usr/local/bin/aws", "s3", "cp", value, string.format("s3://%s/screencasts/", screenshotbucket), "--acl", "public-read"})
+        task:start()
+        last = value
+      end
+    elseif value:ends(".mp4") and value ~= last then
+      if string.starts(value, os.getenv("HOME") .. "/Documents/screenshots/.") then
+        print(value)
+      else
+        local task = hs.task.new("/usr/local/bin/aws-vault", function()
+          local file = string.match(value, "^.+/(.+)$")
+          message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screencasts/" .. urlencode(file)
+          hs.notify.new(function ()
+            hs.execute("open -R '" .. value .. "'")
+          end, {title="Screencast",informativeText=message, autoWithdraw=false, hasActionButton=false}):send()
+          hs.pasteboard.setContents(message)
+        end, {"exec", "personal", "--", "/usr/local/bin/aws", "s3", "cp", value, string.format("s3://%s/screencasts/", screenshotbucket), "--acl", "public-read"})
+        task:start()
+        last = value
+      end
+    elseif value:ends(".mov") and value ~= last then
+      if string.starts(value, os.getenv("HOME") .. "/Documents/screenshots/.") then
+        print(value)
+      else
+        local task = hs.task.new("/bin/bash", function(code, out, err)
+          log.i("Task finised with " .. code .. "")
+          log.i(err)
+          log.i(out)
+        end, {"/Users/clavery/bin/convertmovtogif", value})
+        task:start()
         last = value
       end
     end
   end
 end
 
-function convertscreencasts(changes)
-  for key,value in pairs(changes) do 
-    if value:ends(".mov") and value ~= last then
-      success, code, output = execute(string.format("/Users/clavery/bin/convertmovtogif %q", value))
-  log.i(output)
-    end
-  end
-end
-function uploadscreencasts(changes)
-  for key,value in pairs(changes) do 
-    if value:ends(".gif") and value ~= last then
-      success, code, output = execute(string.format("/usr/local/bin/aws-vault exec personal -- /Users/clavery/.local/bin/aws s3 cp %q s3://%s/screencasts/ --acl public-read", value, screenshotbucket))
-
-      local file = string.match(value, "^.+/(.+)$")
-      message = "https://" .. screenshotbucket .. ".s3.amazonaws.com/screencasts/" .. urlencode(file)
-      hs.notify.new(function ()
-        hs.execute("open -R '" .. value .. "'")
-      end, {title="Screencast",informativeText=message, autoWithdraw=true,hasActionButton=false}):send()
-      hs.pasteboard.setContents(message)
-      last = value
-    end
-  end
-end
-
 hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screenshots/", uploadscreenshots):start()
-hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screencasts/", convertscreencasts):start()
-hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screencasts/", uploadscreencasts):start()
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
 

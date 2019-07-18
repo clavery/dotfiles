@@ -37,6 +37,11 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug '~/code/pxl/vim-dwre/'
 Plug 'styled-components/vim-styled-components'
+Plug 'aklt/plantuml-syntax'
+
+"Plug '/usr/local/opt/fzf'
+"Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
 
 call plug#end()
 
@@ -55,7 +60,7 @@ endif
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
 
-inoremap jk <Esc>`^
+"inoremap jk <Esc>`^
 "inoremap kj <c-c>`^
 "inoremap <Esc> <nop>
 
@@ -343,8 +348,8 @@ call SetCustomColors()
 
 augroup AutoSaveFolds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  "autocmd BufWinLeave * mkview
+  "autocmd BufWinEnter * silent! loadview
 augroup END
 
 func! ToggleScheme()
@@ -461,7 +466,7 @@ augroup END
 
 " ag
 function! SearchWithAg(ss)
-  exec "Ag! " . shellescape(substitute(a:ss, "\\$", "\\\\$", "g"), 1)
+  exec "Rg " . shellescape(substitute(a:ss, "\\$", "\\\\$", "g"), 1)
 endfunction
 command! -nargs=1 S :call SearchWithAg(<q-args>)
 nnoremap <leader>a :<C-U>S 
@@ -538,7 +543,7 @@ let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_sort_direction='reverse'
 let g:netrw_winsize=30
-let g:netrw_browse_split=4
+let g:netrw_browse_split=0
 let g:netrw_altv=1
 
 " CTRLP

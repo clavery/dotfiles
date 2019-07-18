@@ -13,4 +13,4 @@ if ! /usr/local/bin/docker system info &>/dev/null; then
   (( i )) && printf '\n'
 fi
 
-exec /usr/local/bin/docker $@
+exec /usr/local/bin/docker "$@"
