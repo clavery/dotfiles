@@ -104,16 +104,40 @@ hs.hotkey.bind(hyper, "k", function()
     f.h = max.h / 2
     win:setFrame(f)
 end)
-hs.hotkey.bind(hyper, "j", function()
+hs.hotkey.bind(hyper, "1", function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
     local max = screen:frame()
 
     f.x = max.x
-    f.y = max.y + (max.h / 2)
-    f.w = max.w
-    f.h = max.h / 2
+    f.y = max.y
+    f.w = max.w / 3
+    f.h = max.h
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "2", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 3)
+    f.y = max.y
+    f.w = max.w / 3
+    f.h = max.h
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "3", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 3 * 2)
+    f.y = max.y
+    f.w = max.w / 3
+    f.h = max.h
     win:setFrame(f)
 end)
 
@@ -153,6 +177,18 @@ hs.hotkey.bind(hyper, "u", function()
     f.h = max.h / 2
     win:setFrame(f)
 end)
+
+hs.hotkey.bind(hyper, "\\", function()
+  hs.notify.new({title="Hammerspoon", informativeText="Setting home layout"}):send()
+  local homeMonitor = "LG ULTRAWIDE"
+  local windowLayout = {
+        {"PhpStorm", nil, homeMonitor, {x=0, y=0, w=0.6, h=1},    nil, nil},
+        {"Charles", nil, homeMonitor, {x=0.6, y=0.6, w=0.4, h=0.4},   nil, nil},
+        {"Safari", nil, homeMonitor, {x=0.6, y=0, w=0.4, h=0.6}, nil, nil},        
+    }
+    hs.layout.apply(windowLayout)
+end)
+
 
 switcher = hs.window.switcher.new()
 -- Window hints

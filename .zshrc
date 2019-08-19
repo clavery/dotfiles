@@ -97,6 +97,7 @@ alias ll="ls -Alhtr"
 fpath=($HOME/dotfiles/.completions/src/ $fpath)
 
 export PATH=~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/Library/TeX/texbin:$PATH
 
 function setjdk() {
   if [ $# -ne 0 ]; then
@@ -596,6 +597,9 @@ alias curl="gpg --batch -q -d ~/.netrc.gpg | curl --netrc-file /dev/stdin"
 # git management
 git_create_repo() {
   curl -q ${GIT_URL}/api/v1/user/repos -XPOST --data "name=$1&private=true" 2>/dev/null | jq -r .ssh_url | xargs echo "git remote add origin" | tee /dev/tty | print -S
+}
+git_create_repo_org() {
+  curl -q ${GIT_URL}/api/v1/org/$1/repos -XPOST --data "name=$2&private=true" 2>/dev/null | jq -r .ssh_url | xargs echo "git remote add origin" | tee /dev/tty | print -S
 }
 
 # fix high sierra bullshit
