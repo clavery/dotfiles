@@ -3,6 +3,7 @@
 [user]
   name = Charles Lavery
   email = charles.lavery@gmail.com
+	signingkey = 61E304BE451D80E969CA888BB050C1999B5B4181
 [include]
   path = ~/.gitconfig-local
 [color]
@@ -84,3 +85,5 @@
 	cmd = /Users/clavery/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
 
+[gpg]
+	program = gpg2

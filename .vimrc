@@ -35,9 +35,11 @@ Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug '~/code/pxl/vim-dwre/'
+Plug '~/code/dwre/vim-dwre/'
 Plug 'styled-components/vim-styled-components'
 Plug 'aklt/plantuml-syntax'
+
+Plug 'sirtaj/vim-openscad'
 
 "Plug '/usr/local/opt/fzf'
 "Plug 'junegunn/fzf.vim'
@@ -499,16 +501,19 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'javascript.jsx': ['eslint'],
 \   'dsscript': ['eslint'],
+\   'svelte': ['eslint'],
 \   'python': ['autopep8'],
 \}
 let g:ale_python_autopep8_options = '--aggressive --aggressive'
 " let g:ale_fix_on_save = 1
-let g:ale_linter_aliases = {'dsscript': 'javascript', 'isml': 'html'}
+let g:ale_linter_aliases = {'dsscript': 'javascript', 'svelte' : 'javascript', 'isml': 'html'}
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'dsscript': ['eslint'],
+\   'svelte': ['eslint'],
 \   'xml': ['dwrexmllint'],
 \}
+
 "let g:ale_fix_on_save = 1
 "let g:ale_fixers['javascript'] = ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace']
 "let g:ale_fixers['dsscript'] = ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace']
@@ -517,11 +522,12 @@ nnoremap <silent> <leader>ef :ALEFix<cr>
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '➧'
 let g:ale_echo_cursor = 1
-let g:ale_xml_dwrexmllint_schema_path = '/Users/clavery/code/pxl/dwre-dwre-tools/dwre_tools/schemas/'
+let g:ale_xml_dwrexmllint_schema_path = '/Users/charleslavery/code/dwre/dwre-tools/dwre_tools/schemas/'
 
 " javascript
 let g:javascript_plugin_jsdoc = 1
 autocmd FileType json set formatprg=python\ -mjson.tool
+autocmd FileType *.svelte setf html
 
 " Undo tree
 nnoremap <silent> <leader>u :UndotreeToggle<cr>

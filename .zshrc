@@ -98,6 +98,7 @@ fpath=($HOME/dotfiles/.completions/src/ $fpath)
 
 export PATH=~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=/Library/TeX/texbin:$PATH
+export PATH=~/.cargo/bin:$PATH
 
 function setjdk() {
   if [ $# -ne 0 ]; then
@@ -116,7 +117,9 @@ function removeFromPath() {
 case $HOST_OS in
   darwin)
     export MANPATH=/usr/local/share/man:/Applications/Xcode.app/Contents/Developer/usr/share/man:$MANPATH
-    setjdk 1.8
+    # setjdk 8
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
+    export PATH=${JAVA_HOME}bin:$PATH
   ;;
   linux)
     export JAVA_HOME="/usr/java"
@@ -196,8 +199,8 @@ list_colors() {
 }
 
 PROMPT=''
-case $HOSTNAME in
-  meeples|beast|dasbook|chucks|chucksmbp)
+case $HOST_OS in
+  darwin)
     export PROMPT='%F{red}${vcs_info_msg_0_}%F{blue}%3c %(?.%F{blue}.%F{red})$%f '
     export RPROMPT='%F{237}${_VENV}%f'
     #export RPROMPT=""
@@ -462,28 +465,6 @@ function fkill {
 
 alias uuid4="python -c 'import uuid; import sys; print(str(uuid.uuid4()))'"
 
-function pw {
-  _oldumask=$(umask)
-  umask 077
-  _tmpfile=$(mktemp -u -t pw)
-  mkfifo $_tmpfile
-
-  gpg --quiet --batch -d $PASSWORD_FILE |
-   tee $_tmpfile |
-   ~/bin/pw.py -a |
-   fzf |
-   xargs ~/bin/pw.py <(cat $_tmpfile) -p |
-   pbcopy
-
-  rm $_tmpfile
-  umask $_oldumask
-}
-function dpw {
-  dwre pw list |
-    fzf |
-    xargs dwre pw get |
-    pbcopy
-}
 function vault {
   aws-vault exec default -- $@
 }
@@ -497,23 +478,6 @@ function aws {
   )
 }
 
-function totp {
-  _oldumask=$(umask)
-  umask 077
-  _tmpfile=$(mktemp -u -t pw)
-  mkfifo $_tmpfile
-
-  gpg --quiet --batch -d $PASSWORD_FILE |
-   tee $_tmpfile |
-   ~/bin/totp.py -a |
-   fzf |
-   xargs ~/bin/totp.py <(cat $_tmpfile) -p |
-   pbcopy
-
-  rm $_tmpfile
-  umask $_oldumask
-}
-
 # example from man pages
 eg() {
   MAN_KEEP_FORMATTING=1 man "$@" 2>/dev/null \
@@ -524,17 +488,12 @@ eg() {
 alias iso8601="echo $(date +\"%Y%m%dT%H%M%S\")"
 
 function todo {
-  cd ~/Nextcloud/Todo && mvim pixelmedia.txt personal.txt;
+  cd ~/Nextcloud/Todo && mvim work.txt personal.txt;
   cd -
 }
 
 function gist {
   pbpaste | command gist -p -f $1 -d "$(echo ${@:2})" | tee >(pbcopy) | cat
-}
-
-function next_release() {
-  tickets=`git log --format="%C(auto) %h %s" HEAD^..develop | grep -oe "$1-\d\d\d" | uniq | perl -pe 'chomp if eof' - | tr '\n' ','`
-  open "https://pixelmedia.atlassian.net/issues/?jql=resolution = Unresolved and key in ($tickets)"
 }
 
 function review() {
@@ -606,3 +565,66 @@ git_create_repo_org() {
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 export GOPATH=$HOME/code/go
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/charleslavery/code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/charleslavery/code/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/charleslavery/code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/charleslavery/code/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+# plugins
+if [ -f '~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh' ]; then
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+
+_pwdstore-files() {
+  find $HOME/.password-store -type f \
+    | sed 's/.*\(\.password-store\/.*\)/\1/' \
+    | grep -v '/\.' \
+    | cut -d / -f2- \
+    | rev \
+    | cut -d . -f2- \
+    | rev
+}
+
+# pass copy
+pw() {
+  local files pwdstore_file
+  files=$(_pwdstore-files)
+  pwdstore_file=$(echo $files | fzf)
+  pass -c "$(echo "$pwdstore_file")"
+}
+
+# pass copy
+totp() {
+  local files pwdstore_file
+  files=$(_pwdstore-files)
+  pwdstore_file=$(echo $files | fzf)
+  pass otp "$(echo "$pwdstore_file")"
+}
+
+# pass show
+pd() {
+  local files pwdstore_file
+  files=$(_pwdstore-files)
+  pwdstore_file=$(echo $files | fzf)
+  pass show "$(echo "$pwdstore_file")"
+}
+
+# pass edit
+pe() {
+  local files pwdstore_file
+  files=$(_pwdstore-files)
+  pwdstore_file=$(echo $files | fzf)
+  pass edit "$(echo "$pwdstore_file")"
+}
+
+passpush() {
+  pushd ~/.password-store
+  git push
+  popd
+}
+
+export ANDROID_HOME=/Users/charleslavery/Library/Android/sdk/

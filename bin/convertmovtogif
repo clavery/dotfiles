@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
+sleep 10
 name=$(basename "$1" .mov)
-/usr/local/bin/ffmpeg -i "$1" -pix_fmt rgb24 -r 10 -f gif - | /usr/local/bin/gifsicle --optimize=3 --delay=7 -o $TMPDIR/out.gif
-mv "${TMPDIR}out.gif" "$HOME/Documents/screenshots/${name}.gif"
-/usr/local/bin/ffmpeg -i "$1" -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "${TMPDIR}video.mp4"
-mv "${TMPDIR}video.mp4" "$HOME/Documents/screenshots/${name}.mp4"
+dir=$(dirname "$1")
+/usr/local/bin/ffmpeg -i "$1" -crf 20 "${dir}/${name}.mp4"

@@ -104,6 +104,19 @@ hs.hotkey.bind(hyper, "k", function()
     f.h = max.h / 2
     win:setFrame(f)
 end)
+hs.hotkey.bind(hyper, "j", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.h / 2
+    f.w = max.w
+    f.h = max.h / 2
+  log.i("Setting window to " .. max.y);
+    win:setFrame(f)
+end)
 hs.hotkey.bind(hyper, "1", function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
@@ -137,6 +150,18 @@ hs.hotkey.bind(hyper, "3", function()
     f.x = max.x + (max.w / 3 * 2)
     f.y = max.y
     f.w = max.w / 3
+    f.h = max.h
+    win:setFrame(f)
+end)
+hs.hotkey.bind(hyper, "4", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + (max.w / 3)
+    f.y = max.y
+    f.w = max.w / 3 * 2
     f.h = max.h
     win:setFrame(f)
 end)
@@ -177,6 +202,10 @@ hs.hotkey.bind(hyper, "u", function()
     f.h = max.h / 2
     win:setFrame(f)
 end)
+hs.hotkey.bind(hyper, ";", function()
+    local win = hs.window.focusedWindow()
+    win:centerOnScreen()
+end)
 
 hs.hotkey.bind(hyper, "\\", function()
   hs.notify.new({title="Hammerspoon", informativeText="Setting home layout"}):send()
@@ -192,9 +221,6 @@ end)
 
 switcher = hs.window.switcher.new()
 -- Window hints
-hs.hotkey.bind(hyper, ";", function()
-  switcher:next()
-end)
 -- Fuzzy Window Switcher
 
 _fuzzyChoices = nil
@@ -680,7 +706,25 @@ function uploadscreenshots(changes)
   end
 end
 
+function converttutorials(changes)
+  for key,value in pairs(changes) do 
+    if value:ends(".mov") and value ~= last then
+      local task = hs.task.new("/bin/bash", function(code, out, err)
+        log.i("Video conversion finished with " .. code .. "")
+        log.i(err)
+        log.i(out)
+        hs.notify.new(function ()
+          hs.execute("open -R '" .. value .. "'")
+        end, {title="Video",informativeText="Video Converted", autoWithdraw=false, hasActionButton=false}):send()
+      end, {"/Users/charleslavery/bin/convertmovtogif", value})
+      task:start()
+      last = value
+    end
+  end
+end
+
 hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/screenshots/", uploadscreenshots):start()
+hs.pathwatcher.new(os.getenv("HOME") .. "/Documents/tutorials/", converttutorials):start()
 -- Show message when reloaded
 hs.alert.show("HS Config loaded")
 
