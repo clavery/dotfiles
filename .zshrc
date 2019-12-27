@@ -302,7 +302,6 @@ zstyle ':completion:*:*:node:*' file-patterns '*.js:globbed-files *(-/):director
 zstyle ':completion:*:*:ruby:*' file-patterns '*.rb:globbed-files *(-/):directories' '*:all-files'
 
 # grep
-export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 
 # Quick password generation functions
