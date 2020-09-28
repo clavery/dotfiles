@@ -2,13 +2,13 @@
 # ---------
 unalias fzf 2> /dev/null
 unset fzf 2> /dev/null
-if [[ ! "$PATH" =~ "/usr/local/Cellar/fzf/0.9.1/bin" ]]; then
-  export PATH="/usr/local/Cellar/fzf/0.9.1/bin:$PATH"
+if [[ ! "$PATH" =~ "/usr/local/Cellar/fzf/0.18.0/bin" ]]; then
+  export PATH="/usr/local/Cellar/fzf/0.18.0/bin:$PATH"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.9.1/fzf-completion.zsh
+[[ $- =~ i ]] && source /usr/local/Cellar/fzf/0.18.0/shell/completion.zsh
 
 # Key bindings
 # ------------
@@ -57,7 +57,7 @@ bindkey '\ec' fzf-cd-widget
 
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
-  LBUFFER=$(fc -l 1 | fzf +s +m -n2..,.. | sed "s/ *[0-9*]* *//")
+  LBUFFER=$(fc -l 1 | fzf +s +m --tac -n2..,.. | sed "s/ *[0-9*]* *//")
   zle redisplay
 }
 zle     -N   fzf-history-widget

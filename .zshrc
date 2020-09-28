@@ -454,7 +454,7 @@ function ec2_waitforinstance() {
 
 # fzf
 export FZF_DEFAULT_COMMAND="ag -l --hidden -g '' --ignore .git"
-if [ -x /usr/local/Cellar/fzf/0.8.8/bin/fzf ]; then
+if [ -x /usr/local/bin/fzf ]; then
   source ~/.fzf.zsh
 fi
 
@@ -539,18 +539,11 @@ function defi() {
   fi
 }
 
-fh() {
-  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//' | sed 's/\\/\\\\/g')
-}
-zle -N fzffindhistory fh
-bindkey '^R' fzffindhistory
-
 export NVM_DIR="$HOME/.nvm"
 [ -f "$NVM_DIR/nvm.sh" ] && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -f "$NVM_DIR/bash_completion" ] && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # support encrypted netrc
-alias curl="gpg --batch -q -d ~/.netrc.gpg | curl --netrc-file /dev/stdin"
 
 # git management
 git_create_repo() {
@@ -626,4 +619,20 @@ passpush() {
   popd
 }
 
+# single commit to the current branch then cherry pick to the given
+# maintenance branch, tag, push and trigger a build
+# $1 = version to hotfix (i.e. 1.9.2 will cherry pick to 1.9.x branch)
+# $2 commit message
+hotfix() {
+  git commit -am $2
+  _hash=$(git log --format="%H" -n 1)
+  major=$(echo $1 | cut -d. -f1)
+  minor=$(echo $1 | cut -d. -f2)
+  patch=$(echo $1 | cut -d. -f2)
+  pushd "../$major.$minor.x"
+  git cherry-pick $_hash
+  git tag $1
+  git push --follow-tags
+  popd
+}
 export ANDROID_HOME=/Users/charleslavery/Library/Android/sdk/

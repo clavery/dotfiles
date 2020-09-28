@@ -1,25 +1,29 @@
 let mapleader = " "
 
-set clipboard=unnamedplus,unnamed
+set clipboard=ideaput
 
 set ignorecase
 set smartcase
 set scrolloff=3         " 3 lines above/below cursor when scrolling
 set ideajoin
 set incsearch
+set surround
+set commentary
+set keymodel=stopsel
 
 set visualbell
 set noerrorbells
+
 
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
 nmap <c-k> <c-w>k
 nmap <c-j> <c-w>j
 
-
 nmap <c-e> :action RecentFiles<cr>
-nmap <c-l> :action RecentLocations<cr>
+nmap g<c-e> :action RecentLocations<cr>
 nmap <c-p> :action GotoFile<cr>
+nmap <c-s> :action FileStructurePopup<cr>
 nmap <leader>g :action GotoDeclaration<cr>
 nmap <leader>b :action Back<cr>
 nmap <leader>f :action Forward<cr>
@@ -33,4 +37,3 @@ nmap <leader>ns :action GotoSymbol<cr>
 nmap <leader>nm :action FileStructurePopup<cr>
 nmap <leader>d :action ShowErrorDescription<cr>
 nmap == :action ReformatCode<cr>
-set clipboard+=ideaput

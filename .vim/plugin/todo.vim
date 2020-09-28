@@ -40,5 +40,39 @@ function! todo#refile()
   endif
 endfunction
 
+function! todo#allTags()
+  exec "Rg " . shellescape("\\[T_") . "~/Nextcloud/todo/**/*<CR>:cw<CR>"
+endfunction
+noremap <Leader>ta :call todo#allTags()<cr>
+
+function! todo#openJiraTicket()
+  let currentWord = expand("<cWORD>")
+  if match(currentWord, '\v\w\w\w-\d{1,4}') != -1
+    let ticket = substitute(currentWord, '\v.*(\w\w\w-\d{1,4}).*', '\1', "g")
+    exec "!open https://ross-simons.atlassian.net/browse/" . ticket
+  endif
+endfunction
+noremap <Leader>to :call todo#openJiraTicket()<cr>
+
+
+function! todo#ToggleCB() range
+
+  for lineno in range(a:firstline, a:lastline)
+    let line = getline(lineno)
+
+    if(match(line, "\\[ \\]") != -1)
+      let line = substitute(line, "\\[ \\]", "[✓]", "")
+    elseif(match(line, "\\[✓\\]") != -1)
+      let line = substitute(line, "\\[✓\\]", "[ ]", "")
+    else
+      let line = substitute(line, "^\\(\\s*\\(-\\|\\*\\)\\)\\s", "\\1 [ ] ", "")
+    endif
+
+    call setline(lineno, line)
+  endfor
+endfunction
+command! -range ToggleCB <line1>,<line2>call todo#ToggleCB()
+vnoremap <silent> <leader>tt :ToggleCB<cr>
+nnoremap <silent> <leader>tt :ToggleCB<cr>
 
 command! Journal call todo#journal()

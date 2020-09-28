@@ -12,28 +12,6 @@ command! -range=% HTML <line1>,<line2>w !cd $TMPDIR && pandoc -f markdown -s --t
 command! -range=% DOCX <line1>,<line2>w !pandoc --reference-doc=/Users/charleslavery/Nextcloud/Todo/Wiki/LBH/reference.docx -f markdown -s --toc -o $TMPDIR/%:t:r.docx && open $TMPDIR/%:t:r.docx
 command! -range=% SLIDES <line1>,<line2>w !cd $TMPDIR && pandoc -f markdown -t revealjs -s -V revealjs-url='file:///Users/charleslavery/code/reveal.js/' --slide-level 2 -o $TMPDIR/%:t:r.html && open $TMPDIR/%:t:r.html
 
-fu! pandoc#ToggleCB() range
-
-  for lineno in range(a:firstline, a:lastline)
-    let line = getline(lineno)
-
-    if(match(line, "\\[ \\]") != -1)
-      let line = substitute(line, "\\[ \\]", "[✓]", "")
-    elseif(match(line, "\\[✓\\]") != -1)
-      let line = substitute(line, "\\[✓\\]", "[ ]", "")
-    else
-      let line = substitute(line, "^\\(\\s*\\(-\\|\\*\\)\\)\\s", "\\1 [ ] ", "")
-    endif
-
-    call setline(lineno, line)
-  endfor
-endf
-
-command! -range ToggleCB <line1>,<line2>call pandoc#ToggleCB()
-
-vnoremap <silent> <buffer> <leader>t :ToggleCB<cr>
-nnoremap <silent> <buffer> <leader>t :ToggleCB<cr>
-
 function! TSIndent(line)
 	return strlen(matchstr(a:line,'\v^\s+'))
 endfunction

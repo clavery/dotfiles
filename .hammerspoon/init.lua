@@ -4,6 +4,7 @@ require("localvars")
 -- s3bucket = "bucketname"
 
 local log = hs.logger.new('init','debug')
+local homeDir = os.getenv('HOME')
 
 local cmd = {"cmd"}
 local hyper = {"cmd", "ctrl"}
@@ -32,8 +33,8 @@ function focusScreen(screen)
   --If no windows exist, bring focus to desktop. Otherwise, set focus on
   --front-most application window.
   local windows = hs.fnutils.filter(
-      hs.window.orderedWindows(),
-      hs.fnutils.partial(isInScreen, screen))
+  hs.window.orderedWindows(),
+  hs.fnutils.partial(isInScreen, screen))
   local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
   windowToFocus:focus()
 
@@ -47,175 +48,175 @@ end)
 
 
 hs.hotkey.bind(hyper, "p", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenEast(true, true, 0)
+  local win = hs.window.focusedWindow()
+  win:moveOneScreenEast(true, true, 0)
 end)
 hs.hotkey.bind(hyper, "o", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenWest(true, true, 0)
+  local win = hs.window.focusedWindow()
+  win:moveOneScreenWest(true, true, 0)
 end)
 -- Fullscreen
 hs.hotkey.bind(hyper, "f", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w
+  f.h = max.h
+  win:setFrame(f)
 end)
 -- Left
 hs.hotkey.bind(hyper, "h", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w / 2
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "l", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x + (max.w / 2)
-    f.y = max.y
-    f.w = max.w / 2
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x + (max.w / 2)
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "k", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w
-    f.h = max.h / 2
-    win:setFrame(f)
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w
+  f.h = max.h / 2
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "j", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.h / 2
-    f.w = max.w
-    f.h = max.h / 2
+  f.x = max.x
+  f.y = max.h / 2
+  f.w = max.w
+  f.h = max.h / 2
   log.i("Setting window to " .. max.y);
-    win:setFrame(f)
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "1", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w / 3
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w / 3
+  f.h = max.h
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "2", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x + (max.w / 3)
-    f.y = max.y
-    f.w = max.w / 3
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x + (max.w / 3)
+  f.y = max.y
+  f.w = max.w / 3
+  f.h = max.h
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "3", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x + (max.w / 3 * 2)
-    f.y = max.y
-    f.w = max.w / 3
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x + (max.w / 3 * 2)
+  f.y = max.y
+  f.w = max.w / 3
+  f.h = max.h
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "4", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x + (max.w / 3)
-    f.y = max.y
-    f.w = max.w / 3 * 2
-    f.h = max.h
-    win:setFrame(f)
+  f.x = max.x + (max.w / 3)
+  f.y = max.y
+  f.w = max.w / 3 * 2
+  f.h = max.h
+  win:setFrame(f)
 end)
 
 hs.hotkey.bind(hyper, "n", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x 
-    f.y = max.y + (max.h / 2)
-    f.w = max.w / 2
-    f.h = max.h / 2
-    win:setFrame(f)
+  f.x = max.x 
+  f.y = max.y + (max.h / 2)
+  f.w = max.w / 2
+  f.h = max.h / 2
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "m", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x + (max.w / 2)
-    f.y = max.y + (max.h / 2)
-    f.w = max.w / 2
-    f.h = max.h / 2
-    win:setFrame(f)
+  f.x = max.x + (max.w / 2)
+  f.y = max.y + (max.h / 2)
+  f.w = max.w / 2
+  f.h = max.h / 2
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, "u", function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-    local screen = win:screen()
-    local max = screen:frame()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = max.w / 2
-    f.h = max.h / 2
-    win:setFrame(f)
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h / 2
+  win:setFrame(f)
 end)
 hs.hotkey.bind(hyper, ";", function()
-    local win = hs.window.focusedWindow()
-    win:centerOnScreen()
+  local win = hs.window.focusedWindow()
+  win:centerOnScreen()
 end)
 
 hs.hotkey.bind(hyper, "\\", function()
   hs.notify.new({title="Hammerspoon", informativeText="Setting home layout"}):send()
   local homeMonitor = "LG ULTRAWIDE"
   local windowLayout = {
-        {"PhpStorm", nil, homeMonitor, {x=0, y=0, w=0.6, h=1},    nil, nil},
-        {"Charles", nil, homeMonitor, {x=0.6, y=0.6, w=0.4, h=0.4},   nil, nil},
-        {"Safari", nil, homeMonitor, {x=0.6, y=0, w=0.4, h=0.6}, nil, nil},        
-    }
-    hs.layout.apply(windowLayout)
+    {"PhpStorm", nil, homeMonitor, {x=0, y=0, w=0.6, h=1},    nil, nil},
+    {"Charles", nil, homeMonitor, {x=0.6, y=0.6, w=0.4, h=0.4},   nil, nil},
+    {"Safari", nil, homeMonitor, {x=0.6, y=0, w=0.4, h=0.6}, nil, nil},        
+  }
+  hs.layout.apply(windowLayout)
 end)
 
 
@@ -327,20 +328,106 @@ end)
 
 local caffeine = hs.menubar.new()
 function setCaffeineDisplay(state)
-    if state then
-        caffeine:setTitle("☀")
-    else
-        caffeine:setTitle("☁")
-    end
+  if state then
+    caffeine:setTitle("☀")
+  else
+    caffeine:setTitle("☁")
+  end
 end
 
 function caffeineClicked()
-    setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+  setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
 end
 
 if caffeine then
-    caffeine:setClickCallback(caffeineClicked)
-    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+  caffeine:setClickCallback(caffeineClicked)
+  setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+end
+
+----
+-- Pomodoro
+-- 
+local pomoMenu = hs.menubar.new()
+local pomoControl = hs.menubar.new()
+local pomoRunning = false
+local pomoPaused = false
+local pomoRunTime = 25
+local pomoShortBreak = 5
+local pomoLargeBreak = 25
+local pomoCurrentRemaining = 0
+local pomoTimer = nil
+function setPomoMenu()
+  if pomoPaused then
+    pomoMenu:setTitle("▶️ ".. pomoCurrentRemaining .. "m")
+  elseif pomoRunning then
+    pomoMenu:setTitle("⏸️ ".. pomoCurrentRemaining .. "m")
+  else
+    pomoMenu:setTitle("🛑")
+  end
+end
+hs.notify.register("pomoReply", function(notification)
+  if notification:activationType() == hs.notify.activationTypes.replied then
+    log.i("Notified: " .. notification:response());
+    local date = os.date("%Y/%m/%d %I:%M %p")
+    appendToFile(toPath(homeDir, "Nextcloud", "Todo", "worklog.txt"), date .. ": " .. notification:response())
+  end
+end)
+
+function pomoUpdate()
+  pomoCurrentRemaining = pomoCurrentRemaining - 1
+  if pomoCurrentRemaining == 0 then
+    pomoRunning = false
+    pomoTimer:stop()
+    -- TODO show message
+    -- TODO start break timer
+    hs.notify.new("pomoReply", {title="POMO", informativeText="Pomo completed", withdrawAfter=0,
+      hasReplyButton=true, hasActionButton=true}):send()
+    local sound = hs.sound.getByName("Glass")
+    sound:loopSound(true)
+    sound:play()
+    hs.timer.doAfter(3.5, function()
+      sound:stop()
+    end)
+  end
+  pomoUpdateMenus()
+end
+
+function cancelPomo()
+  pomoRunning = false
+  pomoPaused = false
+  pomoTimer:stop()
+  pomoUpdateMenus()
+  log.i("Pomo Cancel")
+end
+function pomoUpdateMenus()
+  pomoControl:setMenu({
+    { title = "Cancel Current", disabled = (not pomoRunning and not pomoPaused),fn=cancelPomo },
+  })
+  setPomoMenu()
+end
+function pomoClicked()
+  if pomoRunning then
+    pomoPaused = true
+    pomoRunning = false
+    log.i("Pomo Pausing")
+    pomoTimer:stop()
+  elseif pomoPaused then
+    pomoPaused = false
+    pomoRunning = true
+    log.i("Pomo Unpausing")
+    pomoTimer:start()
+  else
+    log.i("Pomo Starting")
+    pomoRunning = true
+    pomoCurrentRemaining = pomoRunTime
+    pomoTimer = hs.timer.doEvery(60, pomoUpdate)
+  end
+  pomoUpdateMenus()
+end
+if pomoMenu then
+  pomoMenu:setClickCallback(pomoClicked)
+  pomoControl:setTitle("🍅")
+  pomoUpdateMenus()
 end
 
 --
@@ -366,14 +453,14 @@ local homeSSID = localHomeSSID
 local lastSSID = hs.wifi.currentNetwork()
 
 function ssidChangedCallback()
-    newSSID = hs.wifi.currentNetwork()
+  newSSID = hs.wifi.currentNetwork()
 
-    if newSSID ~= lastSSID then
-        hs.alert.show("Wifi Change - Zeroing Volume", 5)
-        hs.audiodevice.defaultOutputDevice():setVolume(0)
-    end
+  if newSSID ~= lastSSID then
+    hs.alert.show("Wifi Change - Zeroing Volume", 5)
+    hs.audiodevice.defaultOutputDevice():setVolume(0)
+  end
 
-    lastSSID = newSSID
+  lastSSID = newSSID
 end
 
 wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
@@ -387,24 +474,24 @@ wifiWatcher:start()
 local mouseCircle = nil
 local mouseCircleTimer = nil
 function mouseHighlight()
-    -- Delete an existing highlight if it exists
-    if mouseCircle then
-        mouseCircle:delete()
-        if mouseCircleTimer then
-            mouseCircleTimer:stop()
-        end
+  -- Delete an existing highlight if it exists
+  if mouseCircle then
+    mouseCircle:delete()
+    if mouseCircleTimer then
+      mouseCircleTimer:stop()
     end
-    -- Get the current co-ordinates of the mouse pointer
-    mousepoint = hs.mouse.getAbsolutePosition()
-    -- Prepare a big red circle around the mouse pointer
-    mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-40, mousepoint.y-40, 80, 80))
-    mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
-    mouseCircle:setFill(true)
-    mouseCircle:setStrokeWidth(5)
-    mouseCircle:show()
+  end
+  -- Get the current co-ordinates of the mouse pointer
+  mousepoint = hs.mouse.getAbsolutePosition()
+  -- Prepare a big red circle around the mouse pointer
+  mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-40, mousepoint.y-40, 80, 80))
+  mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
+  mouseCircle:setFill(true)
+  mouseCircle:setStrokeWidth(5)
+  mouseCircle:show()
 
-    -- Set a timer to delete the circle after 3 seconds
-    mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
+  -- Set a timer to delete the circle after 3 seconds
+  mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
 end
 hs.hotkey.bind(hyper, "D", mouseHighlight)
 
@@ -458,26 +545,26 @@ local chooser = nil
 local phone = localPhoneNumber
 
 local function createNewTimer(seconds, message)
-    hs.timer.doAfter(seconds, function()
-      hs.notify.new({title="Reminder",informativeText=message, autoWithdraw=false,hasActionButton=false}):send()
-      local sound = hs.sound.getByName("Glass")
-      sound:loopSound(true)
-      sound:play()
-      hs.timer.doAfter(2.5, function()
-        sound:stop()
-      end)
-
-      hs.messages.iMessage(phone, message)
+  hs.timer.doAfter(seconds, function()
+    hs.notify.new({title="Reminder",informativeText=message, autoWithdraw=false,hasActionButton=false}):send()
+    local sound = hs.sound.getByName("Glass")
+    sound:loopSound(true)
+    sound:play()
+    hs.timer.doAfter(2.5, function()
+      sound:stop()
     end)
+
+    hs.messages.iMessage(phone, message)
+  end)
 end
 
 function toPath(...) return table.concat({...}, '/') end
 
 function readAll(file)
-    local f = io.open(file, "rb")
-    local content = f:read("*all")
-    f:close()
-    return content
+  local f = io.open(file, "rb")
+  local content = f:read("*all")
+  f:close()
+  return content
 end
 
 function appendToFile(file, text)
@@ -552,7 +639,6 @@ local function parseLine(line)
   hs.notify.new({title="Timer Set",informativeText="Setting timer for " .. seconds/60 .. " minutes", autoWithdraw=true,hasActionButton=false}):send()
 end
 
-local homeDir = os.getenv('HOME')
 
 local function parseTimeEntry(line)
   local message
@@ -583,11 +669,6 @@ local commands = {
     ['command'] = 'newnotepersonal',
   },
   {
-    ['text'] = 'Time Entry',
-    ['subText'] = 'File a timesheet entry',
-    ['command'] = 'newtime',
-  },
-  {
     ['text'] = 'New Timer...',
     ['subText'] = 'Create a Timer',
     ['command'] = 'newtimer',
@@ -603,9 +684,9 @@ function choice()
     if choice.command == 'newtimer' then
       parseLine(tostring(chooser:query()))
     elseif choice.command == 'newnote' then
-      prependToFile(toPath(homeDir, "Nextcloud", "Todo", "pixelmedia.txt"), "- " .. chooser:query())
+      prependToFile(toPath(homeDir, "Nextcloud", "Todo", "work.txt"), "- " .. chooser:query() .. " [T_REFILE]")
     elseif choice.command == 'newnotepersonal' then
-      prependToFile(toPath(homeDir, "Nextcloud", "Todo", "personal.txt"), "- " .. chooser:query())
+      prependToFile(toPath(homeDir, "Nextcloud", "Todo", "personal.txt"), "- " .. chooser:query() .. " [T_REFILE]")
     elseif choice.command == 'newtime' then
       parseTimeEntry(tostring(chooser:query()))
     end
@@ -620,26 +701,26 @@ hs.hotkey.bind(hyper, "y", choice)
 -- screenshots with 
 local screenshotbucket = s3bucket
 function execute(command)
-    -- returns success, error code, output.
-    local f = io.popen(command..' 2>&1 && echo " $?"')
-    local output = f:read"*a"
-    print(output) 
-    local begin, finish, code = output:find" (%d+)\n$"
-    output, code = output:sub(1, begin -1), tonumber(code)
-    return code == 0 and true or false, code, output
+  -- returns success, error code, output.
+  local f = io.popen(command..' 2>&1 && echo " $?"')
+  local output = f:read"*a"
+  print(output) 
+  local begin, finish, code = output:find" (%d+)\n$"
+  output, code = output:sub(1, begin -1), tonumber(code)
+  return code == 0 and true or false, code, output
 end
 function string.ends(String,End)
-   return End=='' or string.sub(String,-string.len(End))==End
+return End=='' or string.sub(String,-string.len(End))==End
 end
 function string.starts(String,Start)
-   return string.sub(String,1,string.len(Start))==Start
+  return string.sub(String,1,string.len(Start))==Start
 end
 function urlencode(str)
-   if (str) then
-      str = string.gsub (str, "\n", "\r\n")
-      str = string.gsub (str, " ", "%%20")
-   end
-   return str    
+  if (str) then
+    str = string.gsub (str, "\n", "\r\n")
+    str = string.gsub (str, " ", "%%20")
+  end
+  return str    
 end
 
 local lastscreenshot = nil

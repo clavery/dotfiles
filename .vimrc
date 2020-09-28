@@ -40,6 +40,8 @@ Plug 'styled-components/vim-styled-components'
 Plug 'aklt/plantuml-syntax'
 
 Plug 'sirtaj/vim-openscad'
+Plug 'vim-scripts/dhcpd.vim'
+Plug 'pearofducks/ansible-vim'
 
 "Plug '/usr/local/opt/fzf'
 "Plug 'junegunn/fzf.vim'
