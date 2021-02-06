@@ -30,7 +30,7 @@ Plug 'vim-python/python-syntax'
 Plug 'mbbill/undotree', { 'on':  ['UndotreeToggle'] }
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'ctrlpvim/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPBuffer'] }
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'epmatsw/ag.vim', { 'on':  'Ag' }
 
 Plug 'pangloss/vim-javascript'

@@ -1,7 +1,11 @@
 let mapleader = " "
 
 set clipboard=ideaput
+set highlightedyank
 
+set dialogescape=on
+set oneline=off
+set ideamarks
 set ignorecase
 set smartcase
 set scrolloff=3         " 3 lines above/below cursor when scrolling
