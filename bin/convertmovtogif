@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-sleep 10
 name=$(basename "$1" .mov)
 dir=$(dirname "$1")
 /usr/local/bin/ffmpeg -i "$1" -crf 20 "${dir}/${name}.mp4"
