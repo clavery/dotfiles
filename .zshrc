@@ -99,6 +99,7 @@ fpath=($HOME/dotfiles/.completions/src/ $fpath)
 export PATH=~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=/Library/TeX/texbin:$PATH
 export PATH=~/.cargo/bin:$PATH
+export PATH=/opt/homebrew/bin:$PATH
 
 function setjdk() {
   if [ $# -ne 0 ]; then
