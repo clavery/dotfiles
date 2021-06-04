@@ -488,7 +488,12 @@ eg() {
 alias iso8601="echo $(date +\"%Y%m%dT%H%M%S\")"
 
 function todo {
-  cd ~/Nextcloud/Todo && mvim work.txt personal.txt;
+  if [ -d ~/Nextcloud/Todo ]; then
+    cd ~/Nextcloud/Todo && mvim personal.txt;
+  fi
+  if [ -d ~/Documents/todo ]; then
+    cd ~/Documents/todo && mvim work.md;
+  fi
   cd -
 }
 
